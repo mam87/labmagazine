@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نبض المختبرات الطبية | مأمون السعودي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0984e3;
+            --author-color: #2c3e50; 
+            --accent-orange: #d35400;
+            --bg-color: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-color); color: #2d3436; line-height: 1.6; }
+
+        header {
+            background: linear-gradient(135deg, #1e3799, #0984e3);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+        /* قسم التعريف والروابط */
+        .profile-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-me { flex: 1; min-width: 300px; }
+        .about-me h3 { color: var(--primary-color); margin-bottom: 10px; }
+        .about-me p { font-size: 0.95rem; color: #636e72; }
+
+        .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
+        .social-btn {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-tg { background: #0088cc; }
+        .btn-wa { background: #25d366; }
+        .social-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+        /* قسم مقال اليوم */
+        .daily-article {
+            background: #fff;
+            border-right: 6px solid var(--accent-orange);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .daily-article h2 { color: var(--accent-orange); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+
+        /* شبكة الأخبار */
+        .section-title { margin-bottom: 20px; color: var(--primary-color); border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; height: 100%; }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: #1e3799; }
+        .btn-read { margin-top: auto; background: var(--primary-color); color: white; text-align: center; padding: 10px; text-decoration: none; border-radius: 5px; }
+
+        footer { background: #2c3e50; color: white; padding: 25px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fas fa-flask"></i> بوابة علوم المختبرات الطبية</h1>
+    <p>بإشراف الأخصائي مأمون السعودي</p>
+    <div id="google_translate_element"></div>
+</header>
+
+<div class="container">
+    
+    <section class="profile-card">
+        <div class="about-me">
+            <h3><i class="fas fa-user-md"></i> عن الكاتب</h3>
+            <p>مأمون السعودي، أخصائي مختبرات طبية مهتم بنشر الوعي العلمي وتحديثات الطب المخبري والبحث العلمي المعتمد.</p>
+        </div>
+        <div class="social-links">
+            <a href="https://t.me/alshamelmls" target="_blank" class="social-btn btn-tg">
+                <i class="fab fa-telegram-plane"></i> مكتبة الكتب والقناة
+            </a>
+            <a href="https://wa.me/962799146795" target="_blank" class="social-btn btn-wa">
+                <i class="fab fa-whatsapp"></i> واتساب للملاحظات
+            </a>
+        </div>
+    </section>
+
+    <section class="daily-article">
+        <h2><i class="fas fa-calendar-day"></i> مقال اليوم</h2>
+        <div class="article-content">
+            <h3 style="margin-bottom: 10px; color: #2d3436;">تطور الفحوصات المناعية في الكشف عن الأورام</h3>
+            <p style="color: #636e72;">
+                تعتبر الفحوصات المناعية حجر الزاوية في التشخيص الحديث، حيث تساهم التقنيات الجديدة في تقليل زمن استخراج النتائج وزيادة الدقة النوعية للتشخيص المبكر...
+            </p>
+            <p style="margin-top: 15px; font-size: 0.85rem; font-weight: bold; color: var(--author-color);">بقلم: مأمون السعودي</p>
+        </div>
+    </section>
+
+    <div class="section-title">
+        <h2><i class="fas fa-rss"></i> آخر مستجدات الأبحاث العالمية</h2>
+    </div>
+
+    <div id="loader" style="text-align:center; padding: 40px;"><i class="fas fa-sync fa-spin fa-2x"></i> جاري التحديث...</div>
+    <div class="news-grid" id="newsContainer"></div>
+</div>
+
+<footer>
+    <p>جميع الحقوق محفوظة &copy; مأمون السعودي 2026</p>
+</footer>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar', layout: google.translate.TranslateElement.InlineMethod.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+    const GNEWS_API_KEY = 'D3cd119609465ffd24672fc85c139947'; 
+    const QUERY = '"medical laboratory" OR "biomedical science" OR "clinical pathology"';
+    const URL = `https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&max=9&apikey=${GNEWS_API_KEY}`;
+
+    async function fetchNews() {
+        try {
+            const response = await fetch(URL);
+            const data = await response.json();
+            if (data.articles) displayNews(data.articles);
+        } catch (error) {
+            document.getElementById('loader').innerHTML = "تعذر تحميل الأخبار العالمية.";
+        }
+    }
+
+    function displayNews(articles) {
+        const container = document.getElementById('newsContainer');
+        document.getElementById('loader').style.display = 'none';
+        articles.forEach(article => {
+            container.innerHTML += `
+                <div class="card">
+                    <img src="${article.image || 'https://via.placeholder.com/400x200?text=Lab+News'}" alt="News">
+                    <div class="card-body">
+                        <div class="card-title">${article.title}</div>
+                        <p style="font-size:0.85rem; color:#636e72; margin-bottom:15px;">${article.description}</p>
+                        <a href="${article.url}" target="_blank" class="btn-read">اقرأ المزيد</a>
+                    </div>
+                </div>`;
+        });
+    }
+    window.onload = fetchNews;
+</script>
+
+</body>
+</html>
+
