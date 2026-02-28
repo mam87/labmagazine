@@ -1,178 +1,1120 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نبض المختبرات الطبية | مأمون السعودي</title>
+    <title>بوابة علوم المختبرات | مأمون السعودي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0984e3;
-            --author-color: #2c3e50; 
-            --accent-orange: #d35400;
-            --bg-color: #f4f7f6;
+            --primary: #0984e3;
+            --accent: #d35400;
+            --bg: #f4f7f6;
             --white: #ffffff;
+            --transition: all 0.3s ease;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-color); color: #2d3436; line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg); color: #2d3436; }
+        
+        .top-bar { background: #1a1a1a; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .lang-btn { background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
         header {
             background: linear-gradient(135deg, #1e3799, #0984e3);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
+            color: white; padding: 60px 20px; text-align: center;
         }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 
-        /* قسم التعريف والروابط */
-        .profile-card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: center;
-            justify-content: space-between;
+        /* Profile Section with Image */
+        .profile-section {
+            background: var(--white); border-radius: 20px; padding: 40px; margin-top: -50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; gap: 30px; align-items: center;
         }
 
-        .about-me { flex: 1; min-width: 300px; }
-        .about-me h3 { color: var(--primary-color); margin-bottom: 10px; }
-        .about-me p { font-size: 0.95rem; color: #636e72; }
+        .profile-image-container { 
+            flex: 0 0 200px; 
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(9, 132, 227, 0.3);
+            background: #f0f0f0;
+            display: block;
+            margin: 0 auto;
+        }
 
-        .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
-        .social-btn {
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px;
+        .profile-image-placeholder {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-size: 72px;
+            font-weight: bold;
+            border: 5px solid var(--primary);
+            margin: 0 auto;
+        }
+
+        .about-text { flex: 2; min-width: 300px; }
+        .about-text h2 { color: var(--primary); margin-bottom: 15px; font-size: 2rem; }
+        .social-box { flex: 1; display: flex; flex-direction: column; gap: 15px; min-width: 250px; }
+        .social-btn { text-decoration: none; padding: 15px; border-radius: 12px; color: white; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); }
+        .btn-tg { background: #0088cc; } .btn-wa { background: #25d366; }
+
+        .daily-article-large {
+            background: var(--white); margin: 40px 0; border-radius: 20px; overflow: hidden;
+            border-right: 10px solid var(--accent); box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+        [dir="ltr"] .daily-article-large { border-right: none; border-left: 10px solid var(--accent); }
+        .article-header { background: #fffaf0; padding: 30px; }
+        .article-content { padding: 40px; }
+
+        /* Encyclopedia Section with Tabs */
+        .encyclopedia-section { background: white; border-radius: 20px; padding: 30px; margin: 40px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .tabs-wrapper { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            margin-bottom: 25px; 
+            justify-content: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .tab-btn { 
+            padding: 12px 24px; 
+            border-radius: 25px; 
+            border: 2px solid #e0e0e0; 
+            background: #f8f9fa; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .tab-btn:hover {
+            background: #e3f2fd;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active { 
+            background: var(--primary); 
+            color: white; 
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3);
+        }
+
+        .tab-count {
+            background: rgba(255,255,255,0.3);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        .search-box { 
+            width: 100%; 
+            padding: 15px 20px; 
+            border-radius: 12px; 
+            border: 2px solid #e0e0e0; 
+            margin-bottom: 20px; 
+            outline: none; 
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: var(--primary);
+        }
+
+        .table-container { 
+            overflow-x: auto; 
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 800px; 
+            text-align: left; 
             font-size: 0.9rem;
+        }
+        
+        [dir="rtl"] table { text-align: right; }
+        
+        th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white;
+            padding: 16px; 
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        td { 
+            padding: 14px 16px; 
+            border-bottom: 1px solid #eee; 
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tr:nth-child(even) {
+            background: #fafbfc;
+        }
+        
+        tr:nth-child(even):hover {
+            background: #f0f4f8;
+        }
+
+        /* Pagination */
+        .pagination {
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            gap: 10px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
         }
-        .btn-tg { background: #0088cc; }
-        .btn-wa { background: #25d366; }
-        .social-btn:hover { opacity: 0.8; transform: translateY(-2px); }
-
-        /* قسم مقال اليوم */
-        .daily-article {
-            background: #fff;
-            border-right: 6px solid var(--accent-orange);
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        
+        .page-btn {
+            padding: 10px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 40px;
         }
-        .daily-article h2 { color: var(--accent-orange); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        
+        .page-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-info {
+            padding: 10px 20px;
+            color: #636e72;
+            font-weight: 500;
+        }
 
-        /* شبكة الأخبار */
-        .section-title { margin-bottom: 20px; color: var(--primary-color); border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        /* News Section */
+        .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .news-controls { display: flex; gap: 10px; align-items: center; }
+        .update-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .update-btn:hover { background: #0770c2; }
+        .update-btn.spinning i { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .last-update { color: #636e72; font-size: 0.9rem; background: #dfe6e9; padding: 5px 15px; border-radius: 15px; }
+        
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; height: 100%; }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: #1e3799; }
-        .btn-read { margin-top: auto; background: var(--primary-color); color: white; text-align: center; padding: 10px; text-decoration: none; border-radius: 5px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 25px; flex-grow: 1; }
+        .card-title { font-weight: bold; margin-bottom: 10px; color: #2d3436; line-height: 1.4; }
+        .card-date { color: #636e72; font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .card-source { display: inline-block; background: var(--primary); color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; margin-bottom: 15px; }
+        .btn-read { display: inline-block; background: var(--accent); color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-top: auto; }
+        
+        .loading { text-align: center; padding: 40px; color: var(--primary); grid-column: 1 / -1; }
+        .error-msg { text-align: center; padding: 20px; color: #e74c3c; background: #ffeaa7; border-radius: 10px; grid-column: 1 / -1; }
+        .no-news { text-align: center; padding: 40px; color: #636e72; grid-column: 1 / -1; }
 
-        footer { background: #2c3e50; color: white; padding: 25px; text-align: center; margin-top: 50px; }
+        footer { background: #2c3e50; color: white; padding: 40px; text-align: center; margin-top: 40px; }
+
+        @media (max-width: 768px) {
+            .profile-image-container { flex: 0 0 100%; margin-bottom: 20px; }
+            .profile-image, .profile-image-placeholder { width: 150px; height: 150px; font-size: 60px; }
+            .tabs-wrapper { gap: 5px; }
+            .tab-btn { padding: 8px 16px; font-size: 0.85rem; }
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .badge-hematology { background: #ffebee; color: #c62828; }
+        .badge-chemistry { background: #e3f2fd; color: #1565c0; }
+        .badge-hormones { background: #f3e5f5; color: #6a1b9a; }
+        .badge-coagulation { background: #fff3e0; color: #ef6c00; }
+        .badge-immunology { background: #e8f5e9; color: #2e7d32; }
+        .badge-microbiology { background: #fce4ec; color: #c2185b; }
+        .badge-genetic { background: #e0f2f1; color: #00695c; }
+        .badge-tumormarkers { background: #fff8e1; color: #f9a825; }
+        .badge-toxicology { background: #efebe9; color: #4e342e; }
     </style>
 </head>
-<body>
+<body id="bodyTag">
 
-<header>
-    <h1><i class="fas fa-flask"></i> بوابة علوم المختبرات الطبية</h1>
-    <p>بإشراف الأخصائي مأمون السعودي</p>
-    <div id="google_translate_element"></div>
-</header>
-
-<div class="container">
-    
-    <section class="profile-card">
-        <div class="about-me">
-            <h3><i class="fas fa-user-md"></i> عن الكاتب</h3>
-            <p>مأمون السعودي، أخصائي مختبرات طبية مهتم بنشر الوعي العلمي وتحديثات الطب المخبري والبحث العلمي المعتمد.</p>
-        </div>
-        <div class="social-links">
-            <a href="https://t.me/alshamelmls" target="_blank" class="social-btn btn-tg">
-                <i class="fab fa-telegram-plane"></i> مكتبة الكتب والقناة
-            </a>
-            <a href="https://wa.me/962799146795" target="_blank" class="social-btn btn-wa">
-                <i class="fab fa-whatsapp"></i> واتساب للملاحظات
-            </a>
-        </div>
-    </section>
-
-    <section class="daily-article">
-        <h2><i class="fas fa-calendar-day"></i> مقال اليوم</h2>
-        <div class="article-content">
-            <h3 style="margin-bottom: 10px; color: #2d3436;">تطور الفحوصات المناعية في الكشف عن الأورام</h3>
-            <p style="color: #636e72;">
-                تعتبر الفحوصات المناعية حجر الزاوية في التشخيص الحديث، حيث تساهم التقنيات الجديدة في تقليل زمن استخراج النتائج وزيادة الدقة النوعية للتشخيص المبكر...
-            </p>
-            <p style="margin-top: 15px; font-size: 0.85rem; font-weight: bold; color: var(--author-color);">بقلم: مأمون السعودي</p>
-        </div>
-    </section>
-
-    <div class="section-title">
-        <h2><i class="fas fa-rss"></i> آخر مستجدات الأبحاث العالمية</h2>
+    <div class="top-bar">
+        <div id="todayDate"></div>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
     </div>
 
-    <div id="loader" style="text-align:center; padding: 40px;"><i class="fas fa-sync fa-spin fa-2x"></i> جاري التحديث...</div>
-    <div class="news-grid" id="newsContainer"></div>
-</div>
+    <header>
+        <h1 id="headerTitle">بوابة علوم المختبرات الطبية</h1>
+        <p id="headerSub">بإشراف الأخصائي مأمون السعودي</p>
+    </header>
 
-<footer>
-    <p>جميع الحقوق محفوظة &copy; مأمون السعودي 2026</p>
-</footer>
+    <div class="container">
+        <section class="profile-section">
+            <!-- Profile Image - Replace src with your image URL or Base64 -->
+            <div class="profile-image-container">
+                <!-- Option 1: Using a placeholder with initials -->
+                <div class="profile-image-placeholder" id="profileImg">م س</div>
+                
+                <!-- Option 2: Using an image URL (uncomment and replace) -->
+                <!-- <img src="https://your-image-url-here.jpg" alt="مأمون السعودي" class="profile-image" onerror="this.style.display='none'; document.getElementById('profilePlaceholder').style.display='flex';"> -->
+                <!-- <div class="profile-image-placeholder" id="profilePlaceholder" style="display:none;">م س</div> -->
+                
+                <!-- Option 3: Using Base64 (recommended) - replace with your base64 string -->
+                <!-- <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD..." alt="مأمون السعودي" class="profile-image"> -->
+            </div>
+            
+            <div class="about-text">
+                <h2 id="aboutTitle">عن الكاتب</h2>
+                <p id="aboutDesc">أنا مأمون السعودي، أخصائي مختبرات طبية أسعى لتقديم محتوى علمي رصين يجمع بين أحدث ما توصل إليه الطب العالمي وخبراتنا المحلية.</p>
+            </div>
+            
+            <div class="social-box">
+                <a href="https://t.me/alshamelmls" target="_blank" class="social-btn btn-tg">
+                    <i class="fab fa-telegram-plane"></i> <span id="tgText">قناة التلغرام</span>
+                </a>
+                <a href="https://wa.me/962799146795" target="_blank" class="social-btn btn-wa">
+                    <i class="fab fa-whatsapp"></i> <span id="waText">واتساب</span>
+                </a>
+            </div>
+        </section>
 
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar', layout: google.translate.TranslateElement.InlineMethod.SIMPLE}, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <section class="daily-article-large">
+            <div class="article-header">
+                <h2 id="dailyTitle"><i class="fas fa-star"></i> مقال اليوم</h2>
+            </div>
+            <div class="article-content">
+                <h3 id="artTitle">مستقبل التشخيص الجزيئي</h3>
+                <p id="artText">يشهد عالم المختبرات ثورة مع الذكاء الاصطناعي...</p>
+                <div class="signature" id="signatureText">بقلم: مأمون السعودي</div>
+            </div>
+        </section>
 
-<script>
-    const GNEWS_API_KEY = 'D3cd119609465ffd24672fc85c139947'; 
-    const QUERY = '"medical laboratory" OR "biomedical science" OR "clinical pathology"';
-    const URL = `https://gnews.io/api/v4/search?q=${encodeURIComponent(QUERY)}&lang=en&max=9&apikey=${GNEWS_API_KEY}`;
+        <!-- Encyclopedia Section with Tabs and Pagination -->
+        <section class="encyclopedia-section">
+            <h2 id="encyTitle" style="margin-bottom: 20px; color: var(--primary);">
+                <i class="fas fa-book-medical"></i> موسوعة الفحوصات (200+ Test)
+            </h2>
+            
+            <input type="text" class="search-box" id="labSearch" onkeyup="searchLab()" placeholder="ابحث عن فحص...">
+            
+            <div class="tabs-wrapper" id="tabLinks">
+                <button class="tab-btn active" onclick="filterTab('All')">
+                    الكل <span class="tab-count" id="count-All">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Hematology')">
+                    Hematology <span class="tab-count" id="count-Hematology">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Chemistry')">
+                    Chemistry <span class="tab-count" id="count-Chemistry">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Hormones')">
+                    Hormones <span class="tab-count" id="count-Hormones">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Coagulation')">
+                    Coagulation <span class="tab-count" id="count-Coagulation">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Immunology')">
+                    Immunology <span class="tab-count" id="count-Immunology">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Microbiology')">
+                    Microbiology <span class="tab-count" id="count-Microbiology">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Genetic')">
+                    Genetic <span class="tab-count" id="count-Genetic">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('TumorMarkers')">
+                    Tumor Markers <span class="tab-count" id="count-TumorMarkers">0</span>
+                </button>
+                <button class="tab-btn" onclick="filterTab('Toxicology')">
+                    Toxicology <span class="tab-count" id="count-Toxicology">0</span>
+                </button>
+            </div>
 
-    async function fetchNews() {
-        try {
-            const response = await fetch(URL);
-            const data = await response.json();
-            if (data.articles) displayNews(data.articles);
-        } catch (error) {
-            document.getElementById('loader').innerHTML = "تعذر تحميل الأخبار العالمية.";
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="thName">Test Name</th>
+                            <th id="thSample">Sample Type</th>
+                            <th id="thNormal">Reference Range</th>
+                            <th id="thUse">Clinical Use</th>
+                        </tr>
+                    </thead>
+                    <tbody id="labTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination" id="paginationControls">
+                <button class="page-btn" onclick="changePage('prev')" id="btnPrev">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <span class="page-info" id="pageInfo">صفحة 1 من 10</span>
+                <button class="page-btn" onclick="changePage('next')" id="btnNext">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <div class="news-header">
+            <h2 id="newsSectionTitle" style="color:var(--primary); border-bottom:3px solid var(--primary); display:inline-block; padding-bottom:5px;">
+                <i class="fas fa-newspaper"></i> آخر المستجدات العالمية
+            </h2>
+            <div class="news-controls">
+                <span class="last-update" id="lastUpdate">آخر تحديث: --</span>
+                <button class="update-btn" id="updateBtn" onclick="forceUpdateNews()">
+                    <i class="fas fa-sync-alt"></i> <span id="updateBtnText">تحديث الآن</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="news-grid" id="newsContainer">
+            <div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري تحميل الأخبار...</div>
+        </div>
+    </div>
+
+    <footer id="footerText">تطوير: مأمون السعودي © 2026</footer>
+
+    <script>
+        let currentLang = 'ar';
+        let currentTab = 'All';
+        let currentPage = 1;
+        const itemsPerPage = 20; // Show 20 tests per page
+        
+        // 200+ Laboratory Tests Database
+        const testsData = [
+            // HEMATOLOGY (25 tests)
+            { name: "CBC (Complete Blood Count)", cat: "Hematology", sample: "EDTA (Purple)", normal: "WBC: 4.5-11.0×10³/μL, RBC: 4.5-5.5×10⁶/μL, Hgb: 13.5-17.5 g/dL, Hct: 41-50%, Plt: 150-450×10³/μL", use: "General health screening, anemia, infection detection" },
+            { name: "Reticulocyte Count", cat: "Hematology", sample: "EDTA (Purple)", normal: "0.5-2.5% of RBCs, 20-115×10³/μL absolute", use: "Bone marrow function assessment, anemia classification" },
+            { name: "Peripheral Blood Smear", cat: "Hematology", sample: "EDTA (Purple)", normal: "Normal RBC morphology, WBC differential", use: "Blood cell morphology, malaria, leukemia diagnosis" },
+            { name: "ESR (Erythrocyte Sedimentation Rate)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Male: <15 mm/hr, Female: <20 mm/hr", use: "Non-specific inflammation marker, autoimmune disease monitoring" },
+            { name: "HbA1c (Glycated Hemoglobin)", cat: "Hematology", sample: "EDTA (Purple)", normal: "<5.7% Normal, 5.7-6.4% Prediabetes, ≥6.5% Diabetes", use: "3-month average glucose control, diabetes monitoring" },
+            { name: "Sickle Cell Screen", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative (no sickling)", use: "Sickle cell disease screening" },
+            { name: "Hemoglobin Electrophoresis", cat: "Hematology", sample: "EDTA (Purple)", normal: "HbA: 96-98%, HbA2: 2-3%, HbF: <1%", use: "Thalassemia, hemoglobinopathies diagnosis" },
+            { name: "G6PD (Glucose-6-Phosphate Dehydrogenase)", cat: "Hematology", sample: "EDTA (Purple)", normal: "6.5-15.5 U/g Hb", use: "G6PD deficiency, hemolytic anemia" },
+            { name: "Pyruvate Kinase", cat: "Hematology", sample: "EDTA (Purple)", normal: "2.0-5.5 U/g Hb", use: "Pyruvate kinase deficiency, hemolytic anemia" },
+            { name: "Osmotic Fragility Test", cat: "Hematology", sample: "EDTA (Purple)", normal: "0.45-0.50% NaCl (begin hemolysis)", use: "Hereditary spherocytosis" },
+            { name: "Coombs Test (Direct)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "Autoimmune hemolytic anemia" },
+            { name: "Coombs Test (Indirect)", cat: "Hematology", sample: "Serum (Yellow)", normal: "Negative", use: "Blood compatibility, antibody screening" },
+            { name: "Cold Agglutinins", cat: "Hematology", sample: "Serum (Yellow)", normal: "<1:64 titer", use: "Cold agglutinin disease, Mycoplasma infection" },
+            { name: "Haptoglobin", cat: "Hematology", sample: "Serum (Yellow)", normal: "30-200 mg/dL", use: "Hemolysis detection" },
+            { name: "Ferritin", cat: "Hematology", sample: "Serum (Yellow)", normal: "Male: 20-250, Female: 10-120 ng/mL", use: "Iron stores, anemia of chronic disease" },
+            { name: "Iron", cat: "Hematology", sample: "Serum (Yellow)", normal: "Male: 65-175, Female: 50-170 μg/dL", use: "Iron deficiency anemia, hemochromatosis" },
+            { name: "TIBC (Total Iron Binding Capacity)", cat: "Hematology", sample: "Serum (Yellow)", normal: "250-450 μg/dL", use: "Iron metabolism assessment" },
+            { name: "Transferrin", cat: "Hematology", sample: "Serum (Yellow)", normal: "200-360 mg/dL", use: "Iron transport, nutritional status" },
+            { name: "Transferrin Saturation", cat: "Hematology", sample: "Calculated", normal: "20-50%", use: "Hemochromatosis screening" },
+            { name: "Soluble Transferrin Receptor", cat: "Hematology", sample: "Serum (Yellow)", normal: "2.9-8.3 mg/L", use: "Iron deficiency, erythropoietic activity" },
+            { name: "Vitamin B12", cat: "Hematology", sample: "Serum (Yellow)", normal: "200-900 pg/mL", use: "Megaloblastic anemia, neuropathy" },
+            { name: "Folate (Serum)", cat: "Hematology", sample: "Serum (Yellow)", normal: ">3.0 ng/mL", use: "Megaloblastic anemia" },
+            { name: "RBC Folate", cat: "Hematology", sample: "EDTA (Purple)", normal: ">140 ng/mL", use: "Long-term folate status" },
+            { name: "Methylmalonic Acid", cat: "Hematology", sample: "Serum (Yellow)", normal: "<0.4 μmol/L", use: "B12 deficiency (early marker)" },
+            { name: "Homocysteine", cat: "Hematology", sample: "Plasma (EDTA)", normal: "4-15 μmol/L", use: "B12/folate deficiency, cardiovascular risk" },
+
+            // CHEMISTRY (45 tests)
+            { name: "Glucose (Fasting)", cat: "Chemistry", sample: "Serum (Grey/Yellow)", normal: "70-100 mg/dL", use: "Diabetes screening and monitoring" },
+            { name: "Glucose (Random)", cat: "Chemistry", sample: "Serum (Grey/Yellow)", normal: "<140 mg/dL", use: "Acute hyperglycemia detection" },
+            { name: "Glucose Tolerance Test (GTT)", cat: "Chemistry", sample: "Serum (Grey)", normal: "2-hr: <140 mg/dL", use: "Diabetes diagnosis, gestational diabetes" },
+            { name: "Creatinine", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: 0.7-1.3, Female: 0.6-1.1 mg/dL", use: "Kidney function assessment" },
+            { name: "BUN (Blood Urea Nitrogen)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "7-20 mg/dL", use: "Kidney function, hydration status" },
+            { name: "BUN/Creatinine Ratio", cat: "Chemistry", sample: "Calculated", normal: "10:1 to 20:1", use: "Prerenal vs intrinsic renal disease" },
+            { name: "eGFR (Estimated GFR)", cat: "Chemistry", sample: "Calculated", normal: ">90 mL/min/1.73m²", use: "Kidney filtration rate, CKD staging" },
+            { name: "Cystatin C", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0.6-1.2 mg/L", use: "Kidney function (less variable than creatinine)" },
+            { name: "Uric Acid", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: 3.5-7.2, Female: 2.6-6.0 mg/dL", use: "Gout, kidney stones, tumor lysis" },
+            { name: "Sodium", cat: "Chemistry", sample: "Serum (Yellow)", normal: "135-145 mEq/L", use: "Fluid balance, adrenal function" },
+            { name: "Potassium", cat: "Chemistry", sample: "Serum (Yellow)", normal: "3.5-5.0 mEq/L", use: "Cardiac function, kidney disease, acid-base" },
+            { name: "Chloride", cat: "Chemistry", sample: "Serum (Yellow)", normal: "98-106 mEq/L", use: "Acid-base balance, hydration" },
+            { name: "CO2 (Bicarbonate)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "23-29 mEq/L", use: "Acid-base disorders" },
+            { name: "Anion Gap", cat: "Chemistry", sample: "Calculated", normal: "8-16 mEq/L", use: "Metabolic acidosis, toxin ingestion" },
+            { name: "Calcium (Total)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "8.5-10.5 mg/dL", use: "Bone metabolism, parathyroid function" },
+            { name: "Calcium (Ionized)", cat: "Chemistry", sample: "Whole blood (Heparin)", normal: "4.5-5.3 mg/dL", use: "Active calcium (more accurate)" },
+            { name: "Phosphorus", cat: "Chemistry", sample: "Serum (Yellow)", normal: "2.5-4.5 mg/dL", use: "Bone health, kidney disease" },
+            { name: "Magnesium", cat: "Chemistry", sample: "Serum (Yellow)", normal: "1.7-2.2 mg/dL", use: "Cardiac arrhythmias, malnutrition" },
+            { name: "ALT (Alanine Aminotransferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: <41, Female: <33 U/L", use: "Hepatocellular damage" },
+            { name: "AST (Aspartate Aminotransferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<40 U/L", use: "Liver and cardiac muscle damage" },
+            { name: "ALP (Alkaline Phosphatase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "44-147 U/L", use: "Cholestasis, bone disorders" },
+            { name: "GGT (Gamma-Glutamyl Transferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: <55, Female: <38 U/L", use: "Biliary obstruction, alcohol abuse" },
+            { name: "LDH (Lactate Dehydrogenase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "140-280 U/L", use: "Tissue damage, hemolysis, tumors" },
+            { name: "Bilirubin (Total)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0.1-1.2 mg/dL", use: "Jaundice, hemolysis, liver disease" },
+            { name: "Bilirubin (Direct)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0-0.3 mg/dL", use: "Conjugated hyperbilirubinemia" },
+            { name: "Bilirubin (Indirect)", cat: "Chemistry", sample: "Calculated", normal: "0.1-0.9 mg/dL", use: "Unconjugated hyperbilirubinemia" },
+            { name: "Albumin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "3.5-5.0 g/dL", use: "Liver function, nutrition, nephrotic syndrome" },
+            { name: "Total Protein", cat: "Chemistry", sample: "Serum (Yellow)", normal: "6.0-8.3 g/dL", use: "Liver/kidney disease, multiple myeloma" },
+            { name: "Globulin", cat: "Chemistry", sample: "Calculated", normal: "2.3-3.5 g/dL", use: "Immune function, chronic inflammation" },
+            { name: "A/G Ratio", cat: "Chemistry", sample: "Calculated", normal: "1.0-2.2", use: "Liver disease, myeloma" },
+            { name: "Prealbumin (Transthyretin)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "15-35 mg/dL", use: "Nutritional status (short half-life)" },
+            { name: "Ammonia", cat: "Chemistry", sample: "EDTA (Ice)", normal: "15-45 μg/dL", use: "Hepatic encephalopathy, Reye syndrome" },
+            { name: "Lactate", cat: "Chemistry", sample: "Fluoride plasma (Grey)", normal: "0.5-2.2 mmol/L", use: "Sepsis, tissue hypoxia, shock" },
+            { name: "Pyruvate", cat: "Chemistry", sample: "Perchloric acid", normal: "0.08-0.16 mmol/L", use: "Mitochondrial disorders" },
+            { name: "Total Cholesterol", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<200 mg/dL (desirable)", use: "Cardiovascular risk assessment" },
+            { name: "HDL Cholesterol", cat: "Chemistry", sample: "Serum (Yellow)", normal: ">40 mg/dL (Male), >50 (Female)", use: "Cardioprotective cholesterol" },
+            { name: "LDL Cholesterol", cat: "Chemistry", sample: "Calculated/Direct", normal: "<100 mg/dL (optimal)", use: "Atherosclerotic risk" },
+            { name: "Triglycerides", cat: "Chemistry", sample: "Serum (Fasting)", normal: "<150 mg/dL", use: "Pancreatitis risk, metabolic syndrome" },
+            { name: "Non-HDL Cholesterol", cat: "Chemistry", sample: "Calculated", normal: "<130 mg/dL", use: "Comprehensive CV risk" },
+            { name: "Apolipoprotein A1", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: 90-150, Female: 100-170 mg/dL", use: "HDL metabolism" },
+            { name: "Apolipoprotein B", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: 60-120, Female: 60-110 mg/dL", use: "LDL metabolism, CV risk" },
+            { name: "Lp(a) (Lipoprotein a)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<30 mg/dL", use: "Inherited CV risk" },
+            { name: "Amylase", cat: "Chemistry", sample: "Serum (Yellow)", normal: "30-110 U/L", use: "Acute pancreatitis" },
+            { name: "Lipase", cat: "Chemistry", sample: "Serum (Yellow)", normal: "10-140 U/L", use: "Acute pancreatitis (more specific)" },
+            { name: "Cholinesterase", cat: "Chemistry", sample: "Serum (Yellow)", normal: "5300-10400 U/L", use: "Organophosphate poisoning, liver function" },
+
+            // CARDIAC MARKERS (10 tests)
+            { name: "Troponin I (cTnI)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<0.04 ng/mL", use: "Acute myocardial infarction (AMI)" },
+            { name: "Troponin T (cTnT)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<0.01 ng/mL", use: "AMI, high sensitivity for cardiac injury" },
+            { name: "CK-MB", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<25 U/L, <6% of total CK", use: "AMI (less specific than troponin)" },
+            { name: "Myoglobin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "Male: 25-72, Female: 25-58 ng/mL", use: "Early AMI marker, rhabdomyolysis" },
+            { name: "BNP (B-type Natriuretic Peptide)", cat: "Chemistry", sample: "EDTA (Purple)", normal: "<100 pg/mL", use: "Heart failure diagnosis and severity" },
+            { name: "NT-proBNP", cat: "Chemistry", sample: "EDTA (Purple)", normal: "<300 pg/mL (<75 yr), <450 (>75 yr)", use: "Heart failure (age-adjusted)" },
+            { name: "CRP (C-Reactive Protein)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<10 mg/L", use: "Inflammation, infection" },
+            { name: "hs-CRP (High Sensitivity)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<1.0 mg/L (Low risk)", use: "Cardiovascular risk prediction" },
+            { name: "Homocysteine", cat: "Chemistry", sample: "Plasma (EDTA)", normal: "4-15 μmol/L", use: "CV risk, B12/folate deficiency" },
+            { name: "Ischemia Modified Albumin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<85 U/mL", use: "Early myocardial ischemia" },
+
+            // HORMONES (40 tests)
+            { name: "TSH (Thyroid Stimulating Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.45-4.5 mIU/L (0.3-3.0 optimal)", use: "Primary thyroid function screening" },
+            { name: "Free T4", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.8-1.8 ng/dL", use: "Thyroid hormone status" },
+            { name: "Total T4", cat: "Hormones", sample: "Serum (Yellow)", normal: "5.0-12.0 μg/dL", use: "Thyroid function (protein bound)" },
+            { name: "Free T3", cat: "Hormones", sample: "Serum (Yellow)", normal: "2.3-4.2 pg/mL", use: "Hyperthyroidism diagnosis" },
+            { name: "Total T3", cat: "Hormones", sample: "Serum (Yellow)", normal: "80-200 ng/dL", use: "Thyroid hormone evaluation" },
+            { name: "Reverse T3", cat: "Hormones", sample: "Serum (Yellow)", normal: "10-24 ng/dL", use: "Euthyroid sick syndrome" },
+            { name: "Thyroglobulin", cat: "Hormones", sample: "Serum (Yellow)", normal: "3-40 ng/mL", use: "Thyroid cancer monitoring" },
+            { name: "Anti-TPO (Thyroid Peroxidase Ab)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<35 IU/mL", use: "Hashimoto's thyroiditis" },
+            { name: "Anti-Thyroglobulin Ab", cat: "Hormones", sample: "Serum (Yellow)", normal: "<40 IU/mL", use: "Autoimmune thyroid disease" },
+            { name: "TSH Receptor Antibodies (TRAb)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<1.0 IU/L", use: "Graves' disease diagnosis" },
+            { name: "TSH Stimulating Immunoglobulin", cat: "Hormones", sample: "Serum (Yellow)", normal: "<130%", use: "Graves' disease activity" },
+            { name: "Calcitonin", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: <8.4, Female: <5.0 pg/mL", use: "Medullary thyroid cancer" },
+            { name: "Parathyroid Hormone (PTH)", cat: "Hormones", sample: "EDTA (Purple)", normal: "10-65 pg/mL", use: "Calcium metabolism disorders" },
+            { name: "PTH-related Protein", cat: "Hormones", sample: "EDTA (Purple)", normal: "<2.0 pmol/L", use: "Malignancy-associated hypercalcemia" },
+            { name: "Cortisol (Morning)", cat: "Hormones", sample: "Serum (Yellow)", normal: "5-25 μg/dL (8 AM)", use: "Adrenal function, Cushing's disease" },
+            { name: "Cortisol (Evening)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<10 μg/dL (4 PM)", use: "Diurnal rhythm assessment" },
+            { name: "24-hr Urine Free Cortisol", cat: "Hormones", sample: "24h Urine", normal: "10-100 μg/24h", use: "Cushing's syndrome diagnosis" },
+            { name: "ACTH (Adrenocorticotropic Hormone)", cat: "Hormones", sample: "EDTA (Ice)", normal: "7-63 pg/mL", use: "Cushing's disease, Addison's disease" },
+            { name: "Aldosterone", cat: "Hormones", sample: "Serum (Upright)", normal: "Upright: 4-31, Supine: 2-9 ng/dL", use: "Hypertension, Conn's syndrome" },
+            { name: "Plasma Renin Activity", cat: "Hormones", sample: "EDTA (Ice)", normal: "0.65-5.0 ng/mL/hr", use: "Aldosterone/renin ratio" },
+            { name: "DHEA-S (Dehydroepiandrosterone Sulfate)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 280-640, Female: 65-380 μg/dL", use: "Adrenal androgen, PCOS" },
+            { name: "17-OH Progesterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "Adult: <200 ng/dL", use: "Congenital adrenal hyperplasia" },
+            { name: "Androstenedione", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 75-205, Female: 60-270 ng/dL", use: "PCOS, adrenal function" },
+            { name: "Testosterone (Total)", cat: "Hormones", sample: "Serum (Morning)", normal: "Male: 300-1000, Female: 15-70 ng/dL", use: "Hypogonadism, PCOS" },
+            { name: "Testosterone (Free)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 5-21, Female: 0.1-0.8 pg/mL", use: "Bioavailable testosterone" },
+            { name: "Bioavailable Testosterone", cat: "Hormones", sample: "Calculated", normal: "Male: 100-400, Female: 0.5-6 ng/dL", use: "Androgen status" },
+            { name: "SHBG (Sex Hormone Binding Globulin)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 10-57, Female: 18-114 nmol/L", use: "Testosterone binding capacity" },
+            { name: "Dihydrotestosterone (DHT)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 25-75, Female: 5-30 ng/dL", use: "Prostate health, hair loss" },
+            { name: "Estradiol (E2)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 10-40, Female (Follicular): 30-100 pg/mL", use: "Ovulation monitoring, menopause" },
+            { name: "Estrone (E1)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 10-60, Female: 20-100 pg/mL", use: "Menopause, estrogen metabolism" },
+            { name: "Estriol (E3) (Unconjugated)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<0.1 ng/mL (non-pregnant)", use: "Fetal well-being (pregnancy)" },
+            { name: "Progesterone", cat: "Hormones", sample: "Serum (Luteal)", normal: "Follicular: <1, Luteal: 5-20 ng/mL", use: "Ovulation confirmation, pregnancy" },
+            { name: "17-Hydroxypregnenolone", cat: "Hormones", sample: "Serum (Yellow)", normal: "<10 ng/dL", use: "CAH (3β-HSD deficiency)" },
+            { name: "Prolactin", cat: "Hormones", sample: "Serum (Fasting, AM)", normal: "Male: 2-18, Female: 2-29 ng/mL", use: "Galactorrhea, infertility, pituitary tumors" },
+            { name: "FSH (Follicle Stimulating Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 1.5-12.4, Female (Follicular): 3.5-12.5 mIU/mL", use: "Ovarian reserve, menopause, spermatogenesis" },
+            { name: "LH (Luteinizing Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 1.7-8.6, Female (Follicular): 2.4-12.6 mIU/mL", use: "Ovulation prediction, hypogonadism" },
+            { name: "hCG (Quantitative)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<5 mIU/mL (non-pregnant)", use: "Pregnancy confirmation, ectopic pregnancy" },
+            { name: "hCG (Beta subunit)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<5 mIU/mL", use: "Tumor marker, pregnancy monitoring" },
+            { name: "AMH (Anti-Müllerian Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 2-6, Female: 1-4 ng/mL", use: "Ovarian reserve assessment" },
+            { name: "Inhibin B", cat: "Hormones", sample: "Serum (Yellow)", normal: "Male: 100-300, Female: 10-80 pg/mL", use: "Sertoli cell function, menopause" },
+
+            // GROWTH HORMONE AXIS (5 tests)
+            { name: "GH (Growth Hormone)", cat: "Hormones", sample: "Serum (Fasting)", normal: "<5 ng/mL (basal)", use: "Growth disorders, acromegaly" },
+            { name: "IGF-1 (Insulin-like Growth Factor 1)", cat: "Hormones", sample: "Serum (Yellow)", normal: "115-307 ng/mL (adult)", use: "GH status, acromegaly screening" },
+            { name: "IGF-2", cat: "Hormones", sample: "Serum (Yellow)", normal: "400-600 ng/mL", use: "Growth regulation" },
+            { name: "IGFBP-3", cat: "Hormones", sample: "Serum (Yellow)", normal: "3.4-7.8 mg/L", use: "GH disorders, nutritional status" },
+            { name: "IGFBP-1", cat: "Hormones", sample: "Serum (Yellow)", normal: "10-50 ng/mL", use: "Insulin sensitivity" },
+
+            // GLUCOSE METABOLISM (5 tests)
+            { name: "Insulin (Fasting)", cat: "Hormones", sample: "Serum (Yellow)", normal: "2.6-24.9 μIU/mL", use: "Insulin resistance, diabetes type" },
+            { name: "C-Peptide", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.9-4.0 ng/mL", use: "Endogenous insulin production" },
+            { name: "Proinsulin", cat: "Hormones", sample: "Serum (Yellow)", normal: "<10 pmol/L", use: "Insulinoma, beta cell function" },
+            { name: "Glucagon", cat: "Hormones", sample: "EDTA (Ice)", normal: "50-100 pg/mL", use: "Hypoglycemia, glucagonoma" },
+            { name: "GAD-65 Antibodies", cat: "Hormones", sample: "Serum (Yellow)", normal: "<5.0 IU/mL", use: "Type 1 diabetes autoimmunity" },
+
+            // COAGULATION (30 tests)
+            { name: "PT (Prothrombin Time)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "11-13.5 sec, INR: 0.8-1.2", use: "Extrinsic pathway, warfarin monitoring" },
+            { name: "INR (International Normalized Ratio)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "0.8-1.2 (therapeutic: 2.0-3.0)", use: "Standardized warfarin monitoring" },
+            { name: "aPTT (Activated Partial Thromboplastin Time)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "25-35 sec", use: "Intrinsic pathway, heparin monitoring" },
+            { name: "TT (Thrombin Time)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "14-21 sec", use: "Fibrinogen disorders, heparin effect" },
+            { name: "Fibrinogen", cat: "Coagulation", sample: "Citrate (Blue)", normal: "200-400 mg/dL", use: "DIC, liver disease, bleeding risk" },
+            { name: "D-Dimer", cat: "Coagulation", sample: "Citrate (Blue)", normal: "<0.5 μg/mL FEU", use: "DVT/PE exclusion, DIC" },
+            { name: "FDP (Fibrin Degradation Products)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "<10 μg/mL", use: "Fibrinolysis marker" },
+            { name: "AT-III (Antithrombin III)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "80-120%", use: "Heparin resistance, thrombosis" },
+            { name: "Protein C", cat: "Coagulation", sample: "Citrate (Blue)", normal: "70-140%", use: "Thrombophilia screening" },
+            { name: "Protein S (Free)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "60-130%", use: "Thrombosis risk assessment" },
+            { name: "Protein S (Total)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "70-140%", use: "Protein S deficiency" },
+            { name: "Protein C Activity", cat: "Coagulation", sample: "Citrate (Blue)", normal: "70-140%", use: "Functional protein C status" },
+            { name: "Factor II (Prothrombin)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Factor deficiency, warfarin effect" },
+            { name: "Factor V", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Factor V deficiency (Parahemophilia)" },
+            { name: "Factor V Leiden", cat: "Coagulation", sample: "Citrate/DNA", normal: "Negative", use: "Activated protein C resistance" },
+            { name: "Factor VII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Factor VII deficiency" },
+            { name: "Factor VIII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia A monitoring" },
+            { name: "Factor IX", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia B (Christmas disease)" },
+            { name: "Factor X", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Stuart-Prower factor deficiency" },
+            { name: "Factor XI", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia C" },
+            { name: "Factor XII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hageman factor deficiency" },
+            { name: "Factor XIII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Fibrin stabilization, wound healing" },
+            { name: "Von Willebrand Factor (vWF)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Von Willebrand disease" },
+            { name: "vWF Activity (Ristocetin Cofactor)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "vWF functional activity" },
+            { name: "vWF Antigen", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "vWF quantity" },
+            { name: "Ristocetin-Induced Platelet Agglutination", cat: "Coagulation", sample: "Citrate (Blue)", normal: "Normal agglutination", use: "vWD subtyping" },
+            { name: "Platelet Function Analyzer (PFA-100)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "Closure time: 60-120 sec", use: "Platelet function screening" },
+            { name: "Platelet Aggregation", cat: "Coagulation", sample: "Citrate (Blue)", normal: "Variable by agonist", use: "Antiplatelet therapy monitoring" },
+            { name: "Bleeding Time (Ivy)", cat: "Coagulation", sample: "Skin puncture", normal: "2-9 minutes", use: "Platelet function, vWD" },
+            { name: "Reptilase Time", cat: "Coagulation", sample: "Citrate (Blue)", normal: "15-20 sec", use: "Distinguish heparin effect" },
+
+            // IMMUNOLOGY (35 tests)
+            { name: "ANA (Antinuclear Antibodies)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative (<1:40)", use: "Systemic autoimmune diseases" },
+            { name: "Anti-dsDNA", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative (<30 IU/mL)", use: "Systemic lupus erythematosus (SLE)" },
+            { name: "Anti-Smith (Sm)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "SLE (highly specific)" },
+            { name: "Anti-RNP (Ribonucleoprotein)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Mixed connective tissue disease" },
+            { name: "Anti-SSA/Ro", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Sjögren's syndrome, neonatal lupus" },
+            { name: "Anti-SSB/La", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Sjögren's syndrome" },
+            { name: "Anti-Scl-70", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Systemic sclerosis (diffuse)" },
+            { name: "Anti-Centromere", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "CREST syndrome" },
+            { name: "Anti-Jo-1", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Polymyositis/dermatomyositis" },
+            { name: "RF (Rheumatoid Factor)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<14 IU/mL", use: "Rheumatoid arthritis" },
+            { name: "Anti-CCP (Cyclic Citrullinated Peptide)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<20 U/mL", use: "Rheumatoid arthritis (early)" },
+            { name: "HIV-1/2 Antibody", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "HIV infection screening" },
+            { name: "HIV Ag/Ab Combo (4th Gen)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Early HIV detection (p24 antigen)" },
+            { name: "HIV RNA (Viral Load)", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable (<20 copies/mL)", use: "HIV monitoring, treatment efficacy" },
+            { name: "Hepatitis Bs Ag (HBsAg)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute/chronic Hepatitis B" },
+            { name: "Anti-HBs (Hepatitis B surface Ab)", cat: "Immunology", sample: "Serum (Yellow)", normal: ">10 mIU/mL (immune)", use: "Immunity status post-vaccination" },
+            { name: "Anti-HBc Total", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Past or present Hepatitis B" },
+            { name: "Anti-HBc IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute Hepatitis B" },
+            { name: "HBeAg (Hepatitis B e Antigen)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "High infectivity, viral replication" },
+            { name: "Anti-HBe", cat: "Immunology", sample: "Serum (Yellow)", normal: "Positive (in recovery)", use: "Seroconversion monitoring" },
+            { name: "HBV DNA (Viral Load)", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable", use: "Hepatitis B monitoring, treatment" },
+            { name: "Anti-HCV (Hepatitis C Antibody)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Hepatitis C screening" },
+            { name: "HCV RNA (PCR)", cat: "Immunology", sample: "EDTA (Purple)", normal: "Not detected", use: "Active HCV infection confirmation" },
+            { name: "HCV Genotype", cat: "Immunology", sample: "EDTA (Purple)", normal: "Type 1-6", use: "Treatment selection" },
+            { name: "IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "700-1600 mg/dL", use: "Immune status, immunodeficiency" },
+            { name: "IgA", cat: "Immunology", sample: "Serum (Yellow)", normal: "70-400 mg/dL", use: "Mucosal immunity, celiac disease" },
+            { name: "IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "40-230 mg/dL", use: "Acute immune response" },
+            { name: "IgE (Total)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<100 IU/mL", use: "Allergies, atopic diseases" },
+            { name: "IgE (Specific)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Class 0-6", use: "Specific allergen identification" },
+            { name: "Complement C3", cat: "Immunology", sample: "Serum (Yellow)", normal: "90-180 mg/dL", use: "Immune complex diseases, SLE" },
+            { name: "Complement C4", cat: "Immunology", sample: "Serum (Yellow)", normal: "10-40 mg/dL", use: "Hereditary angioedema, SLE" },
+            { name: "CH50 (Total Complement)", cat: "Immunology", sample: "Serum (Yellow)", normal: "30-75 U/mL", use: "Classical pathway activity" },
+            { name: "ASO (Anti-Streptolysin O)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<200 Todd units", use: "Streptococcal infection, rheumatic fever" },
+            { name: "Anti-DNase B", cat: "Immunology", sample: "Serum (Yellow)", normal: "<120 U/mL", use: "Streptococcal infection confirmation" },
+            { name: "Monospot (Heterophile Antibodies)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Infectious mononucleosis (EBV)" },
+
+            // MICROBIOLOGY (25 tests)
+            { name: "Blood Culture (Aerobic)", cat: "Microbiology", sample: "Blood culture bottle", normal: "No growth", use: "Bacteremia, sepsis diagnosis" },
+            { name: "Blood Culture (Anaerobic)", cat: "Microbiology", sample: "Blood culture bottle", normal: "No growth", use: "Anaerobic bacteremia" },
+            { name: "Urine Culture", cat: "Microbiology", sample: "Clean catch urine", normal: "<10³ CFU/mL", use: "UTI diagnosis" },
+            { name: "Urine Analysis (Dipstick)", cat: "Microbiology", sample: "Random urine", normal: "Negative for LE, Nitrite, Blood", use: "UTI screening" },
+            { name: "Urine Microscopy", cat: "Microbiology", sample: "Fresh urine", normal: "<5 WBC/HPF, <5 RBC/HPF", use: "UTI, kidney disease" },
+            { name: "Stool Culture", cat: "Microbiology", sample: "Stool (Cary-Blair)", normal: "No pathogens", use: "Bacterial gastroenteritis" },
+            { name: "Stool Ova and Parasites", cat: "Microbiology", sample: "Fresh stool", normal: "None detected", use: "Parasitic infections" },
+            { name: "Stool Antigen (H. pylori)", cat: "Microbiology", sample: "Fresh stool", normal: "Negative", use: "H. pylori infection" },
+            { name: "C. difficile Toxin A/B", cat: "Microbiology", sample: "Liquid stool", normal: "Negative", use: "C. difficile colitis" },
+            { name: "Stool Rotavirus Antigen", cat: "Microbiology", sample: "Fresh stool", normal: "Negative", use: "Viral gastroenteritis" },
+            { name: "Stool Adenovirus", cat: "Microbiology", sample: "Fresh stool", normal: "Negative", use: "Viral gastroenteritis" },
+            { name: "Stool Calprotectin", cat: "Microbiology", sample: "Fresh stool", normal: "<50 μg/g", use: "IBD vs IBS differentiation" },
+            { name: "Stool Lactoferrin", cat: "Microbiology", sample: "Fresh stool", normal: "Negative", use: "Intestinal inflammation" },
+            { name: "Sputum Culture", cat: "Microbiology", sample: "Deep cough sputum", normal: "Normal flora", use: "Pneumonia, bronchitis" },
+            { name: "Sputum AFB Smear", cat: "Microbiology", sample: "Early morning sputum", normal: "Negative", use: "Tuberculosis screening" },
+            { name: "TB Culture (Mycobacterial)", cat: "Microbiology", sample: "Sputum/CSF/tissue", normal: "No growth", use: "Tuberculosis diagnosis" },
+            { name: "TB PCR (GeneXpert MTB/RIF)", cat: "Microbiology", sample: "Sputum", normal: "MTB not detected", use: "Rapid TB detection, rifampin resistance" },
+            { name: "Throat Culture", cat: "Microbiology", sample: "Throat swab", normal: "No Group A Strep", use: "Streptococcal pharyngitis" },
+            { name: "Rapid Strep Test", cat: "Microbiology", sample: "Throat swab", normal: "Negative", use: "Quick strep screening" },
+            { name: "Wound Culture", cat: "Microbiology", sample: "Swab or tissue", normal: "No significant growth", use: "Wound infection" },
+            { name: "CSF Culture", cat: "Microbiology", sample: "CSF (sterile tube)", normal: "No growth", use: "Meningitis, encephalitis" },
+            { name: "CSF Analysis (Cell Count)", cat: "Microbiology", sample: "CSF", normal: "WBC: 0-5, RBC: 0, Glucose: 40-70", use: "Meningitis type differentiation" },
+            { name: "Fungal Culture", cat: "Microbiology", sample: "Skin/nail/hair", normal: "No growth", use: "Dermatophyte infection" },
+            { name: "KOH Preparation", cat: "Microbiology", sample: "Skin scrapings", normal: "No hyphae", use: "Rapid fungal detection" },
+            { name: "India Ink Prep (Cryptococcus)", cat: "Microbiology", sample: "CSF", normal: "Negative", use: "Cryptococcal meningitis" },
+
+            // TUMOR MARKERS (20 tests)
+            { name: "AFP (Alpha-Fetoprotein)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<10 ng/mL", use: "Hepatocellular carcinoma, germ cell tumors" },
+            { name: "CEA (Carcinoembryonic Antigen)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<3.0 ng/mL (non-smoker)", use: "Colorectal cancer monitoring" },
+            { name: "CA 125", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<35 U/mL", use: "Ovarian cancer, endometriosis" },
+            { name: "CA 19-9", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<37 U/mL", use: "Pancreatic cancer, cholangiocarcinoma" },
+            { name: "CA 15-3", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<30 U/mL", use: "Breast cancer monitoring" },
+            { name: "CA 27-29", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<38 U/mL", use: "Breast cancer (alternative)" },
+            { name: "CA 72-4", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<6.9 U/mL", use: "Gastric cancer" },
+            { name: "CA 242", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<20 U/mL", use: "Pancreatic/colorectal cancer" },
+            { name: "PSA (Total)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<4.0 ng/mL", use: "Prostate cancer screening" },
+            { name: "PSA (Free)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: ">25% of total", use: "Prostate cancer differentiation" },
+            { name: "PSA Density", cat: "TumorMarkers", sample: "Calculated", normal: "<0.15 ng/mL/g", use: "BPH vs cancer differentiation" },
+            { name: "PSA Velocity", cat: "TumorMarkers", sample: "Calculated", normal: "<0.75 ng/mL/year", use: "Cancer progression rate" },
+            { name: "Beta-hCG (Quantitative)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<5 mIU/mL (male/non-pregnant)", use: "Choriocarcinoma, germ cell tumors" },
+            { name: "LDH (Isoenzymes)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "LDH1<LDH2", use: "Germ cell tumors, lymphoma" },
+            { name: "NSE (Neuron-Specific Enolase)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<12.5 ng/mL", use: "Small cell lung cancer, neuroblastoma" },
+            { name: "Chromogranin A", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<93 ng/mL", use: "Neuroendocrine tumors" },
+            { name: "Synaptophysin (IHC)", cat: "TumorMarkers", sample: "Tissue", normal: "Negative/Positive", use: "Neuroendocrine differentiation" },
+            { name: "Thyroglobulin", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "3-40 ng/mL", use: "Thyroid cancer monitoring" },
+            { name: "Calcitonin", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Male: <8.4, Female: <5.0 pg/mL", use: "Medullary thyroid cancer" },
+            { name: "PAP (Prostatic Acid Phosphatase)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<3.0 ng/mL", use: "Prostate cancer (metastatic)" },
+
+            // GENETIC/MOLECULAR (15 tests)
+            { name: "BRCA1/BRCA2 Mutation", cat: "Genetic", sample: "EDTA (DNA)", normal: "No mutation", use: "Hereditary breast/ovarian cancer risk" },
+            { name: "Factor V Leiden (Mutation)", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal genotype", use: "Thrombophilia" },
+            { name: "Prothrombin G20210A", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal genotype", use: "Thrombophilia" },
+            { name: "MTHFR C677T Mutation", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal genotype", use: "Hyperhomocysteinemia risk" },
+            { name: "HLA-B27", cat: "Genetic", sample: "EDTA (DNA)", normal: "Negative", use: "Ankylosing spondylitis" },
+            { name: "HLA-B*5701", cat: "Genetic", sample: "EDTA (DNA)", normal: "Negative", use: "Abacavir hypersensitivity" },
+            { name: "CYP2C19 Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Extensive metabolizer", use: "Clopidogrel metabolism" },
+            { name: "CYP2D6 Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Extensive metabolizer", use: "Drug metabolism (codeine, tamoxifen)" },
+            { name: "CYP3A4/5 Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal function", use: "Statin, immunosuppressant metabolism" },
+            { name: "VKORC1 Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal sensitivity", use: "Warfarin dosing" },
+            { name: "TPMT Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal activity", use: "Thiopurine dosing (azathioprine)" },
+            { name: "DPYD Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "Normal activity", use: "5-FU toxicity prediction" },
+            { name: "UGT1A1 Genotype", cat: "Genetic", sample: "EDTA (DNA)", normal: "*1/*1 (normal)", use: "Irinotecan toxicity (Gilbert syndrome)" },
+            { name: "CFTR Mutation Panel", cat: "Genetic", sample: "EDTA (DNA)", normal: "No mutations", use: "Cystic fibrosis screening" },
+            { name: "SMN1 Gene Deletion", cat: "Genetic", sample: "EDTA (DNA)", normal: "2 copies", use: "Spinal muscular atrophy" },
+
+            // TOXICOLOGY/THERAPEUTIC DRUG MONITORING (45 tests)
+            { name: "Acetaminophen (Paracetamol)", cat: "Toxicology", sample: "Serum (Grey)", normal: "10-30 μg/mL", use: "Overdose monitoring (toxic >150)" },
+            { name: "Salicylate (Aspirin)", cat: "Toxicology", sample: "Serum (Grey)", normal: "<30 mg/dL", use: "Overdose, therapeutic monitoring" },
+            { name: "Ethanol", cat: "Toxicology", sample: "Serum (Grey)", normal: "0 mg/dL (Legal <80 mg/dL)", use: "Intoxication, legal testing" },
+            { name: "Methanol", cat: "Toxicology", sample: "Serum (Grey)", normal: "Undetectable", use: "Toxic alcohol poisoning" },
+            { name: "Ethylene Glycol", cat: "Toxicology", sample: "Serum (Grey)", normal: "Undetectable", use: "Antifreeze poisoning" },
+            { name: "Isopropanol", cat: "Toxicology", sample: "Serum (Grey)", normal: "Undetectable", use: "Rubbing alcohol poisoning" },
+            { name: "Carbamazepine", cat: "Toxicology", sample: "Serum (Yellow)", normal: "4-12 μg/mL", use: "Epilepsy treatment" },
+            { name: "Phenytoin", cat: "Toxicology", sample: "Serum (Yellow)", normal: "10-20 μg/mL", use: "Seizure control" },
+            { name: "Valproic Acid", cat: "Toxicology", sample: "Serum (Yellow)", normal: "50-100 μg/mL", use: "Epilepsy, bipolar disorder" },
+            { name: "Phenobarbital", cat: "Toxicology", sample: "Serum (Yellow)", normal: "15-40 μg/mL", use: "Seizure control" },
+            { name: "Lamotrigine", cat: "Toxicology", sample: "Serum (Yellow)", normal: "2.5-15 μg/mL", use: "Epilepsy, bipolar disorder" },
+            { name: "Levetiracetam", cat: "Toxicology", sample: "Serum (Yellow)", normal: "12-46 μg/mL", use: "Epilepsy treatment" },
+            { name: "Lithium", cat: "Toxicology", sample: "Serum (Yellow)", normal: "0.6-1.2 mEq/L (12h post-dose)", use: "Bipolar disorder" },
+            { name: "Digoxin", cat: "Toxicology", sample: "Serum (Yellow)", normal: "0.5-2.0 ng/mL (>6h post-dose)", use: "Heart failure, arrhythmias" },
+            { name: "Vancomycin (Trough)", cat: "Toxicology", sample: "Serum (Yellow)", normal: "10-20 μg/mL", use: "MRSA infection (nephrotoxicity prevention)" },
+            { name: "Gentamicin (Peak/Trough)", cat: "Toxicology", sample: "Serum (Yellow)", normal: "Peak: 5-10, Trough: <2 μg/mL", use: "Gram-negative infection (nephrotoxicity)" },
+            { name: "Tobramycin", cat: "Toxicology", sample: "Serum (Yellow)", normal: "Peak: 5-10, Trough: <2 μg/mL", use: "Aminoglycoside monitoring" },
+            { name: "Amikacin", cat: "Toxicology", sample: "Serum (Yellow)", normal: "Peak: 20-30, Trough: <10 μg/mL", use: "Resistant gram-negative infection" },
+            { name: "Cyclosporine", cat: "Toxicology", sample: "EDTA (Purple)", normal: "100-400 ng/mL (whole blood)", use: "Transplant immunosuppression" },
+            { name: "Tacrolimus (FK506)", cat: "Toxicology", sample: "EDTA (Purple)", normal: "5-20 ng/mL (whole blood)", use: "Organ transplant monitoring" },
+            { name: "Sirolimus (Rapamycin)", cat: "Toxicology", sample: "EDTA (Purple)", normal: "4-12 ng/mL", use: "Immunosuppressive therapy" },
+            { name: "Everolimus", cat: "Toxicology", sample: "EDTA (Purple)", normal: "3-8 ng/mL", use: "Transplant, cancer therapy" },
+            { name: "Mycophenolate (MPA)", cat: "Toxicology", sample: "Serum (Yellow)", normal: "1.0-3.5 μg/mL", use: "Transplant rejection prevention" },
+            { name: "Theophylline", cat: "Toxicology", sample: "Serum (Yellow)", normal: "10-20 μg/mL", use: "Asthma, COPD" },
+            { name: "Caffeine", cat: "Toxicology", sample: "Serum (Yellow)", normal: "1-10 μg/mL", use: "Neonatal apnea, toxicity" },
+            { name: "Tricyclic Antidepressants", cat: "Toxicology", sample: "Serum (Grey)", normal: "50-300 ng/mL", use: "Depression treatment, overdose" },
+            { name: "Benzodiazepines", cat: "Toxicology", sample: "Urine/Serum", normal: "Negative/Therapeutic", use: "Sedation, overdose screening" },
+            { name: "Barbiturates", cat: "Toxicology", sample: "Urine/Serum", normal: "Negative", use: "Sedation, overdose" },
+            { name: "Opiates", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Pain management, abuse screening" },
+            { name: "Cocaine Metabolites", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Drug abuse screening" },
+            { name: "Amphetamines", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "ADHD medication, abuse" },
+            { name: "Cannabinoids (THC)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Marijuana use detection" },
+            { name: "PCP (Phencyclidine)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Hallucinogen screening" },
+            { name: "Methadone", cat: "Toxicology", sample: "Urine/Serum", normal: "Negative/Therapeutic", use: "Opioid maintenance therapy" },
+            { name: "Buprenorphine", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Opioid addiction treatment" },
+            { name: "Oxycodone", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Prescription opioid monitoring" },
+            { name: "Fentanyl", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Synthetic opioid detection" },
+            { name: "Lead (Blood)", cat: "Toxicology", sample: "EDTA (Royal Blue)", normal: "<5 μg/dL", use: "Lead poisoning screening" },
+            { name: "Mercury (Blood)", cat: "Toxicology", sample: "EDTA (Royal Blue)", normal: "<10 μg/L", use: "Mercury toxicity" },
+            { name: "Arsenic (24h Urine)", cat: "Toxicology", sample: "24h Urine", normal: "<50 μg/24h", use: "Arsenic poisoning" },
+            { name: "Cadmium", cat: "Toxicology", sample: "EDTA (Royal Blue)", normal: "<5 μg/L", use: "Cadmium toxicity" },
+            { name: "Chromium", cat: "Toxicology", sample: "Serum (Royal Blue)", normal: "<1 μg/L", use: "Chromium exposure" },
+            { name: "Selenium", cat: "Toxicology", sample: "Serum (Royal Blue)", normal: "70-150 μg/L", use: "Selenium status, toxicity" },
+            { name: "Zinc", cat: "Toxicology", sample: "Serum (Royal Blue)", normal: "70-120 μg/dL", use: "Zinc deficiency, toxicity" },
+            { name: "Copper", cat: "Toxicology", sample: "Serum (Royal Blue)", normal: "70-140 μg/dL", use: "Wilson disease, deficiency" },
+            { name: "Ceruloplasmin", cat: "Toxicology", sample: "Serum (Yellow)", normal: "20-40 mg/dL", use: "Wilson disease, copper status" }
+        ];
+
+        const content = {
+            ar: {
+                langBtn: "English", headerTitle: "بوابة علوم المختبرات الطبية", headerSub: "بإشراف الأخصائي مأمون السعودي",
+                aboutTitle: "عن الكاتب", aboutDesc: "أنا مأمون السعودي، أخصائي مختبرات طبية أسعى لتقديم محتوى علمي رصين يجمع بين أحدث ما توصل إليه الطب العالمي وخبراتنا المحلية.",
+                tgText: "قناة التلغرام", waText: "واتساب",
+                dailyTitle: "مقال اليوم", artTitle: "مستقبل التشخيص الجزيئي", artText: "يشهد عالم المختبرات ثورة مع الذكاء الاصطناعي...",
+                signatureText: "بقلم: مأمون السعودي", encyTitle: "موسوعة الفحوصات (200+ Test)",
+                thName: "Test Name", thSample: "Sample Type", thNormal: "Reference Range", thUse: "Clinical Use",
+                newsSectionTitle: "آخر المستجدات العالمية", footerText: "تطوير: مأمون السعودي © 2026",
+                searchPh: "ابحث عن فحص...", updateBtnText: "تحديث الآن", lastUpdateText: "آخر تحديث: ",
+                loadingText: "جاري تحميل الأخبار...", noNewsText: "لا توجد أخبار متاحة حالياً",
+                errorText: "تعذر تحميل الأخبار. سيتم عرض أخبار محلية."
+            },
+            en: {
+                langBtn: "العربية", headerTitle: "Medical Lab Sciences Portal", headerSub: "Supervised by Specialist Ma'moun Al-Saudi",
+                aboutTitle: "About the Author", aboutDesc: "I am Ma'moun Al-Saudi, a medical laboratory specialist dedicated to providing rigorous scientific content combining global medical advances with local expertise.",
+                tgText: "Telegram", waText: "WhatsApp",
+                dailyTitle: "Daily Article", artTitle: "Future of Molecular Diagnostics", artText: "The laboratory world is witnessing a revolution with artificial intelligence...",
+                signatureText: "By: Ma'moun Al-Saudi", encyTitle: "Lab Tests Encyclopedia (200+ Tests)",
+                thName: "Test Name", thSample: "Sample Type", thNormal: "Reference Range", thUse: "Clinical Use",
+                newsSectionTitle: "Latest Global Updates", footerText: "Developed by: Ma'moun Al-Saudi © 2026",
+                searchPh: "Search for a test...", updateBtnText: "Update Now", lastUpdateText: "Last update: ",
+                loadingText: "Loading news...", noNewsText: "No news available currently",
+                errorText: "Failed to load news. Showing local news instead."
+            }
+        };
+
+        // News System Configuration
+        const NEWS_CONFIG = {
+            API_KEY: 'D3cd119609465ffd24672fc85c139947',
+            UPDATE_INTERVAL: 24 * 60 * 60 * 1000,
+            STORAGE_KEY: 'labPortalNews',
+            LAST_UPDATE_KEY: 'labPortalLastUpdate'
+        };
+
+        function shouldUpdateNews() {
+            const lastUpdate = localStorage.getItem(NEWS_CONFIG.LAST_UPDATE_KEY);
+            if (!lastUpdate) return true;
+            const timeDiff = Date.now() - parseInt(lastUpdate);
+            return timeDiff >= NEWS_CONFIG.UPDATE_INTERVAL;
         }
-    }
 
-    function displayNews(articles) {
-        const container = document.getElementById('newsContainer');
-        document.getElementById('loader').style.display = 'none';
-        articles.forEach(article => {
-            container.innerHTML += `
-                <div class="card">
-                    <img src="${article.image || 'https://via.placeholder.com/400x200?text=Lab+News'}" alt="News">
+        function saveNews(newsData) {
+            localStorage.setItem(NEWS_CONFIG.STORAGE_KEY, JSON.stringify(newsData));
+            localStorage.setItem(NEWS_CONFIG.LAST_UPDATE_KEY, Date.now().toString());
+            updateLastUpdateTime();
+        }
+
+        function getSavedNews() {
+            const saved = localStorage.getItem(NEWS_CONFIG.STORAGE_KEY);
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        function updateLastUpdateTime() {
+            const lastUpdate = localStorage.getItem(NEWS_CONFIG.LAST_UPDATE_KEY);
+            const c = content[currentLang];
+            const element = document.getElementById('lastUpdate');
+            if (lastUpdate) {
+                const date = new Date(parseInt(lastUpdate));
+                const timeString = date.toLocaleTimeString(currentLang === 'ar' ? 'ar-EG' : 'en-US', { hour: '2-digit', minute: '2-digit' });
+                const dateString = date.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US');
+                element.innerText = `${c.lastUpdateText} ${dateString} ${timeString}`;
+            } else {
+                element.innerText = c.lastUpdateText + '--';
+            }
+        }
+
+        async function fetchNews(force = false) {
+            const container = document.getElementById('newsContainer');
+            const c = content[currentLang];
+            
+            if (!force && !shouldUpdateNews()) {
+                const savedNews = getSavedNews();
+                if (savedNews && savedNews.length > 0) {
+                    displayNews(savedNews);
+                    updateLastUpdateTime();
+                    return;
+                }
+            }
+            
+            container.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br>${c.loadingText}</div>`;
+            
+            const queries = ['medical laboratory technology', 'clinical diagnostics breakthrough', 'pathology laboratory innovation', 'lab medicine research'];
+            
+            try {
+                const randomQuery = queries[Math.floor(Math.random() * queries.length)];
+                const lang = currentLang === 'ar' ? 'ar' : 'en';
+                const URL = `https://gnews.io/api/v4/search?q=${encodeURIComponent(randomQuery)}&lang=${lang}&max=6&apikey=${NEWS_CONFIG.API_KEY}`;
+                
+                const res = await fetch(URL);
+                const data = await res.json();
+                
+                if (data.articles && data.articles.length > 0) {
+                    const processedNews = data.articles.map(article => ({
+                        title: article.title,
+                        description: article.description,
+                        url: article.url,
+                        image: article.image || getDefaultImage(),
+                        source: article.source?.name || 'Medical News',
+                        publishedAt: article.publishedAt,
+                        fetchedAt: Date.now()
+                    }));
+                    
+                    saveNews(processedNews);
+                    displayNews(processedNews);
+                } else {
+                    throw new Error('No articles found');
+                }
+            } catch (error) {
+                const fallbackNews = generateFallbackNews();
+                saveNews(fallbackNews);
+                displayNews(fallbackNews, true);
+            }
+        }
+
+        function generateFallbackNews() {
+            const isAr = currentLang === 'ar';
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            
+            const newsPool = [
+                { title: isAr ? "تقنية جديدة للكشف المبكر عن السرطان بالذكاء الاصطناعي" : "AI Early Cancer Detection Technology", desc: isAr ? "خوارزمية جديدة تكشف السرطان بدقة 95% من تحليل دم بسيط" : "New algorithm detects cancer with 95% accuracy from simple blood test", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=400&h=200&fit=crop" },
+                { title: isAr ? "اختبار منزلي سريع لكورونا يعطي نتائج في 15 دقيقة" : "15-Minute Home COVID-19 Test", desc: isAr ? "اختبار جديد يعتمد على الكشف عن المستضدات بدقة عالية" : "New antigen detection test with high accuracy", image: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=400&h=200&fit=crop" },
+                { title: isAr ? "اكتشاف مؤشرات حيوية جديدة لأمراض القلب" : "New Heart Disease Biomarkers Discovered", desc: isAr ? "بروتينات في الدم تتنبأ بأمراض القلب قبل سنوات" : "Blood proteins predict heart disease years in advance", image: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400&h=200&fit=crop" },
+                { title: isAr ? "رقاقة مختبرية متكاملة لتحليل الدم في المنزل" : "Lab-on-Chip for Home Blood Testing", desc: isAr ? "جهاز بحجم بطاقة ائتمان يجري 50 فحصاً دموياً" : "Credit-card sized device performs 50+ blood tests", image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=200&fit=crop" },
+                { title: isAr ? "تحسن في دقة اختبارات الحمض النووي" : "Improved Genetic Testing Accuracy", desc: isAr ? "تقنية تسلسل الجيل التالي تقلل النتائج غير المؤكدة 40%" : "Next-gen sequencing reduces uncertain results by 40%", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=400&h=200&fit=crop" },
+                { title: isAr ? "مضادات حيوية جديدة ضد البكتيريا المقاومة" : "New Antibiotics for Resistant Bacteria", desc: isAr ? "فئة جديدة فعالة ضد البكتيريا متعددة المقاومة" : "New class effective against multidrug-resistant bacteria", image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=200&fit=crop" }
+            ];
+            
+            const rotatedNews = [];
+            for (let i = 0; i < 6; i++) {
+                const index = (dayOfYear + i) % newsPool.length;
+                rotatedNews.push({
+                    ...newsPool[index],
+                    source: isAr ? "أخبار المختبرات" : "Lab News Daily",
+                    publishedAt: new Date(Date.now() - (i * 86400000)).toISOString(),
+                    fetchedAt: Date.now(),
+                    url: "#"
+                });
+            }
+            return rotatedNews;
+        }
+
+        function getDefaultImage() {
+            const images = [
+                "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=400&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=400&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&h=200&fit=crop"
+            ];
+            return images[Math.floor(Math.random() * images.length)];
+        }
+
+        function displayNews(news, isFallback = false) {
+            const container = document.getElementById('newsContainer');
+            const c = content[currentLang];
+            
+            if (!news || news.length === 0) {
+                container.innerHTML = `<div class="no-news">${c.noNewsText}</div>`;
+                return;
+            }
+            
+            container.innerHTML = news.map((item, index) => `
+                <div class="card" style="animation: fadeIn 0.5s ease ${index * 0.1}s both;">
+                    <img src="${item.image}" alt="News" onerror="this.src='${getDefaultImage()}'">
                     <div class="card-body">
-                        <div class="card-title">${article.title}</div>
-                        <p style="font-size:0.85rem; color:#636e72; margin-bottom:15px;">${article.description}</p>
-                        <a href="${article.url}" target="_blank" class="btn-read">اقرأ المزيد</a>
+                        <span class="card-source">${item.source}</span>
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-date"><i class="far fa-clock"></i> ${new Date(item.publishedAt).toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US')}</div>
+                        <p style="margin: 10px 0; color: #636e72; font-size: 0.9rem; line-height: 1.5;">${item.description ? item.description.substring(0, 120) + '...' : ''}</p>
+                        ${item.url !== '#' ? 
+                            `<a href="${item.url}" target="_blank" class="btn-read">${currentLang === 'ar' ? 'قراءة المزيد' : 'Read More'}</a>` :
+                            `<span class="btn-read" style="background: #95a5a6; cursor: default;">${currentLang === 'ar' ? 'خبر يومي' : 'Daily News'}</span>`
+                        }
                     </div>
-                </div>`;
-        });
-    }
-    window.onload = fetchNews;
-</script>
+                </div>
+            `).join('');
+            
+            if (isFallback) {
+                container.insertAdjacentHTML('afterbegin', 
+                    `<div class="error-msg" style="margin-bottom: 20px; grid-column: 1/-1;"><i class="fas fa-info-circle"></i> ${c.errorText}</div>`
+                );
+            }
+        }
 
+        function forceUpdateNews() {
+            const btn = document.getElementById('updateBtn');
+            const originalText = btn.innerHTML;
+            btn.classList.add('spinning');
+            btn.disabled = true;
+            
+            fetchNews(true).then(() => {
+                setTimeout(() => {
+                    btn.classList.remove('spinning');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }, 1000);
+            });
+        }
+
+        // Update category counts
+        function updateCategoryCounts() {
+            const categories = ['All', 'Hematology', 'Chemistry', 'Hormones', 'Coagulation', 'Immunology', 'Microbiology', 'Genetic', 'TumorMarkers', 'Toxicology'];
+            
+            categories.forEach(cat => {
+                const count = cat === 'All' ? testsData.length : testsData.filter(t => t.cat === cat).length;
+                const countElement = document.getElementById(`count-${cat}`);
+                if (countElement) {
+                    countElement.innerText = count;
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('mainHtml').lang = currentLang;
+            
+            const c = content[currentLang];
+            Object.keys(c).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.innerText = c[key];
+            });
+            
+            document.getElementById('labSearch').placeholder = c.searchPh;
+            updateDate();
+            renderTable();
+            updateLastUpdateTime();
+            const savedNews = getSavedNews();
+            if (savedNews) displayNews(savedNews);
+            else fetchNews();
+        }
+
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('todayDate').innerText = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US', options);
+        }
+
+        function getFilteredData() {
+            const searchTerm = document.getElementById('labSearch').value.toLowerCase();
+            let filtered = testsData;
+            
+            if (currentTab !== 'All') {
+                filtered = filtered.filter(t => t.cat === currentTab);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(t => 
+                    t.name.toLowerCase().includes(searchTerm) || 
+                    t.use.toLowerCase().includes(searchTerm) ||
+                    t.sample.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            return filtered;
+        }
+
+        function renderTable() {
+            const filteredData = getFilteredData();
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageData = filteredData.slice(start, end);
+            
+            const body = document.getElementById('labTableBody');
+            
+            if (pageData.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #636e72;">${currentLang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</td></tr>`;
+            } else {
+                body.innerHTML = pageData.map(t => `
+                    <tr>
+                        <td>
+                            <span class="category-badge badge-${t.cat.toLowerCase()}">${t.cat}</span><br>
+                            <b>${t.name}</b>
+                        </td>
+                        <td>${t.sample}</td>
+                        <td>${t.normal}</td>
+                        <td>${t.use}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            updatePagination(filteredData.length);
+        }
+
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pageInfo = document.getElementById('pageInfo');
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+            
+            pageInfo.innerText = currentLang === 'ar' ? 
+                `صفحة ${currentPage} من ${totalPages} (${totalItems} فحص)` : 
+                `Page ${currentPage} of ${totalPages} (${totalItems} tests)`;
+            
+            btnPrev.disabled = currentPage === 1;
+            btnNext.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        function changePage(direction) {
+            const filteredData = getFilteredData();
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            }
+            
+            renderTable();
+            document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterTab(cat) {
+            currentTab = cat;
+            currentPage = 1;
+            
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            renderTable();
+        }
+
+        function searchLab() {
+            currentPage = 1;
+            renderTable();
+        }
+
+        // Initialize
+        window.onload = () => {
+            updateDate();
+            updateCategoryCounts();
+            renderTable();
+            updateLastUpdateTime();
+            
+            if (shouldUpdateNews()) fetchNews();
+            else {
+                const savedNews = getSavedNews();
+                if (savedNews) displayNews(savedNews);
+                else fetchNews();
+            }
+            
+            // Setup midnight auto-update
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            const msUntilMidnight = tomorrow - now;
+            
+            setTimeout(() => {
+                fetchNews(true);
+                setInterval(() => fetchNews(true), 24 * 60 * 60 * 1000);
+            }, msUntilMidnight);
+        };
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </body>
 </html>
-
