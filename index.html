@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة علوم المختبرات الطبية | أ. مأمون السعودي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #0056b3; --secondary: #17a2b8; --accent: #ffc107; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; }
+        .hero-bg { background: linear-gradient(135deg, #004085 0%, #007bff 100%); color: white; padding: 60px 0; border-bottom: 5px solid var(--accent); }
+        .nav-tabs .nav-link { font-weight: bold; color: #495057; border-radius: 20px 20px 0 0; margin: 0 5px; }
+        .nav-tabs .nav-link.active { background-color: var(--primary) !important; color: white !important; }
+        .search-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: -30px; }
+        .test-card { transition: 0.3s; border: 1px solid #eee; }
+        .test-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .badge-sample { background-color: #e9ecef; color: #495057; font-size: 0.85rem; }
+        .telegram-section { background: #0088cc; color: white; padding: 15px; border-radius: 10px; display: inline-block; text-decoration: none; transition: 0.3s; }
+        .telegram-section:hover { background: #006699; color: white; transform: scale(1.05); }
+        .safety-box { border-right: 5px solid #dc3545; background: #fff5f5; padding: 15px; margin-bottom: 10px; }
+        .safety-box.warning { border-right-color: #ffc107; background: #fffbeb; }
+        .safety-box.success { border-right-color: #28a745; background: #f0fff4; }
+        .safety-box.info { border-right-color: #17a2b8; background: #e6fffa; }
+        .safety-box.dark { border-right-color: #6c757d; background: #f8f9fa; }
+        .footer { background: #212529; color: white; padding: 40px 0; margin-top: 50px; }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 1000; }
+        #testTableBody tr td { vertical-align: middle; }
+        .stats-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .reporting-box { background: #6f42c1; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .reporting-step { background: rgba(255,255,255,0.1); padding: 10px; margin: 5px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <header class="hero-bg text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">بوابة علوم المختبرات الطبية</h1>
+            <p class="lead">الدليل الشامل للفحوصات المخبرية ومعايير السلامة العالمية</p>
+            <div class="mt-4">
+                <a href="https://t.me/alshamelmls" target="_blank" class="telegram-section">
+                    <i class="fab fa-telegram-plane"></i> انضم لقناة التلغرام: alshamelmls
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <ul class="nav nav-tabs justify-content-center border-0" id="mainTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="directory-tab" data-bs-toggle="tab" data-bs-target="#directory" type="button">🔍 دليل الفحوصات</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="safety-tab" data-bs-toggle="tab" data-bs-target="#safety" type="button">🛡️ السلامة المهنية</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="news-tab" data-bs-toggle="tab" data-bs-target="#news" type="button">📰 أخبار LabMedica</button>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-4" id="mainTabsContent">
+            
+            <div class="tab-pane fade show active" id="directory">
+                <div class="search-container mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="ابحث باسم الفحص أو التخصص (مثلاً: Glucose أو Hematology)...">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="categoryFilter" class="form-select form-select-lg">
+                                <option value="All">كل الأقسام</option>
+                                <option value="Hematology">Hematology</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Hormones">Hormones</option>
+                                <option value="Coagulation">Coagulation</option>
+                                <option value="Immunology">Immunology</option>
+                                <option value="Microbiology">Microbiology</option>
+                                <option value="TumorMarkers">Tumor Markers</option>
+                                <option value="Genetic">Genetic</option>
+                                <option value="Toxicology">Toxicology</option>
+                                <option value="BloodBank">Blood Bank</option>
+                                <option value="Urinalysis">Urinalysis</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive bg-white p-3 rounded shadow-sm">
+                    <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>اسم الفحص</th>
+                                <th>التخصص</th>
+                                <th>العينة المطلوب</th>
+                                <th>القيم الطبيعية</th>
+                                <th>الاستخدامات (Indications)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="safety">
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="card p-4 shadow-sm border-0">
+                            <h3 class="text-danger mb-4"><i class="fas fa-biohazard"></i> بروتوكول السلامة العامة - إعداد أ. مأمون السعودي</h3>
+                            
+                            <div class="safety-box">
+                                <h5><i class="fas fa-shield-alt"></i> 1. معدات الحماية الشخصية (PPE)</h5>
+                                <p>يجب ارتداء المعطف المختبري (Lab Coat) مغلق الأزرار، القفازات ذات الاستخدام الواحد، والكمامة الواقية عند التعامل مع العينات المعدية. نظارات الوقاية إلزامية عند العمل مع المواد الكيميائية.</p>
+                            </div>
+                            
+                            <div class="safety-box warning">
+                                <h5><i class="fas fa-syringe"></i> 2. التعامل مع الأدوات الحادة</h5>
+                                <p>يمنع منعاً باتاً إعادة تغطية الإبر (Recapping). يجب التخلص منها فوراً في الحاويات الصلبة (Sharp Containers). في حال وخز إبرة ملوثة: غسل الجرح بالماء والصابون فوراً، الإبلاغ فوراً، ومتابعة البروتوكولات الطبية.</p>
+                            </div>
+                            
+                            <div class="safety-box success">
+                                <h5><i class="fas fa-pump-soap"></i> 3. النظافة والتعقيم</h5>
+                                <p>يتم تعقيم أسطح العمل بمحلول الصوديوم هيبوكلوريت (10%) قبل وبعد العمل اليومي. غسل اليدين واجب عند خلع القفازات. استخدام معقم اليدين الكحولي (70%) بشكل دوري.</p>
+                            </div>
+                            
+                            <div class="safety-box info">
+                                <h5><i class="fas fa-fire-extinguisher"></i> 4. السلامة الكيميائية</h5>
+                                <p>تخزين الأحماض والقواعد بشكل منفصل. استخدام خزانة الأبخرة (Fume Hood) عند التعامل مع المواد المتطايرة. معرفة مواقع محطات غسل العيون ودش الطوارئ.</p>
+                            </div>
+                            
+                            <div class="safety-box">
+                                <h5><i class="fas fa-bacterium"></i> 5. التعامل مع العينات المعدية</h5>
+                                <p>جميع عينات الدم تعتبر معدية حتى يثبت العكس (Universal Precautions). التعامل مع العينات في خزانة الأمان البيولوجي (BSC - Biological Safety Cabinet) للعينات عالية الخطورة. تعقيم النفايات قبل التخلص منها.</p>
+                            </div>
+                            
+                            <div class="safety-box dark">
+                                <h5><i class="fas fa-ambulance"></i> 6. إجراءات الطوارئ والإبلاغ</h5>
+                                <p>اتباع بروتوكول الإبلاغ الداخلي للمؤسسة فوراً عند أي حادث. التواصل مع الإدارة المباشرة وقسم الصحة المهنية. توثيق الحادث في سجل الحوادث. عدم التأخر في طلب المساعدة الطبية عند الضرورة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card text-center mb-4">
+                            <h4><i class="fas fa-clipboard-check"></i></h4>
+                            <h5>معايير السلامة</h5>
+                            <p class="mb-0">CLSI GP17-A2<br>OSHA Standards<br>ISO 15189</p>
+                        </div>
+                        
+                        <div class="reporting-box text-center">
+                            <h5><i class="fas fa-file-medical-alt"></i> بروتوكول الإبلاغ عن الحوادث</h5>
+                            <div class="reporting-step">
+                                <i class="fas fa-1"></i> إبلاغ المشرف المباشر فوراً
+                            </div>
+                            <div class="reporting-step">
+                                <i class="fas fa-2"></i> تعبئة نموذج تقرير الحادث
+                            </div>
+                            <div class="reporting-step">
+                                <i class="fas fa-3"></i> متابعة الإجراءات الطبية إن لزم
+                            </div>
+                            <div class="reporting-step">
+                                <i class="fas fa-4"></i> مراجعة قسم الصحة المهنية
+                            </div>
+                            <small class="d-block mt-2">* حسب سياسة المؤسسة الداخلية</small>
+                        </div>
+                        
+                        <div class="card p-4 shadow-sm border-0 bg-light">
+                            <h4 class="mb-3 text-success">♻️ نظام فصل النفايات</h4>
+                            <ul class="list-group list-group-flush bg-transparent">
+                                <li class="list-group-item bg-transparent text-danger"><b>🔴 الكيس الأحمر:</b> للنفايات البيولوجية الملوثة (قطن، شاش، أنابيب دم).</li>
+                                <li class="list-group-item bg-transparent text-dark"><b>⚫ الكيس الأسود:</b> للنفايات الورقية والمكتبية غير الملوثة.</li>
+                                <li class="list-group-item bg-transparent text-warning"><b>🟡 الحاوية الصفراء:</b> حصرياً للإبر، المشارط، والزجاج المكسور.</li>
+                                <li class="list-group-item bg-transparent text-primary"><b>🔵 البراميل الزرقاء:</b> للمواد الكيميائية السائلة.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card mt-3 p-3 bg-warning bg-opacity-10 border-warning">
+                            <h6 class="text-warning"><i class="fas fa-exclamation-triangle"></i> تنبيه هام</h6>
+                            <p class="small mb-0">لا تأكل أو تشرب داخل المختبر. لا تستخدم مستحضرات التجميل. لا تلمس الوجه أو العينين أثناء العمل.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="news">
+                <div class="row mt-3">
+                    
+
+                        
+                            <div class="col-md-6 mb-3">
+                            <div class="card h-100 text-center p-3 shadow-sm">
+                            <i class="fas fa-dna fa-3x text-info mb-3"></i>
+                            <h5>التشخيص الجزيئي والوراثي</h5>
+                            <a href="https://www.labmedica.com/molecular-diagnostics/" target="_blank" class="btn btn-outline-info mt-auto">زيارة القسم</a>
+                            </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                            <div class="card h-100 text-center p-3 shadow-sm">
+                            <i class="fas fa-vial fa-3x text-success mb-3"></i>
+                            <h5>علم الأحياء الدقيقة</h5>
+                            <a href="https://www.labmedica.com/microbiology/" target="_blank" class="btn btn-outline-success mt-auto">زيارة القسم</a>
+                            </div>
+                            </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 text-center p-3 shadow-sm">
+                            <i class="fas fa-vial fa-3x text-success mb-3"></i>
+                            <h5>علم الأحياء الدقيقة</h5>
+                            <a href="https://www.labmedica.com/microbiology/" target="_blank" class="btn btn-outline-success mt-auto">زيارة القسم</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <a href="https://wa.me/962799146795" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <h4>إعداد: أخصائي المختبرات الطبية مأمون السعودي</h4>
+            <p><i class="fas fa-phone"></i> +962799146795</p>
+            <div class="social-links mb-3">
+                <a href="https://t.me/alshamelmls" class="text-white mx-3"><i class="fab fa-telegram fa-2x"></i></a>
+                <a href="https://wa.me/962799146795" class="text-white mx-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+            </div>
+            <p class="small text-muted text-uppercase">Medical Laboratory Science Portal &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 350+ Tests Data Array
+        const testsData = [
+            // Hematology (40 tests)
+            { name: "CBC (Complete Blood Count)", cat: "Hematology", sample: "EDTA (Purple)", normal: "WBC: 4.5-11.0, RBC: 4.5-5.5, Hgb: 13.5-17.5", use: "General screening, anemia, infection" },
+            { name: "Reticulocyte Count", cat: "Hematology", sample: "EDTA (Purple)", normal: "0.5-2.5%", use: "Bone marrow function assessment" },
+            { name: "ESR (Erythrocyte Sedimentation Rate)", cat: "Hematology", sample: "EDTA (Purple)", normal: "M: <15, F: <20 mm/hr", use: "Non-specific inflammation marker" },
+            { name: "HbA1c (Glycated Hemoglobin)", cat: "Hematology", sample: "EDTA (Purple)", normal: "<5.7% Normal", use: "3-month glucose control" },
+            { name: "Ferritin", cat: "Hematology", sample: "Serum (Yellow)", normal: "20-250 ng/mL", use: "Iron stores assessment" },
+            { name: "Vitamin B12", cat: "Hematology", sample: "Serum (Yellow)", normal: "200-900 pg/mL", use: "Megaloblastic anemia" },
+            { name: "Folic Acid", cat: "Hematology", sample: "Serum (Yellow)", normal: ">3.0 ng/mL", use: "Megaloblastic anemia" },
+            { name: "Iron (Fe)", cat: "Hematology", sample: "Serum (Yellow)", normal: "60-170 mcg/dL", use: "Iron deficiency anemia" },
+            { name: "TIBC (Total Iron Binding Capacity)", cat: "Hematology", sample: "Serum (Yellow)", normal: "250-400 mcg/dL", use: "Iron metabolism disorders" },
+            { name: "Transferrin", cat: "Hematology", sample: "Serum (Yellow)", normal: "200-360 mg/dL", use: "Iron transport protein" },
+            { name: "Transferrin Saturation", cat: "Hematology", sample: "Serum (Yellow)", normal: "20-50%", use: "Hemochromatosis screening" },
+            { name: "Peripheral Blood Smear", cat: "Hematology", sample: "EDTA (Purple)", normal: "Normal morphology", use: "Blood cell morphology" },
+            { name: "Sickle Cell Test", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "Sickle cell disease screening" },
+            { name: "Hemoglobin Electrophoresis", cat: "Hematology", sample: "EDTA (Purple)", normal: "HbA: 96-98%", use: "Thalassemia, hemoglobinopathies" },
+            { name: "G6PD (Glucose-6-Phosphate Dehydrogenase)", cat: "Hematology", sample: "EDTA (Purple)", normal: "4.6-13.5 U/g Hb", use: "Hemolytic anemia" },
+            { name: "Pyruvate Kinase", cat: "Hematology", sample: "EDTA (Purple)", normal: "Varies by lab", use: "Hereditary hemolytic anemia" },
+            { name: "Osmotic Fragility Test", cat: "Hematology", sample: "EDTA (Purple)", normal: "0.45-0.55% NaCl", use: "Hereditary spherocytosis" },
+            { name: "Coombs Test (Direct)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "Autoimmune hemolytic anemia" },
+            { name: "Coombs Test (Indirect)", cat: "Hematology", sample: "Serum (Yellow)", normal: "Negative", use: "Blood compatibility, antibody screen" },
+            { name: "Cold Agglutinins", cat: "Hematology", sample: "Serum (Yellow)", normal: "<1:64 titer", use: "Cold agglutinin disease" },
+            { name: "Haptoglobin", cat: "Hematology", sample: "Serum (Yellow)", normal: "30-200 mg/dL", use: "Hemolysis marker" },
+            { name: "Heinz Body Preparation", cat: "Hematology", sample: "EDTA (Purple)", normal: "None seen", use: "G6PD deficiency, unstable Hb" },
+            { name: "Methemoglobin", cat: "Hematology", sample: "EDTA (Purple)", normal: "<1% of total Hb", use: "Methemoglobinemia" },
+            { name: "Carboxyhemoglobin", cat: "Hematology", sample: "EDTA (Purple)", normal: "<3% non-smokers", use: "Carbon monoxide poisoning" },
+            { name: "Sulfhemoglobin", cat: "Hematology", sample: "EDTA (Purple)", normal: "Undetectable", use: "Drug-induced hemolysis" },
+            { name: "Erythropoietin (EPO)", cat: "Hematology", sample: "Serum (Yellow)", normal: "2.6-18.5 mIU/mL", use: "Polycythemia, anemia of CKD" },
+            { name: "Blood Parasites (Malaria)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "Malaria diagnosis" },
+            { name: "Microfilaria", cat: "Hematology", sample: "EDTA (Purple) - Night sample", normal: "Negative", use: "Filariasis diagnosis" },
+            { name: "Bone Marrow Aspiration", cat: "Hematology", sample: "Bone marrow", normal: "Cellularity 30-70%", use: "Leukemia, aplastic anemia" },
+            { name: "Flow Cytometry (CD markers)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Normal distribution", use: "Leukemia immunophenotyping" },
+            { name: "JAK2 Mutation", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "Myeloproliferative neoplasms" },
+            { name: "BCR-ABL (Philadelphia Chromosome)", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "CML diagnosis" },
+            { name: "PML-RARA", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "APL (M3) diagnosis" },
+            { name: "FLT3 Mutation", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis" },
+            { name: "NPM1 Mutation", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis" },
+            { name: "CEBPA Mutation", cat: "Hematology", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis" },
+            { name: "LDH (Lactate Dehydrogenase)", cat: "Hematology", sample: "Serum (Yellow)", normal: "140-280 U/L", use: "Hemolysis, tumor marker" },
+            { name: "Schilling Test", cat: "Hematology", sample: "Urine 24h", normal: ">10% excretion", use: "B12 malabsorption" },
+            { name: "Intrinsic Factor Antibody", cat: "Hematology", sample: "Serum (Yellow)", normal: "Negative", use: "Pernicious anemia" },
+            { name: "Parietal Cell Antibody", cat: "Hematology", sample: "Serum (Yellow)", normal: "Negative", use: "Autoimmune gastritis" },
+            
+            // Chemistry (50 tests)
+            { name: "Glucose (Fasting)", cat: "Chemistry", sample: "Serum (Grey)", normal: "70-100 mg/dL", use: "Diabetes screening" },
+            { name: "Glucose (Random)", cat: "Chemistry", sample: "Serum (Grey)", normal: "<140 mg/dL", use: "Acute hyperglycemia" },
+            { name: "Glucose Tolerance Test (GTT)", cat: "Chemistry", sample: "Serum (Grey) - 5 samples", normal: "2hr <140 mg/dL", use: "Gestational diabetes" },
+            { name: "Creatinine", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0.7-1.3 mg/dL", use: "Kidney function" },
+            { name: "BUN (Blood Urea Nitrogen)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "7-20 mg/dL", use: "Kidney function, dehydration" },
+            { name: "eGFR (Estimated GFR)", cat: "Chemistry", sample: "Calculated", normal: ">90 mL/min", use: "CKD staging" },
+            { name: "Cystatin C", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0.6-1.2 mg/L", use: "Early kidney dysfunction" },
+            { name: "Uric Acid", cat: "Chemistry", sample: "Serum (Yellow)", normal: "M: 3.5-7.2, F: 2.6-6.0 mg/dL", use: "Gout, tumor lysis" },
+            { name: "ALT (Alanine Aminotransferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<41 U/L", use: "Liver damage" },
+            { name: "AST (Aspartate Aminotransferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<40 U/L", use: "Liver/heart/muscle damage" },
+            { name: "ALP (Alkaline Phosphatase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "44-147 U/L", use: "Biliary obstruction, bone disease" },
+            { name: "GGT (Gamma-Glutamyl Transferase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "M: 10-71, F: 6-42 U/L", use: "Alcohol abuse, cholestasis" },
+            { name: "Bilirubin (Total)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0.1-1.2 mg/dL", use: "Jaundice, hemolysis" },
+            { name: "Bilirubin (Direct)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "0-0.3 mg/dL", use: "Hepatocellular vs obstructive" },
+            { name: "Bilirubin (Indirect)", cat: "Chemistry", sample: "Calculated", normal: "0.1-0.9 mg/dL", use: "Hemolysis, Gilbert syndrome" },
+            { name: "Total Protein", cat: "Chemistry", sample: "Serum (Yellow)", normal: "6.0-8.3 g/dL", use: "Nutritional status, liver/kidney" },
+            { name: "Albumin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "3.5-5.0 g/dL", use: "Liver function, nutrition" },
+            { name: "Globulin", cat: "Chemistry", sample: "Calculated", normal: "2.3-3.5 g/dL", use: "Immune status, multiple myeloma" },
+            { name: "A/G Ratio", cat: "Chemistry", sample: "Calculated", normal: "1.0-2.2", use: "Liver disease, myeloma" },
+            { name: "Prealbumin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "15-35 mg/dL", use: "Acute nutritional status" },
+            { name: "Ammonia", cat: "Chemistry", sample: "EDTA (Purple) - Ice", normal: "15-45 mcg/dL", use: "Hepatic encephalopathy" },
+            { name: "Lactate", cat: "Chemistry", sample: "EDTA (Purple) - Ice", normal: "0.5-2.2 mmol/L", use: "Sepsis, hypoxia, shock" },
+            { name: "Pyruvate", cat: "Chemistry", sample: "Perchlorate tube", normal: "0.08-0.16 mmol/L", use: "Mitochondrial disorders" },
+            { name: "Troponin I (cTnI)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<0.04 ng/mL", use: "Myocardial infarction (AMI)" },
+            { name: "Troponin T (cTnT)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<0.01 ng/mL", use: "Myocardial infarction" },
+            { name: "CK-MB (Creatine Kinase-MB)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<25 U/L", use: "Myocardial injury" },
+            { name: "CK Total (Creatine Kinase)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "M: 39-308, F: 26-192 U/L", use: "Muscle damage, MI" },
+            { name: "Myoglobin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<70 ng/mL", use: "Early MI, rhabdomyolysis" },
+            { name: "BNP (B-Type Natriuretic Peptide)", cat: "Chemistry", sample: "EDTA (Purple)", normal: "<100 pg/mL", use: "Heart failure" },
+            { name: "NT-proBNP", cat: "Chemistry", sample: "EDTA (Purple)", normal: "<300 pg/mL", use: "Heart failure severity" },
+            { name: "Homocysteine", cat: "Chemistry", sample: "Serum (Yellow)", normal: "5-15 mcmol/L", use: "Cardiovascular risk, B12/folate" },
+            { name: "CRP (C-Reactive Protein)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<10 mg/L", use: "Inflammation, infection" },
+            { name: "hs-CRP (High Sensitivity)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<1.0 mg/L (low risk)", use: "Cardiovascular risk" },
+            { name: "Procalcitonin", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<0.05 ng/mL", use: "Bacterial sepsis" },
+            { name: "Cholesterol (Total)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<200 mg/dL", use: "Cardiovascular risk" },
+            { name: "Triglycerides", cat: "Chemistry", sample: "Serum (Yellow) - Fasting", normal: "<150 mg/dL", use: "Pancreatitis risk, CVD" },
+            { name: "HDL Cholesterol", cat: "Chemistry", sample: "Serum (Yellow)", normal: ">40 mg/dL (M), >50 (F)", use: "Cardioprotective" },
+            { name: "LDL Cholesterol", cat: "Chemistry", sample: "Calculated", normal: "<100 mg/dL", use: "Atherosclerosis risk" },
+            { name: "VLDL Cholesterol", cat: "Chemistry", sample: "Calculated", normal: "5-40 mg/dL", use: "Triglyceride metabolism" },
+            { name: "Non-HDL Cholesterol", cat: "Chemistry", sample: "Calculated", normal: "<130 mg/dL", use: "CVD risk assessment" },
+            { name: "Apolipoprotein A1", cat: "Chemistry", sample: "Serum (Yellow)", normal: "M: 90-152, F: 94-176 mg/dL", use: "HDL function" },
+            { name: "Apolipoprotein B", cat: "Chemistry", sample: "Serum (Yellow)", normal: "M: 63-133, F: 59-117 mg/dL", use: "LDL particles, CVD risk" },
+            { name: "Lp(a) (Lipoprotein a)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "<30 mg/dL", use: "Inherited CVD risk" },
+            { name: "Sodium (Na)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "136-145 mEq/L", use: "Fluid balance, hyponatremia" },
+            { name: "Potassium (K)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "3.5-5.0 mEq/L", use: "Arrhythmias, renal function" },
+            { name: "Chloride (Cl)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "98-106 mEq/L", use: "Acid-base disorders" },
+            { name: "CO2 (Bicarbonate)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "23-29 mEq/L", use: "Acid-base status" },
+            { name: "Anion Gap", cat: "Chemistry", sample: "Calculated", normal: "8-16 mEq/L", use: "Metabolic acidosis" },
+            { name: "Calcium (Total)", cat: "Chemistry", sample: "Serum (Yellow)", normal: "8.5-10.5 mg/dL", use: "Bone disease, parathyroid" },
+            { name: "Calcium (Ionized)", cat: "Chemistry", sample: "Serum (Yellow) - Ice", normal: "4.65-5.28 mg/dL", use: "Critical care, true calcium" },
+            { name: "Phosphorus", cat: "Chemistry", sample: "Serum (Yellow)", normal: "2.5-4.5 mg/dL", use: "Bone disease, renal failure" },
+            { name: "Magnesium", cat: "Chemistry", sample: "Serum (Yellow)", normal: "1.7-2.2 mg/dL", use: "Arrhythmias, hypomagnesemia" },
+            
+            // Hormones (40 tests)
+            { name: "TSH (Thyroid Stimulating Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.45-4.5 mIU/L", use: "Thyroid screening" },
+            { name: "T4 (Total Thyroxine)", cat: "Hormones", sample: "Serum (Yellow)", normal: "4.5-12.0 mcg/dL", use: "Thyroid function" },
+            { name: "T4 Free (Free Thyroxine)", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.8-1.8 ng/dL", use: "Thyroid function (better)" },
+            { name: "T3 (Total Triiodothyronine)", cat: "Hormones", sample: "Serum (Yellow)", normal: "80-200 ng/dL", use: "Hyperthyroidism" },
+            { name: "T3 Free (Free Triiodothyronine)", cat: "Hormones", sample: "Serum (Yellow)", normal: "2.3-4.2 pg/mL", use: "Thyroid function" },
+            { name: "T3 Reverse", cat: "Hormones", sample: "Serum (Yellow)", normal: "10-24 ng/dL", use: "Euthyroid sick syndrome" },
+            { name: "Thyroglobulin", cat: "Hormones", sample: "Serum (Yellow)", normal: "3-42 ng/mL", use: "Thyroid cancer follow-up" },
+            { name: "Anti-TPO (Thyroid Peroxidase Ab)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<35 IU/mL", use: "Hashimoto's thyroiditis" },
+            { name: "Anti-Tg (Thyroglobulin Ab)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<40 IU/mL", use: "Autoimmune thyroid disease" },
+            { name: "TRAb (TSH Receptor Ab)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<1.0 IU/L", use: "Graves' disease" },
+            { name: "Prolactin", cat: "Hormones", sample: "Serum (Yellow)", normal: "2-18 ng/mL", use: "Pituitary tumors, infertility" },
+            { name: "Total Testosterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "300-1000 ng/dL", use: "Hypogonadism" },
+            { name: "Free Testosterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "5-21 ng/dL", use: "Bioavailable testosterone" },
+            { name: "Bioavailable Testosterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "Varies", use: "Androgen status" },
+            { name: "DHEA-S (Dehydroepiandrosterone Sulfate)", cat: "Hormones", sample: "Serum (Yellow)", normal: "M: 280-640, F: 65-380 mcg/dL", use: "Adrenal function, PCOS" },
+            { name: "Androstenedione", cat: "Hormones", sample: "Serum (Yellow)", normal: "M: 75-205, F: 85-275 ng/dL", use: "PCOS, adrenal tumors" },
+            { name: "DHT (Dihydrotestosterone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "30-85 ng/dL", use: "Androgenetic alopecia, PCOS" },
+            { name: "SHBG (Sex Hormone Binding Globulin)", cat: "Hormones", sample: "Serum (Yellow)", normal: "10-57 nmol/L", use: "Testosterone binding status" },
+            { name: "Estradiol (E2)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Varies by phase", use: "Ovulation, fertility" },
+            { name: "Estriol (E3)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Varies by trimester", use: "Fetal well-being" },
+            { name: "Estrone (E1)", cat: "Hormones", sample: "Serum (Yellow)", normal: "20-80 pg/mL", use: "Menopause, obesity" },
+            { name: "Progesterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "Follicular: <1, Luteal: 5-20 ng/mL", use: "Ovulation, pregnancy" },
+            { name: "17-OH Progesterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "<200 ng/dL", use: "CAH (Congenital Adrenal Hyperplasia)" },
+            { name: "Cortisol (AM)", cat: "Hormones", sample: "Serum (Yellow) - 8AM", normal: "6-23 mcg/dL", use: "Adrenal function, Cushing's" },
+            { name: "Cortisol (PM)", cat: "Hormones", sample: "Serum (Yellow) - 4PM", normal: "3-13 mcg/dL", use: "Diurnal variation" },
+            { name: "24h Urine Free Cortisol", cat: "Hormones", sample: "Urine 24h", normal: "10-100 mcg/24h", use: "Cushing's syndrome" },
+            { name: "Midnight Salivary Cortisol", cat: "Hormones", sample: "Saliva", normal: "<0.13 mcg/dL", use: "Cushing's screening" },
+            { name: "ACTH (Adrenocorticotropic Hormone)", cat: "Hormones", sample: "EDTA (Purple) - Ice", normal: "7.2-63.3 pg/mL", use: "Cushing's, Addison's" },
+            { name: "Aldosterone", cat: "Hormones", sample: "Serum (Yellow)", normal: "<28 ng/dL (upright)", use: "Primary hyperaldosteronism" },
+            { name: "Plasma Renin Activity", cat: "Hormones", sample: "EDTA (Purple) - Ice", normal: "0.65-5.0 ng/mL/hr", use: "Hypertension workup" },
+            { name: "Aldosterone/Renin Ratio", cat: "Hormones", sample: "Calculated", normal: "<20", use: "Conn's syndrome screening" },
+            { name: "Metanephrines (Plasma)", cat: "Hormones", sample: "EDTA (Purple) - Ice", normal: "<0.5 nmol/L", use: "Pheochromocytoma" },
+            { name: "Metanephrines (Urine)", cat: "Hormones", sample: "Urine 24h", normal: "<1.3 mg/24h", use: "Pheochromocytoma" },
+            { name: "VMA (Vanillylmandelic Acid)", cat: "Hormones", sample: "Urine 24h", normal: "<8 mg/24h", use: "Neuroblastoma, pheochromocytoma" },
+            { name: "HVA (Homovanillic Acid)", cat: "Hormones", sample: "Urine 24h", normal: "<15 mg/24h", use: "Neuroblastoma" },
+            { name: "Insulin (Fasting)", cat: "Hormones", sample: "Serum (Yellow)", normal: "2.6-24.9 mIU/L", use: "Insulin resistance, tumor" },
+            { name: "C-Peptide", cat: "Hormones", sample: "Serum (Yellow)", normal: "0.8-4.0 ng/mL", use: "Endogenous insulin production" },
+            { name: "Proinsulin", cat: "Hormones", sample: "Serum (Yellow)", normal: "<18.8 pmol/L", use: "Insulinoma, T2DM" },
+            { name: "Glucagon", cat: "Hormones", sample: "EDTA (Purple) - Ice", normal: "50-100 pg/mL", use: "Glucagonoma, hypoglycemia" },
+            { name: "GH (Growth Hormone)", cat: "Hormones", sample: "Serum (Yellow)", normal: "<10 ng/mL", use: "Acromegaly, deficiency" },
+            { name: "IGF-1 (Insulin-like Growth Factor 1)", cat: "Hormones", sample: "Serum (Yellow)", normal: "Varies by age", use: "GH status, acromegaly" },
+            { name: "IGFBP-3", cat: "Hormones", sample: "Serum (Yellow)", normal: "Varies by age", use: "GH deficiency in children" },
+            
+            // Coagulation (30 tests)
+            { name: "PT (Prothrombin Time)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "11-13.5 sec", use: "Warfarin monitoring" },
+            { name: "INR (International Normalized Ratio)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "0.9-1.1", use: "Warfarin therapeutic range" },
+            { name: "aPTT (Activated Partial Thromboplastin Time)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "25-35 sec", use: "Heparin monitoring" },
+            { name: "D-Dimer", cat: "Coagulation", sample: "Citrate (Blue)", normal: "<0.5 μg/mL", use: "DVT/PE exclusion" },
+            { name: "Fibrinogen", cat: "Coagulation", sample: "Citrate (Blue)", normal: "200-400 mg/dL", use: "DIC, bleeding disorders" },
+            { name: "Thrombin Time", cat: "Coagulation", sample: "Citrate (Blue)", normal: "14-21 sec", use: "Fibrinogen disorders" },
+            { name: "Bleeding Time", cat: "Coagulation", sample: "Skin puncture", normal: "2-9 min", use: "Platelet function" },
+            { name: "Platelet Function Test", cat: "Coagulation", sample: "Citrate (Blue)", normal: "Varies by method", use: "Aspirin/clopidogrel effect" },
+            { name: "Factor II (Prothrombin)", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Deficiency, warfarin effect" },
+            { name: "Factor V", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Factor V Leiden" },
+            { name: "Factor VII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Deficiency" },
+            { name: "Factor VIII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia A" },
+            { name: "Factor IX", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia B" },
+            { name: "Factor X", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Deficiency" },
+            { name: "Factor XI", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Hemophilia C" },
+            { name: "Factor XII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Deficiency (no bleeding)" },
+            { name: "Factor XIII", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "Wound healing defects" },
+            { name: "von Willebrand Factor", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "von Willebrand disease" },
+            { name: "Ristocetin Cofactor", cat: "Coagulation", sample: "Citrate (Blue)", normal: "50-150%", use: "vWF activity" },
+            { name: "Protein C", cat: "Coagulation", sample: "Citrate (Blue)", normal: "65-135%", use: "Thrombophilia" },
+            { name: "Protein S", cat: "Coagulation", sample: "Citrate (Blue)", normal: "65-140%", use: "Thrombophilia" },
+            { name: "Antithrombin III", cat: "Coagulation", sample: "Citrate (Blue)", normal: "80-120%", use: "Thrombophilia, heparin resistance" },
+            { name: "Lupus Anticoagulant", cat: "Coagulation", sample: "Citrate (Blue)", normal: "Negative", use: "APS (Antiphospholipid Syndrome)" },
+            { name: "Anticardiolipin Antibodies", cat: "Coagulation", sample: "Serum (Yellow)", normal: "Negative", use: "APS" },
+            { name: "Anti-beta2 Glycoprotein I", cat: "Coagulation", sample: "Serum (Yellow)", normal: "Negative", use: "APS" },
+            { name: "Homocysteine", cat: "Coagulation", sample: "Serum (Yellow)", normal: "5-15 mcmol/L", use: "Thrombophilia" },
+            { name: "Prothrombin G20210A", cat: "Coagulation", sample: "EDTA (Purple)", normal: "Negative", use: "Inherited thrombophilia" },
+            { name: "Factor V Leiden", cat: "Coagulation", sample: "EDTA (Purple)", normal: "Negative", use: "Activated protein C resistance" },
+            { name: "MTHFR Mutation", cat: "Coagulation", sample: "EDTA (Purple)", normal: "Negative", use: "Hyperhomocysteinemia" },
+            { name: "Platelet Count", cat: "Coagulation", sample: "EDTA (Purple)", normal: "150-450 x10^3/uL", use: "Thrombocytopenia/thrombocytosis" },
+            { name: "MPV (Mean Platelet Volume)", cat: "Coagulation", sample: "EDTA (Purple)", normal: "7.5-11.5 fL", use: "Platelet production" },
+            
+            // Immunology (40 tests)
+            { name: "ANA (Antinuclear Antibodies)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative (<1:40)", use: "Autoimmune diseases" },
+            { name: "ANA Panel (ENA)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Specific autoantibodies" },
+            { name: "Anti-dsDNA", cat: "Immunology", sample: "Serum (Yellow)", normal: "<100 IU/mL", use: "SLE specific" },
+            { name: "Anti-Smith (Sm)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "SLE specific" },
+            { name: "Anti-RNP", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "MCTD" },
+            { name: "Anti-SSA/Ro", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Sjögren's, neonatal lupus" },
+            { name: "Anti-SSB/La", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Sjögren's syndrome" },
+            { name: "Anti-Scl-70", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Systemic sclerosis" },
+            { name: "Anti-Centromere", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "CREST syndrome" },
+            { name: "Anti-Jo-1", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Polymyositis" },
+            { name: "RF (Rheumatoid Factor)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<14 IU/mL", use: "Rheumatoid arthritis" },
+            { name: "Anti-CCP (Cyclic Citrullinated Peptide)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<20 U/mL", use: "Early RA, specificity" },
+            { name: "ASO (Antistreptolysin O)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<200 IU/mL", use: "Post-streptococcal disease" },
+            { name: "Anti-DNase B", cat: "Immunology", sample: "Serum (Yellow)", normal: "<170 U/mL", use: "Streptococcal infection" },
+            { name: "IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "700-1600 mg/dL", use: "Immune status" },
+            { name: "IgA", cat: "Immunology", sample: "Serum (Yellow)", normal: "70-400 mg/dL", use: "Immune deficiency" },
+            { name: "IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "40-230 mg/dL", use: "Acute infection" },
+            { name: "IgE (Total)", cat: "Immunology", sample: "Serum (Yellow)", normal: "<100 IU/mL", use: "Allergies, atopy" },
+            { name: "IgG Subclasses", cat: "Immunology", sample: "Serum (Yellow)", normal: "Varies", use: "Specific immune deficiency" },
+            { name: "Complement C3", cat: "Immunology", sample: "Serum (Yellow)", normal: "90-180 mg/dL", use: "SLE activity" },
+            { name: "Complement C4", cat: "Immunology", sample: "Serum (Yellow)", normal: "10-40 mg/dL", use: "SLE, hereditary angioedema" },
+            { name: "CH50 (Total Complement)", cat: "Immunology", sample: "Serum (Yellow)", normal: "60-144 CAE units", use: "Complement deficiency" },
+            { name: "C1 Esterase Inhibitor", cat: "Immunology", sample: "Serum (Yellow)", normal: "21-39 mg/dL", use: "Hereditary angioedema" },
+            { name: "HIV Antibody (4th Gen)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "HIV screening" },
+            { name: "HIV RNA (Viral Load)", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable", use: "HIV monitoring" },
+            { name: "Hepatitis B Surface Ag (HBsAg)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "HBV infection" },
+            { name: "Hepatitis B Surface Ab (Anti-HBs)", cat: "Immunology", sample: "Serum (Yellow)", normal: ">10 mIU/mL", use: "Immunity" },
+            { name: "Hepatitis B Core Ab (Anti-HBc)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Past/present infection" },
+            { name: "Hepatitis B Core IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute infection" },
+            { name: "Hepatitis B e Ag (HBeAg)", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Infectivity" },
+            { name: "Hepatitis B DNA", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable", use: "Viral load monitoring" },
+            { name: "Hepatitis C Antibody", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "HCV screening" },
+            { name: "Hepatitis C RNA", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable", use: "Active infection" },
+            { name: "Hepatitis A IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute HAV" },
+            { name: "Hepatitis A IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "Positive (immune)", use: "Immunity/past infection" },
+            { name: "Hepatitis E IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute HEV" },
+            { name: "CMV IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute CMV" },
+            { name: "CMV IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Past infection" },
+            { name: "CMV DNA", cat: "Immunology", sample: "EDTA (Purple)", normal: "Undetectable", use: "Active infection" },
+            { name: "EBV VCA IgM", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Acute mono" },
+            { name: "EBV VCA IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Past infection" },
+            { name: "EBV EBNA IgG", cat: "Immunology", sample: "Serum (Yellow)", normal: "Negative", use: "Past infection (>6 months)" },
+            
+            // Microbiology (40 tests)
+            { name: "Blood Culture (Aerobic)", cat: "Microbiology", sample: "Blood culture bottles", normal: "No growth", use: "Bacteremia, sepsis" },
+            { name: "Blood Culture (Anaerobic)", cat: "Microbiology", sample: "Blood culture bottles", normal: "No growth", use: "Anaerobic sepsis" },
+            { name: "Urine Culture", cat: "Microbiology", sample: "Clean catch urine", normal: "<10^3 CFU/mL", use: "UTI diagnosis" },
+            { name: "Stool Culture", cat: "Microbiology", sample: "Stool sample", normal: "No pathogens", use: "Bacterial diarrhea" },
+            { name: "Sputum Culture", cat: "Microbiology", sample: "Sputum", normal: "Normal flora", use: "Respiratory infection" },
+            { name: "Throat Culture", cat: "Microbiology", sample: "Throat swab", normal: "No Group A Strep", use: "Strep throat" },
+            { name: "Wound Culture", cat: "Microbiology", sample: "Wound swab/tissue", normal: "No pathogens", use: "Wound infection" },
+            { name: "CSF Culture", cat: "Microbiology", sample: "CSF", normal: "No growth", use: "Meningitis" },
+            { name: "Gram Stain", cat: "Microbiology", sample: "Any specimen", normal: "No organisms", use: "Rapid bacterial ID" },
+            { name: "Acid-Fast Bacilli (AFB) Smear", cat: "Microbiology", sample: "Sputum/CSF", normal: "Negative", use: "TB screening" },
+            { name: "AFB Culture", cat: "Microbiology", sample: "Sputum/CSF", normal: "No growth", use: "TB diagnosis" },
+            { name: "TB PCR (GeneXpert)", cat: "Microbiology", sample: "Sputum", normal: "MTB not detected", use: "Rapid TB detection" },
+            { name: "TB Drug Resistance", cat: "Microbiology", sample: "Sputum", normal: "Rif sensitive", use: "MDR-TB screening" },
+            { name: "Fungal Culture", cat: "Microbiology", sample: "Skin/nail/hair", normal: "No growth", use: "Dermatophytes" },
+            { name: "KOH Preparation", cat: "Microbiology", sample: "Skin scrapings", normal: "No hyphae", use: "Rapid fungal detection" },
+            { name: "India Ink Prep", cat: "Microbiology", sample: "CSF", normal: "Negative", use: "Cryptococcus" },
+            { name: "Cryptococcal Antigen", cat: "Microbiology", sample: "Serum/CSF", normal: "Negative", use: "Cryptococcal meningitis" },
+            { name: "Galactomannan", cat: "Microbiology", sample: "Serum/BAL", normal: "Negative", use: "Aspergillosis" },
+            { name: "Beta-D-Glucan", cat: "Microbiology", sample: "Serum", normal: "<60 pg/mL", use: "Invasive fungal infection" },
+            { name: "Ova and Parasites", cat: "Microbiology", sample: "Stool (fresh)", normal: "None seen", use: "Parasitic infection" },
+            { name: "Giardia Antigen", cat: "Microbiology", sample: "Stool", normal: "Negative", use: "Giardiasis" },
+            { name: "Cryptosporidium Antigen", cat: "Microbiology", sample: "Stool", normal: "Negative", use: "Cryptosporidiosis" },
+            { name: "C. difficile Toxin", cat: "Microbiology", sample: "Stool", normal: "Negative", use: "Pseudomembranous colitis" },
+            { name: "C. difficile PCR", cat: "Microbiology", sample: "Stool", normal: "Negative", use: "C. diff diagnosis" },
+            { name: "H. pylori Stool Ag", cat: "Microbiology", sample: "Stool", normal: "Negative", use: "H. pylori infection" },
+            { name: "H. pylori Breath Test", cat: "Microbiology", sample: "Breath", normal: "Negative", use: "H. pylori, cure confirmation" },
+            { name: "H. pylori IgG", cat: "Microbiology", sample: "Serum", normal: "Negative", use: "Past exposure" },
+            { name: "Syphilis RPR/VDRL", cat: "Microbiology", sample: "Serum", normal: "Non-reactive", use: "Syphilis screening" },
+            { name: "Syphilis FTA-ABS", cat: "Microbiology", sample: "Serum", normal: "Negative", use: "Confirmatory test" },
+            { name: "Syphilis TP-PA", cat: "Microbiology", sample: "Serum", normal: "Negative", use: "Confirmatory test" },
+            { name: "Chlamydia PCR", cat: "Microbiology", sample: "Urine/swab", normal: "Negative", use: "Chlamydia trachomatis" },
+            { name: "Gonorrhea PCR", cat: "Microbiology", sample: "Urine/swab", normal: "Negative", use: "Neisseria gonorrhoeae" },
+            { name: "Trichomonas Wet Prep", cat: "Microbiology", sample: "Vaginal swab", normal: "Negative", use: "Trichomoniasis" },
+            { name: "Trichomonas NAAT", cat: "Microbiology", sample: "Urine/swab", normal: "Negative", use: "Trichomonas vaginalis" },
+            { name: "Bacterial Vaginosis Panel", cat: "Microbiology", sample: "Vaginal swab", normal: "Normal flora", use: "BV diagnosis" },
+            { name: "MRSA Screen", cat: "Microbiology", sample: "Nasal swab", normal: "Negative", use: "MRSA colonization" },
+            { name: "VRE Screen", cat: "Microbiology", sample: "Rectal swab", normal: "Negative", use: "VRE colonization" },
+            { name: "ESBL Screen", cat: "Microbiology", sample: "Rectal swab", normal: "Negative", use: "ESBL colonization" },
+            { name: "Legionella Urine Ag", cat: "Microbiology", sample: "Urine", normal: "Negative", use: "Legionnaires' disease" },
+            { name: "Streptococcus pneumoniae Urine Ag", cat: "Microbiology", sample: "Urine", normal: "Negative", use: "Pneumococcal pneumonia" },
+            
+            // Tumor Markers (30 tests)
+            { name: "AFP (Alpha-Fetoprotein)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<10 ng/mL", use: "Liver cancer, germ cell tumors" },
+            { name: "CEA (Carcinoembryonic Antigen)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<3.0 ng/mL (non-smoker)", use: "Colorectal cancer" },
+            { name: "CA 19-9", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<37 U/mL", use: "Pancreatic cancer" },
+            { name: "CA 125", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<35 U/mL", use: "Ovarian cancer" },
+            { name: "CA 15-3", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<30 U/mL", use: "Breast cancer" },
+            { name: "CA 27-29", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<38 U/mL", use: "Breast cancer" },
+            { name: "CA 72-4", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<6.9 U/mL", use: "Gastric cancer" },
+            { name: "CA 242", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<20 U/mL", use: "Pancreatic/colorectal cancer" },
+            { name: "PSA (Total)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<4.0 ng/mL", use: "Prostate cancer screening" },
+            { name: "PSA Free", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Varies", use: "Free/Total ratio" },
+            { name: "PSA Free/Total Ratio", cat: "TumorMarkers", sample: "Calculated", normal: ">0.25", use: "Prostate cancer risk" },
+            { name: "p2PSA", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Varies", use: "Prostate Health Index" },
+            { name: "Pro-PSA", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Varies", use: "PHI calculation" },
+            { name: "PHI (Prostate Health Index)", cat: "TumorMarkers", sample: "Calculated", normal: "<55", use: "Prostate cancer probability" },
+            { name: "4Kscore", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Varies", use: "Prostate cancer risk" },
+            { name: "hCG (Quantitative)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<5 mIU/mL", use: "Germ cell tumors, pregnancy" },
+            { name: "LDH (Total)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "140-280 U/L", use: "Germ cell tumors, lymphoma" },
+            { name: "Beta-2 Microglobulin", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "1.1-2.4 mg/L", use: "Multiple myeloma, lymphoma" },
+            { name: "Serum Protein Electrophoresis", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Normal pattern", use: "Multiple myeloma" },
+            { name: "Urine Protein Electrophoresis", cat: "TumorMarkers", sample: "Urine 24h", normal: "Normal pattern", use: "Bence Jones protein" },
+            { name: "Immunofixation Electrophoresis", cat: "TumorMarkers", sample: "Serum/Urine", normal: "No monoclonal bands", use: "Myeloma typing" },
+            { name: "Serum Free Light Chains", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Free kappa: 3.3-19.4 mg/L", use: "Myeloma, AL amyloidosis" },
+            { name: "Kappa/Lambda Ratio", cat: "TumorMarkers", sample: "Calculated", normal: "0.26-1.65", use: "Clonality assessment" },
+            { name: "Chromogranin A", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<93 ng/mL", use: "Neuroendocrine tumors" },
+            { name: "NSE (Neuron-Specific Enolase)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<16.3 ng/mL", use: "Small cell lung cancer" },
+            { name: "ProGRP", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<50 pg/mL", use: "Small cell lung cancer" },
+            { name: "CYFRA 21-1", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<3.3 ng/mL", use: "Non-small cell lung cancer" },
+            { name: "SCC (Squamous Cell Carcinoma Ag)", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<1.5 ng/mL", use: "Squamous cell cancers" },
+            { name: "HE4", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "<70 pmol/L", use: "Ovarian cancer (ROMA)" },
+            { name: "ROMA Score", cat: "TumorMarkers", sample: "Calculated", normal: "Varies", use: "Ovarian cancer risk" },
+            { name: "OVA1", cat: "TumorMarkers", sample: "Serum (Yellow)", normal: "Varies", use: "Ovarian malignancy risk" },
+            
+            // Genetic (30 tests)
+            { name: "BRCA1/BRCA2", cat: "Genetic", sample: "EDTA (Purple)", normal: "No mutation", use: "Hereditary breast/ovarian cancer" },
+            { name: "BRCA1 Methylation", cat: "Genetic", sample: "EDTA (Purple)", normal: "Unmethylated", use: "Sporadic vs hereditary" },
+            { name: "Lynch Syndrome Panel", cat: "Genetic", sample: "EDTA (Purple)", normal: "No mutation", use: "HNPCC (MLH1, MSH2, MSH6, PMS2)" },
+            { name: "Microsatellite Instability (MSI)", cat: "Genetic", sample: "Tissue", normal: "Stable (MSS)", use: "Lynch syndrome, immunotherapy" },
+            { name: "KRAS Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "Colorectal cancer, EGFR therapy" },
+            { name: "NRAS Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "Melanoma, colorectal cancer" },
+            { name: "BRAF V600E", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "Melanoma, colorectal, thyroid" },
+            { name: "EGFR Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "NSCLC - TKI therapy" },
+            { name: "ALK Rearrangement", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "NSCLC - Crizotinib" },
+            { name: "ROS1 Rearrangement", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "NSCLC - Crizotinib" },
+            { name: "PD-L1 Expression", cat: "Genetic", sample: "Tissue", normal: "<1%", use: "Immunotherapy eligibility" },
+            { name: "Tumor Mutational Burden (TMB)", cat: "Genetic", sample: "Tissue", normal: "Low", use: "Immunotherapy response" },
+            { name: "HER2 Amplification", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "Breast/gastric cancer" },
+            { name: "PIK3CA Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "Breast cancer - Alpelisib" },
+            { name: "NTRK Fusion", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "Solid tumors - Larotrectinib" },
+            { name: "RET Fusion", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "NSCLC, thyroid - Selpercatinib" },
+            { name: "MET Amplification", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "NSCLC resistance" },
+            { name: "ERBB2 (HER2) Mutation", cat: "Genetic", sample: "Tissue", normal: "Wild type", use: "NSCLC" },
+            { name: "FGFR Alterations", cat: "Genetic", sample: "Tissue", normal: "Negative", use: "Bladder cancer - Erdafitinib" },
+            { name: "IDH1/IDH2 Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "AML, glioma - Ivosidenib" },
+            { name: "FLT3-ITD", cat: "Genetic", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis - Midostaurin" },
+            { name: "NPM1 Mutation", cat: "Genetic", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis" },
+            { name: "CEBPA Mutation", cat: "Genetic", sample: "EDTA (Purple)", normal: "Negative", use: "AML prognosis" },
+            { name: "TP53 Mutation", cat: "Genetic", sample: "Tissue/Plasma", normal: "Wild type", use: "Many cancers, poor prognosis" },
+            { name: "APC Mutation", cat: "Genetic", sample: "EDTA (Purple)", normal: "No mutation", use: "Familial adenomatous polyposis" },
+            { name: "MTHFR C677T", cat: "Genetic", sample: "EDTA (Purple)", normal: "CC (normal)", use: "Hyperhomocysteinemia risk" },
+            { name: "Factor V Leiden (R506Q)", cat: "Genetic", sample: "EDTA (Purple)", normal: "Negative", use: "Thrombophilia" },
+            { name: "Prothrombin G20210A", cat: "Genetic", sample: "EDTA (Purple)", normal: "Negative", use: "Thrombophilia" },
+            { name: "CYP2C19 Genotype", cat: "Genetic", sample: "EDTA (Purple)", normal: "*1/*1 (normal)", use: "Clopidogrel metabolism" },
+            { name: "CYP2D6 Genotype", cat: "Genetic", sample: "EDTA (Purple)", normal: "*1/*1 (normal)", use: "Tamoxifen, codeine metabolism" },
+            { name: "SLCO1B1 Genotype", cat: "Genetic", sample: "EDTA (Purple)", normal: "*1A/*1A", use: "Statin myopathy risk" },
+            
+            // Toxicology (30 tests)
+            { name: "Ethanol (Blood)", cat: "Toxicology", sample: "Serum (Grey) - NaF", normal: "0 mg/dL", use: "Alcohol intoxication" },
+            { name: "Ethanol (Urine)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Alcohol use" },
+            { name: "Ethyl Glucuronide (EtG)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Alcohol use (up to 80h)" },
+            { name: "Ethyl Sulfate (EtS)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Alcohol use confirmation" },
+            { name: "Acetaminophen (Paracetamol)", cat: "Toxicology", sample: "Serum (Grey)", normal: "10-20 mcg/mL", use: "Overdose monitoring" },
+            { name: "Salicylate (Aspirin)", cat: "Toxicology", sample: "Serum (Grey)", normal: "15-30 mg/dL", use: "Overdose, toxicity" },
+            { name: "Tricyclic Antidepressants", cat: "Toxicology", sample: "Serum (Grey)", normal: "<500 ng/mL", use: "Overdose" },
+            { name: "Benzodiazepines", cat: "Toxicology", sample: "Urine/Serum", normal: "Negative", use: "Sedative overdose" },
+            { name: "Barbiturates", cat: "Toxicology", sample: "Urine/Serum", normal: "Negative", use: "Sedative overdose" },
+            { name: "Opiates (Qualitative)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Drug screening" },
+            { name: "Morphine (Quantitative)", cat: "Toxicology", sample: "Serum (Grey)", normal: "10-80 ng/mL", use: "Pain management" },
+            { name: "Oxycodone", cat: "Toxicology", sample: "Urine/Serum", normal: "10-100 ng/mL", use: "Pain management" },
+            { name: "Fentanyl", cat: "Toxicology", sample: "Urine/Serum", normal: "1-10 ng/mL", use: "Pain management, overdose" },
+            { name: "Methadone", cat: "Toxicology", sample: "Urine/Serum", normal: "100-400 ng/mL", use: "Opioid maintenance" },
+            { name: "Buprenorphine", cat: "Toxicology", sample: "Urine", normal: "1-10 ng/mL", use: "Opioid maintenance" },
+            { name: "Cocaine Metabolite (Benzoylecgonine)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Cocaine use" },
+            { name: "Amphetamines", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Stimulant use" },
+            { name: "MDMA (Ecstasy)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Designer drug use" },
+            { name: "Cannabinoids (THC)", cat: "Toxicology", sample: "Urine", normal: "Negative", use: "Marijuana use" },
+            { name: "Carboxyhemoglobin", cat: "Toxicology", sample: "Blood (Green)", normal: "<3% (non-smoker)", use: "CO poisoning" },
+            { name: "Methemoglobin", cat: "Toxicology", sample: "Blood (Green)", normal: "<1%", use: "Oxidative toxin exposure" },
+            { name: "Lead (Blood)", cat: "Toxicology", sample: "EDTA (Tan)", normal: "<5 mcg/dL", use: "Lead poisoning" },
+            { name: "Mercury (Blood)", cat: "Toxicology", sample: "EDTA (Tan)", normal: "<10 ng/mL", use: "Mercury toxicity" },
+            { name: "Arsenic (24h Urine)", cat: "Toxicology", sample: "Urine 24h", normal: "<50 mcg/24h", use: "Arsenic poisoning" },
+            { name: "Cadmium (Blood)", cat: "Toxicology", sample: "EDTA (Tan)", normal: "<5 ng/mL", use: "Cadmium toxicity" },
+            { name: "Digoxin", cat: "Toxicology", sample: "Serum (Red) - 6-8h post dose", normal: "0.8-2.0 ng/mL", use: "Therapeutic monitoring" },
+            { name: "Lithium", cat: "Toxicology", sample: "Serum (Red) - 12h post dose", normal: "0.6-1.2 mEq/L", use: "Bipolar disorder" },
+            { name: "Valproic Acid", cat: "Toxicology", sample: "Serum (Red)", normal: "50-100 mcg/mL", use: "Seizure disorder" },
+            { name: "Carbamazepine", cat: "Toxicology", sample: "Serum (Red)", normal: "4-12 mcg/mL", use: "Seizure disorder" },
+            { name: "Phenytoin", cat: "Toxicology", sample: "Serum (Red)", normal: "10-20 mcg/mL", use: "Seizure disorder" },
+            
+            // Blood Bank (30 tests)
+            { name: "ABO Group", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Determined", use: "Blood typing" },
+            { name: "Rh(D) Type", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive/Negative", use: "Rh compatibility" },
+            { name: "Antibody Screen (IAT)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Negative", use: "Unexpected antibodies" },
+            { name: "Direct Antiglobulin Test (DAT)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Negative", use: "Hemolytic disease, AIHA" },
+            { name: "Indirect Antiglobulin Test (IAT)", cat: "BloodBank", sample: "Serum (Red)", normal: "Negative", use: "Antibody detection" },
+            { name: "Crossmatch (Major)", cat: "BloodBank", sample: "Patient serum + donor RBCs", normal: "Compatible", use: "Transfusion safety" },
+            { name: "Crossmatch (Minor)", cat: "BloodBank", sample: "Donor serum + patient RBCs", normal: "Compatible", use: "Transfusion safety" },
+            { name: "Kell Antigen", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive/Negative", use: "Extended typing" },
+            { name: "Duffy Antigen (Fy)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive/Negative", use: "Extended typing" },
+            { name: "Kidd Antigen (Jk)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive/Negative", use: "Extended typing" },
+            { name: "MNSs Antigens", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Determined", use: "Extended typing" },
+            { name: "Lewis Antigens", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Le(a+b-), Le(a-b+)", use: "Secretor status" },
+            { name: "P Antigen", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive", use: "Rare phenotypes" },
+            { name: "Lutheran Antigen", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Positive/Negative", use: "Rare phenotypes" },
+            { name: "Antibody Identification", cat: "BloodBank", sample: "Serum (Red)", normal: "None identified", use: "Specific antibody ID" },
+            { name: "Elution", cat: "BloodBank", sample: "RBCs", normal: "No antibody", use: "Antibody on RBCs" },
+            { name: "Adsorption", cat: "BloodBank", sample: "Serum + RBCs", normal: "N/A", use: "Remove interfering antibodies" },
+            { name: "Titration", cat: "BloodBank", sample: "Serum (Red)", normal: "<32", use: "Antibody strength" },
+            { name: "Neonatal Bilirubin", cat: "BloodBank", sample: "Cord blood", normal: "<5 mg/dL", use: "Hemolytic disease of newborn" },
+            { name: "Fetal Screen (Rosette)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Negative", use: "Fetomaternal hemorrhage" },
+            { name: "Kleihauer-Betke", cat: "BloodBank", sample: "EDTA (Purple)", normal: "<0.1%", use: "Quantify fetomaternal bleed" },
+            { name: "Hemoglobin F", cat: "BloodBank", sample: "EDTA (Purple)", normal: "<1% (adults)", use: "Hereditary persistence" },
+            { name: "Platelet Antibody", cat: "BloodBank", sample: "Serum (Yellow)", normal: "Negative", use: "Post-transfusion purpura" },
+            { name: "HLA Typing (Class I)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Determined", use: "Transplant compatibility" },
+            { name: "HLA Typing (Class II)", cat: "BloodBank", sample: "EDTA (Purple)", normal: "Determined", use: "Transplant compatibility" },
+            { name: "HLA Antibody Screen", cat: "BloodBank", sample: "Serum (Yellow)", normal: "Negative", use: "Transplant sensitization" },
+            { name: "Panel Reactive Antibody (PRA)", cat: "BloodBank", sample: "Serum (Yellow)", normal: "0%", use: "Transplant eligibility" },
+            { name: "Cytomegalovirus (CMV) Serology", cat: "BloodBank", sample: "Serum (Yellow)", normal: "Negative", use: "CMV-negative blood products" },
+            { name: "Irradiated Blood Request", cat: "BloodBank", sample: "N/A", normal: "N/A", use: "TA-GVHD prevention" },
+            { name: "Washed RBCs Request", cat: "BloodBank", sample: "N/A", normal: "N/A", use: "Severe allergies, IgA deficiency" },
+            
+            // Urinalysis (30 tests)
+            { name: "Urinalysis (Dipstick)", cat: "Urinalysis", sample: "Random urine", normal: "All negative", use: "Screening" },
+            { name: "Urine Specific Gravity", cat: "Urinalysis", sample: "Random urine", normal: "1.005-1.030", use: "Concentrating ability" },
+            { name: "Urine pH", cat: "Urinalysis", sample: "Random urine", normal: "4.5-8.0", use: "Acid-base status, stones" },
+            { name: "Urine Glucose", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "Diabetes mellitus" },
+            { name: "Urine Ketones", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "DKA, starvation" },
+            { name: "Urine Protein", cat: "Urinalysis", sample: "Random urine", normal: "Negative/trace", use: "Kidney disease" },
+            { name: "Urine Blood", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "Hematuria" },
+            { name: "Urine Bilirubin", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "Liver disease" },
+            { name: "Urine Urobilinogen", cat: "Urinalysis", sample: "Random urine", normal: "0.2-1.0 mg/dL", use: "Hemolysis, liver disease" },
+            { name: "Urine Nitrite", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "UTI screening" },
+            { name: "Urine Leukocyte Esterase", cat: "Urinalysis", sample: "Random urine", normal: "Negative", use: "Pyuria, UTI" },
+            { name: "Urine Microscopy", cat: "Urinalysis", sample: "Random urine", normal: "0-2 RBC, 0-5 WBC", use: "Cells, casts, crystals" },
+            { name: "Urine Culture", cat: "Urinalysis", sample: "Clean catch", normal: "<10^3 CFU/mL", use: "UTI diagnosis" },
+            { name: "24h Urine Protein", cat: "Urinalysis", sample: "24h urine", normal: "<150 mg/24h", use: "Nephrotic syndrome" },
+            { name: "Urine Albumin/Creatinine Ratio", cat: "Urinalysis", sample: "Spot urine", normal: "<30 mg/g", use: "Early diabetic nephropathy" },
+            { name: "Urine Protein/Creatinine Ratio", cat: "Urinalysis", sample: "Spot urine", normal: "<0.2", use: "Proteinuria quantification" },
+            { name: "Urine Electrolytes (Na, K, Cl)", cat: "Urinalysis", sample: "Random/24h", normal: "Varies", use: "Electrolyte disorders" },
+            { name: "Urine Osmolality", cat: "Urinalysis", sample: "Random urine", normal: "300-900 mOsm/kg", use: "Concentrating ability" },
+            { name: "Urine Creatinine", cat: "Urinalysis", sample: "24h urine", normal: "Varies by muscle mass", use: "Creatinine clearance" },
+            { name: "Urine Urea Nitrogen", cat: "Urinalysis", sample: "24h urine", normal: "6-17 g/24h", use: "Protein metabolism" },
+            { name: "Urine Calcium", cat: "Urinalysis", sample: "24h urine", normal: "100-300 mg/24h", use: "Hypercalciuria, stones" },
+            { name: "Urine Uric Acid", cat: "Urinalysis", sample: "24h urine", normal: "250-750 mg/24h", use: "Gout, stones" },
+            { name: "Urine Oxalate", cat: "Urinalysis", sample: "24h urine", normal: "<40 mg/24h", use: "Calcium oxalate stones" },
+            { name: "Urine Citrate", cat: "Urinalysis", sample: "24h urine", normal: ">320 mg/24h", use: "Stone risk assessment" },
+            { name: "Urine Cystine", cat: "Urinalysis", sample: "24h urine", normal: "<60 mg/24h", use: "Cystinuria" },
+            { name: "Urine Porphyrins", cat: "Urinalysis", sample: "24h urine (dark)", normal: "<150 mcg/24h", use: "Porphyria" },
+            { name: "Urine 5-HIAA", cat: "Urinalysis", sample: "24h urine", normal: "2-9 mg/24h", use: "Carcinoid syndrome" },
+            { name: "Urine Catecholamines", cat: "Urinalysis", sample: "24h urine", normal: "<100 mcg/24h", use: "Pheochromocytoma" },
+            { name: "Urine Metanephrines", cat: "Urinalysis", sample: "24h urine", normal: "<1.3 mg/24h", use: "Pheochromocytoma" },
+            { name: "Urine Cortisol (Free)", cat: "Urinalysis", sample: "24h urine", normal: "10-100 mcg/24h", use: "Cushing's syndrome" }
+        ];
+
+        // Function to render table
+        function renderTable(data) {
+            const tableBody = document.getElementById('testTableBody');
+            tableBody.innerHTML = '';
+            data.forEach(test => {
+                const row = `<tr>
+                    <td class="fw-bold text-primary">${test.name}</td>
+                    <td><span class="badge bg-secondary">${test.cat}</span></td>
+                    <td><span class="badge badge-sample border text-dark">${test.sample}</span></td>
+                    <td><small>${test.normal}</small></td>
+                    <td>${test.use}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Search and Filter Logic
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+
+            const filtered = testsData.filter(test => {
+                const matchesSearch = test.name.toLowerCase().includes(searchTerm) || 
+                                    test.cat.toLowerCase().includes(searchTerm) ||
+                                    test.use.toLowerCase().includes(searchTerm);
+                const matchesCategory = (category === 'All' || test.cat === category);
+                return matchesSearch && matchesCategory;
+            });
+
+            renderTable(filtered);
+        }
+
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('categoryFilter').addEventListener('change', filterData);
+
+        // Initial Render
+        window.onload = () => renderTable(testsData);
+    </script>
+</body>
+</html>
+
