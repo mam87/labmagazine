@@ -1,815 +1,419 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot">
+<html lang="ar" dir="rtl" id="root">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Lab Portal | بوابة علوم المختبرات الطبية</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0a2540; --accent: #00b4d8; --accent2: #06d6a0;
-            --danger: #ef233c; --warning: #fb8500;
-            --bg: #f0f4f8; --surface: #ffffff; --surface2: #f7fafc;
-            --text: #1a202c; --text-muted: #718096; --border: #e2e8f0;
-            --shadow: 0 4px 24px rgba(10,37,64,0.10); --shadow-lg: 0 8px 40px rgba(10,37,64,0.16);
-            --radius: 16px; --radius-sm: 8px;
-        }
-        * { box-sizing: border-box; }
-        html[lang="ar"] body { font-family: 'IBM Plex Sans Arabic','Tajawal',sans-serif; }
-        html[lang="en"] body { font-family: 'DM Sans',sans-serif; }
-        body { background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-
-        /* LANG BAR */
-        .lang-bar { background: var(--primary); padding: 8px 0; }
-        html[lang="ar"] .lang-bar .container { text-align: right; }
-        html[lang="en"] .lang-bar .container { text-align: left; }
-        .lang-toggle {
-            display: inline-flex; align-items: center;
-            background: rgba(255,255,255,0.1); border-radius: 100px;
-            padding: 4px; gap: 2px; border: 1px solid rgba(255,255,255,0.15);
-        }
-        .lang-btn {
-            padding: 5px 16px; border-radius: 100px; border: none;
-            background: transparent; color: rgba(255,255,255,0.55);
-            font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
-        }
-        .lang-btn.active { background: var(--accent); color: white; }
-        .lang-btn:hover:not(.active) { color: white; }
-
-        /* HERO */
-        .hero {
-            background: var(--primary);
-            background-image: radial-gradient(ellipse at 20% 50%, rgba(0,180,216,0.18) 0%, transparent 60%),
-                              radial-gradient(ellipse at 80% 20%, rgba(6,214,160,0.12) 0%, transparent 50%);
-            color: white; padding: 56px 0 80px; position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content:''; position:absolute; inset:0;
-            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='%2300b4d8' fill-opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events:none;
-        }
-        .hero-badge {
-            display:inline-flex; align-items:center; gap:8px;
-            background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.35);
-            color:var(--accent); padding:6px 16px; border-radius:100px;
-            font-size:0.82rem; font-weight:500; margin-bottom:20px;
-        }
-        .hero h1 {
-            font-weight:900; font-size:clamp(1.8rem,4vw,2.8rem);
-            line-height:1.2; margin-bottom:14px;
-        }
-        html[lang="ar"] .hero h1 { font-family:'Tajawal',sans-serif; }
-        html[lang="en"] .hero h1 { font-family:'Syne',sans-serif; letter-spacing:-1px; }
-        .hero h1 span { color:var(--accent); }
-        .hero p { color:rgba(255,255,255,0.72); font-size:1.05rem; max-width:560px; margin:0 auto 28px; }
-        .hero-stats { display:flex; justify-content:center; gap:32px; margin-top:36px; flex-wrap:wrap; }
-        .hero-stat .num {
-            display:block; font-weight:900; font-size:2rem; color:var(--accent); line-height:1;
-        }
-        html[lang="ar"] .hero-stat .num { font-family:'Tajawal',sans-serif; }
-        html[lang="en"] .hero-stat .num { font-family:'Syne',sans-serif; }
-        .hero-stat .lbl { display:block; font-size:0.78rem; color:rgba(255,255,255,0.55); margin-top:4px; }
-        .hero-divider { width:1px; background:rgba(255,255,255,0.12); align-self:stretch; }
-        .telegram-btn {
-            display:inline-flex; align-items:center; gap:10px;
-            background:#0088cc; color:white; padding:12px 24px; border-radius:100px;
-            text-decoration:none; font-weight:600; font-size:0.9rem; transition:all 0.25s;
-            box-shadow:0 4px 16px rgba(0,136,204,0.35);
-        }
-        .telegram-btn:hover { background:#006699; color:white; transform:translateY(-2px); }
-
-        /* NAV */
-        .main-nav-wrap {
-            background:var(--surface); border-bottom:1px solid var(--border);
-            position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(10,37,64,0.06);
-        }
-        .main-nav { display:flex; gap:4px; padding:12px 0; justify-content:center; flex-wrap:wrap; }
-        .nav-btn {
-            display:flex; align-items:center; gap:8px; padding:10px 22px;
-            border:none; background:transparent; color:var(--text-muted);
-            font-weight:500; font-size:0.92rem; border-radius:100px; cursor:pointer; transition:all 0.2s;
-        }
-        html[lang="ar"] .nav-btn { font-family:'IBM Plex Sans Arabic',sans-serif; }
-        html[lang="en"] .nav-btn { font-family:'DM Sans',sans-serif; }
-        .nav-btn:hover { background:var(--surface2); color:var(--primary); }
-        .nav-btn.active { background:var(--primary); color:white; box-shadow:0 4px 14px rgba(10,37,64,0.25); }
-
-        .tab-pane { display:none; }
-        .tab-pane.active { display:block; }
-
-        /* SEARCH */
-        .search-section { background:var(--surface); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow); margin-bottom:24px; }
-        .search-title { font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:14px; }
-        .search-input-wrap { position:relative; }
-        .search-icon { position:absolute; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:1rem; }
-        html[lang="ar"] .search-icon { right:16px; }
-        html[lang="en"] .search-icon { left:16px; }
-        .search-input {
-            width:100%; border:2px solid var(--border); border-radius:var(--radius-sm);
-            font-size:0.95rem; background:var(--surface2); color:var(--text);
-            transition:border-color 0.2s,box-shadow 0.2s; outline:none;
-        }
-        html[lang="ar"] .search-input { padding:13px 44px 13px 16px; font-family:'IBM Plex Sans Arabic',sans-serif; }
-        html[lang="en"] .search-input { padding:13px 16px 13px 44px; font-family:'DM Sans',sans-serif; }
-        .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,180,216,0.12); background:white; }
-        .filter-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-        .chip {
-            padding:6px 16px; border-radius:100px; border:1.5px solid var(--border);
-            background:var(--surface2); color:var(--text-muted); font-size:0.8rem; font-weight:500;
-            cursor:pointer; transition:all 0.2s;
-        }
-        html[lang="ar"] .chip { font-family:'IBM Plex Sans Arabic',sans-serif; }
-        html[lang="en"] .chip { font-family:'DM Sans',sans-serif; }
-        .chip:hover { border-color:var(--accent); color:var(--accent); }
-        .chip.active { background:var(--primary); border-color:var(--primary); color:white; }
-        .results-count { font-size:0.82rem; color:var(--text-muted); margin-top:12px; }
-        .results-count strong { color:var(--accent); }
-
-        /* TABLE */
-        .table-card { background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
-        .lab-table { margin:0; font-size:0.88rem; }
-        .lab-table thead th {
-            background:var(--primary); color:rgba(255,255,255,0.85);
-            font-weight:600; padding:14px 16px; border:none; font-size:0.82rem; white-space:nowrap;
-        }
-        .lab-table tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
-        .lab-table tbody tr:hover { background:#f0f9ff; }
-        .lab-table tbody tr:last-child { border-bottom:none; }
-        .lab-table td { padding:13px 16px; vertical-align:middle; border:none; }
-        .test-name { font-weight:600; color:var(--primary); line-height:1.3; }
-        .cat-badge {
-            display:inline-flex; align-items:center; gap:5px; padding:4px 10px;
-            border-radius:100px; font-size:0.72rem; font-weight:600; white-space:nowrap;
-        }
-        .cat-Hematology{background:#fce4ec;color:#c62828} .cat-Chemistry{background:#e3f2fd;color:#1565c0}
-        .cat-Hormones{background:#f3e5f5;color:#6a1b9a} .cat-Coagulation{background:#fbe9e7;color:#bf360c}
-        .cat-Immunology{background:#e8f5e9;color:#2e7d32} .cat-Microbiology{background:#fff3e0;color:#e65100}
-        .cat-TumorMarkers{background:#fce4ec;color:#880e4f} .cat-Genetic{background:#e8eaf6;color:#283593}
-        .cat-Toxicology{background:#efebe9;color:#4e342e} .cat-BloodBank{background:#ffebee;color:#b71c1c}
-        .cat-Urinalysis{background:#fffde7;color:#f57f17}
-        .sample-badge {
-            display:inline-block; padding:3px 10px; border-radius:6px; font-size:0.74rem;
-            font-weight:500; background:var(--surface2); border:1px solid var(--border); color:var(--text);
-        }
-        .normal-text { color:#065f46; font-size:0.8rem; font-weight:500; }
-        .use-text { color:var(--text-muted); font-size:0.82rem; line-height:1.4; }
-        .empty-state { text-align:center; padding:64px 24px; color:var(--text-muted); }
-        .empty-state i { font-size:3rem; opacity:0.3; margin-bottom:12px; display:block; }
-
-        /* SAFETY */
-        .section-title {
-            font-weight:700; font-size:1.3rem; color:var(--primary);
-            margin-bottom:20px; display:flex; align-items:center; gap:10px;
-        }
-        html[lang="ar"] .section-title { font-family:'Tajawal',sans-serif; }
-        html[lang="en"] .section-title { font-family:'Syne',sans-serif; }
-        .safety-card { background:var(--surface); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); margin-bottom:20px; }
-        .safety-item { display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border); }
-        .safety-item:last-child { border-bottom:none; padding-bottom:0; }
-        .safety-icon-wrap { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.1rem; }
-        .si-danger{background:#fce4ec;color:var(--danger)} .si-warning{background:#fff3e0;color:var(--warning)}
-        .si-success{background:#e8f5e9;color:#2e7d32} .si-info{background:#e3f2fd;color:#1565c0}
-        .si-bio{background:#fbe9e7;color:#bf360c} .si-dark{background:#eceff1;color:#37474f}
-        .safety-content h6 { font-weight:700; margin-bottom:6px; color:var(--text); font-size:0.92rem; }
-        .safety-content p { font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.6; }
-        .side-card { background:var(--surface); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); margin-bottom:20px; }
-        .standards-list { list-style:none; padding:0; margin:0; }
-        .standards-list li { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.88rem; font-weight:600; color:var(--primary); }
-        .standards-list li:last-child { border-bottom:none; }
-        .standards-list li::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
-        .reporting-card { background:linear-gradient(135deg,var(--primary) 0%,#1a3a5c 100%); color:white; border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); margin-bottom:20px; }
-        .reporting-card .section-title { color:white; }
-        .reporting-steps { list-style:none; padding:0; margin:0; }
-        .reporting-steps li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:0.85rem; }
-        .reporting-steps li:last-child { border-bottom:none; }
-        .step-num { width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.75rem; flex-shrink:0; }
-        .waste-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--radius-sm); margin-bottom:8px; font-size:0.83rem; font-weight:500; }
-        .waste-red{background:#fce4ec;color:#880e4f} .waste-black{background:#eceff1;color:#212121}
-        .waste-yellow{background:#fffde7;color:#f57f17} .waste-blue{background:#e3f2fd;color:#0d47a1}
-        .alert-card { background:#fff8e1; border:1.5px solid #ffd54f; border-radius:var(--radius-sm); padding:14px 16px; font-size:0.83rem; color:#5d4037; line-height:1.5; }
-        .alert-card strong { color:#e65100; display:block; margin-bottom:6px; }
-
-        /* NEWS */
-        .news-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
-        .news-card { background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; text-decoration:none; color:var(--text); display:flex; flex-direction:column; }
-        .news-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); color:var(--text); }
-        .news-card-header { padding:28px 24px 16px; display:flex; flex-direction:column; align-items:flex-start; gap:14px; }
-        .news-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
-        .news-card h5 { font-weight:700; font-size:0.95rem; margin:0; line-height:1.4; }
-        .news-card p { font-size:0.83rem; color:var(--text-muted); margin:0; line-height:1.5; }
-        .news-card-footer { padding:14px 24px; border-top:1px solid var(--border); margin-top:auto; display:flex; justify-content:space-between; align-items:center; }
-        .visit-link { font-size:0.82rem; font-weight:600; color:var(--accent); text-decoration:none; display:flex; align-items:center; gap:6px; }
-
-        /* FOOTER */
-        .footer { background:var(--primary); background-image:radial-gradient(ellipse at 0% 100%,rgba(0,180,216,0.12) 0%,transparent 50%); color:white; padding:48px 0 32px; margin-top:60px; }
-        html[lang="ar"] .footer h4 { font-family:'Tajawal',sans-serif; }
-        html[lang="en"] .footer h4 { font-family:'Syne',sans-serif; }
-        .footer h4 { font-weight:700; font-size:1.2rem; margin-bottom:6px; }
-        .footer p { color:rgba(255,255,255,0.6); font-size:0.88rem; }
-        .footer-social a { width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.1); display:inline-flex; align-items:center; justify-content:center; color:white; text-decoration:none; margin:0 6px; font-size:1.1rem; transition:background 0.2s,transform 0.2s; }
-        .footer-social a:hover { background:var(--accent); transform:translateY(-2px); }
-        .footer-copy { color:rgba(255,255,255,0.35); font-size:0.78rem; }
-
-        .wa-float { position:fixed; bottom:24px; width:56px; height:56px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:1.6rem; box-shadow:0 4px 20px rgba(37,211,102,0.45); text-decoration:none; transition:transform 0.2s; z-index:999; }
-        html[lang="ar"] .wa-float { left:24px; }
-        html[lang="en"] .wa-float { right:24px; }
-        .wa-float:hover { transform:scale(1.1); color:white; }
-
-        @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-        .fade-up{animation:fadeUp 0.45s ease both} .fade-up-1{animation-delay:0.05s} .fade-up-2{animation-delay:0.12s} .fade-up-3{animation-delay:0.2s}
-        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
-        .live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block;animation:pulse-dot 1.6s infinite;margin-left:6px}
-        @media(max-width:768px){.hero{padding:40px 0 60px}.chip{font-size:0.72rem;padding:5px 12px}.lab-table{font-size:0.8rem}.lab-table td{padding:10px}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة علوم المختبرات الطبية | Medical Lab Portal</title>
+<meta name="description" content="دليل مرجعي ثنائي اللغة لأكثر من 220 فحصاً مخبرياً: نوع العينة، القيم المرجعية، الاستخدامات، ترتيب سحب العينات، أخطاء ما قبل التحليل، ومعايير السلامة. إعداد أ. مأمون السعودي.">
+<meta property="og:title" content="بوابة علوم المختبرات الطبية | Medical Lab Portal">
+<meta property="og:description" content="دليل الفحوصات المخبرية، ترتيب سحب العينات، والسلامة المهنية — بالعربي والإنجليزي.">
+<meta property="og:image" content="https://mam87.github.io/labmagazine/assets/order-of-draw.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1f33">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230e7c7b'/><path d='M26 14h12v4h-2v14l10 16a4 4 0 0 1-3.4 6H21.4A4 4 0 0 1 18 48l10-16V18h-2z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f7f9;--surface:#ffffff;--surface-2:#eef3f6;--ink:#0b1f33;--ink-2:#46596b;--ink-3:#7a8b9a;
+  --line:#dde5eb;--brand:#0e7c7b;--brand-ink:#ffffff;--brand-soft:#e0f2f1;--accent:#c2410c;
+  --warn-bg:#fff7ed;--warn-line:#fed7aa;--warn-ink:#9a3412;
+  --radius:16px;--shadow:0 1px 2px rgba(11,31,51,.06),0 4px 16px rgba(11,31,51,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a141d;--surface:#111e2a;--surface-2:#172836;--ink:#e8eef3;--ink-2:#a9b8c5;--ink-3:#7d8fa0;
+  --line:#22364a;--brand:#2bb3a8;--brand-ink:#04211f;--brand-soft:#0f2f30;--accent:#fb923c;
+  --warn-bg:#2a1a0d;--warn-line:#5a3412;--warn-ink:#fdba74;--shadow:none}}
+:root[data-theme="dark"]{
+  --bg:#0a141d;--surface:#111e2a;--surface-2:#172836;--ink:#e8eef3;--ink-2:#a9b8c5;--ink-3:#7d8fa0;
+  --line:#22364a;--brand:#2bb3a8;--brand-ink:#04211f;--brand-soft:#0f2f30;--accent:#fb923c;
+  --warn-bg:#2a1a0d;--warn-line:#5a3412;--warn-ink:#fdba74;--shadow:none}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+/* header */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none;font-size:15px}
+.logo i{width:34px;height:34px;border-radius:10px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo i svg{width:18px;height:18px;fill:var(--brand-ink)}
+.top .sp{flex:1}
+.pill{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.pill:hover{border-color:var(--brand)}
+/* hero */
+.hero{padding:48px 0 28px}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);background:var(--brand-soft);padding:5px 12px;border-radius:999px}
+.hero h1{font-size:clamp(30px,5.5vw,52px);line-height:1.15;margin:16px 0 12px;letter-spacing:-.01em;text-wrap:balance}
+.hero h1 span{color:var(--brand)}
+.hero p.lead{color:var(--ink-2);font-size:clamp(16px,2.2vw,19px);max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink-3)}
+/* tabs */
+.tabs{position:sticky;top:62px;z-index:15;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs .wrap::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:transparent;color:var(--ink-2);font:inherit;font-weight:600;font-size:14px;padding:9px 14px;border-radius:10px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.pane{display:none;padding:28px 0 56px}
+.pane.on{display:block}
+h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:6px}
+.sub{color:var(--ink-2);margin-bottom:20px}
+/* search */
+.search{position:relative;margin-bottom:14px}
+.search input{width:100%;font:inherit;font-size:16px;padding:14px 46px 14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);outline:none}
+[dir="ltr"] .search input{padding:14px 16px 14px 46px}
+.search input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.search svg{position:absolute;top:50%;transform:translateY(-50%);inset-inline-start:16px;width:18px;height:18px;stroke:var(--ink-3);fill:none;stroke-width:2}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:thin}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.chip small{opacity:.7;margin-inline-start:4px}
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:12px;padding:10px 14px;font-size:13.5px;margin-bottom:14px}
+.count{font-size:13px;color:var(--ink-3);margin-bottom:10px}
+/* test list */
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;direction:ltr;text-align:left}
+.card h3{font-size:15.5px;line-height:1.35}
+.card .cat{font-size:11.5px;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:.04em}
+.row{display:flex;gap:8px;font-size:13.5px;align-items:baseline}
+.row .k{color:var(--ink-3);min-width:62px;font-size:12px}
+.row .v{color:var(--ink)}
+.tube{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.15)}
+.ref{font-variant-numeric:tabular-nums;font-weight:600}
+.empty{grid-column:1/-1;text-align:center;color:var(--ink-3);padding:40px}
+.more{display:block;margin:18px auto 0;padding:11px 22px}
+/* sections */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.box h3{font-size:17px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+.box p,.box li{color:var(--ink-2);font-size:14.5px}
+.box ul{padding-inline-start:18px;display:grid;gap:6px}
+.num{width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+/* order of draw */
+.draw{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:8px 0 24px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 12px;text-align:center;box-shadow:var(--shadow)}
+.step .cap{width:34px;height:14px;border-radius:6px 6px 2px 2px;margin:0 auto}
+.step .body{width:26px;height:46px;margin:0 auto 10px;border-radius:0 0 13px 13px;background:linear-gradient(var(--surface-2),var(--surface-2));border:1px solid var(--line);border-top:0}
+.step b{display:block;font-size:14px}
+.step small{display:block;color:var(--ink-3);font-size:12px;line-height:1.45;margin-top:4px}
+.step .n{font-size:11px;font-weight:700;color:var(--brand)}
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gallery figure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.gallery img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;cursor:zoom-in;background:var(--surface-2)}
+.gallery figcaption{padding:10px 14px;font-size:13.5px;font-weight:600}
+dialog{border:0;padding:0;background:transparent;max-width:min(92vw,720px)}
+dialog::backdrop{background:rgba(5,12,20,.8)}
+dialog img{width:100%;border-radius:12px;display:block}
+/* waste */
+.waste{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.bin{border-radius:var(--radius);padding:16px;border:1px solid var(--line);background:var(--surface);border-top:6px solid var(--c)}
+.bin b{display:block;margin-bottom:4px}
+.bin p{font-size:13.5px;color:var(--ink-2)}
+/* resources */
+.res a{text-decoration:none;color:inherit;display:block;height:100%}
+.res .box{height:100%;transition:border-color .15s}
+.res .box:hover{border-color:var(--brand)}
+.res .dom{font-size:12px;color:var(--brand);font-weight:600;direction:ltr}
+/* footer */
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--ink-2);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+footer .links{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:14px;padding:10px 16px;border-radius:12px;background:var(--brand);color:var(--brand-ink)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+@media (max-width:900px){.draw{grid-template-columns:repeat(3,1fr)}.waste,.grid3,.gallery{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.grid2,.grid3,.gallery,.waste{grid-template-columns:1fr}.draw{grid-template-columns:1fr 1fr}.hero{padding-top:32px}.logo span{display:none}.list{grid-template-columns:1fr}}
+@media print{.top,.tabs,footer,.more{display:none}.pane{display:block!important}}
+</style>
 </head>
 <body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="#"><i><svg viewBox="0 0 24 24"><path d="M9 2h6v2h-1v6.5l5.6 8.9A2 2 0 0 1 17.9 22H6.1a2 2 0 0 1-1.7-2.6L10 10.5V4H9z"/></svg></i><span data-t="brand"></span></a>
+  <div class="sp"></div>
+  <button class="pill" id="themeBtn" aria-label="theme" style="display:grid;place-items:center;width:36px;height:36px;padding:0"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <button class="pill" id="langBtn">English</button>
+</div></header>
 
-<!-- LANG BAR -->
-<div class="lang-bar">
-    <div class="container">
-        <div class="lang-toggle">
-            <button class="lang-btn active" onclick="setLang('ar')" id="btn-ar">العربية</button>
-            <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
-        </div>
-    </div>
-</div>
+<section class="hero"><div class="wrap">
+  <span class="eyebrow" data-t="eyebrow"></span>
+  <h1 data-t="h1" data-html></h1>
+  <p class="lead" data-t="lead"></p>
+  <div class="stats">
+    <div class="stat"><b id="statTests">—</b><span data-t="sTests"></span></div>
+    <div class="stat"><b id="statCats">—</b><span data-t="sCats"></span></div>
+    <div class="stat"><b>6</b><span data-t="sTubes"></span></div>
+    <div class="stat"><b>ISO 15189</b><span data-t="sStd"></span></div>
+  </div>
+</div></section>
 
-<!-- HERO -->
-<header class="hero text-center">
-    <div class="container">
-        <div class="fade-up">
-            <div class="hero-badge">
-                <span class="live-dot"></span>
-                <span data-ar="بوابة مرجعية متخصصة في علوم المختبرات" data-en="Specialized Medical Laboratory Reference Portal"></span>
-            </div>
-        </div>
-        <h1 class="fade-up fade-up-1">
-            <span data-ar="بوابة علوم " data-en="Medical Lab "></span><span><span data-ar="المختبرات الطبية" data-en="Science Portal"></span></span>
-        </h1>
-        <p class="fade-up fade-up-2">
-            <span data-ar="الدليل الشامل للفحوصات المخبرية ومعايير السلامة العالمية — إعداد أ. مأمون السعودي" data-en="The comprehensive guide to laboratory tests and international safety standards — By Mamoun Al-Saudi MLS"></span>
-        </p>
-        <div class="fade-up fade-up-3">
-            <a href="https://t.me/alshamelmls" target="_blank" class="telegram-btn">
-                <i class="fab fa-telegram-plane"></i>
-                <span data-ar="انضم لقناة التلغرام: alshamelmls" data-en="Join Telegram: alshamelmls"></span>
-            </a>
-        </div>
-        <div class="hero-stats fade-up fade-up-3">
-            <div class="hero-stat"><span class="num" id="totalCount">310+</span><span class="lbl" data-ar="فحص مخبري" data-en="Lab Tests"></span></div>
-            <div class="hero-divider"></div>
-            <div class="hero-stat"><span class="num">11</span><span class="lbl" data-ar="تخصص" data-en="Specialties"></span></div>
-            <div class="hero-divider"></div>
-            <div class="hero-stat"><span class="num">ISO</span><span class="lbl" data-ar="معايير دولية" data-en="Int'l Standards"></span></div>
-            <div class="hero-divider"></div>
-            <div class="hero-stat"><span class="num">2026</span><span class="lbl" data-ar="محدّث" data-en="Updated"></span></div>
-        </div>
-    </div>
-</header>
+<nav class="tabs"><div class="wrap" role="tablist">
+  <button class="tab" role="tab" data-pane="tests" aria-selected="true" data-t="tTests"></button>
+  <button class="tab" role="tab" data-pane="pre" aria-selected="false" data-t="tPre"></button>
+  <button class="tab" role="tab" data-pane="safety" aria-selected="false" data-t="tSafety"></button>
+  <button class="tab" role="tab" data-pane="res" aria-selected="false" data-t="tRes"></button>
+</div></nav>
 
-<!-- NAV -->
-<div class="main-nav-wrap">
-    <div class="container">
-        <div class="main-nav">
-            <button class="nav-btn active" onclick="switchTab('directory',this)">
-                <span>🔬</span><span data-ar="دليل الفحوصات" data-en="Test Directory"></span>
-            </button>
-            <button class="nav-btn" onclick="switchTab('safety',this)">
-                <span>🛡️</span><span data-ar="السلامة المهنية" data-en="Lab Safety"></span>
-            </button>
-            <button class="nav-btn" onclick="switchTab('news',this)">
-                <span>🌐</span><span data-ar="مصادر علمية" data-en="Resources"></span>
-            </button>
-        </div>
-    </div>
-</div>
+<main class="wrap">
+<!-- TESTS -->
+<section class="pane on" id="pane-tests" role="tabpanel">
+  <h2 data-t="tTests"></h2>
+  <p class="sub" data-t="testsSub"></p>
+  <div class="search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" autocomplete="off">
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="note">⚠️ <span data-t="refNote"></span></div>
+  <div class="count" id="count"></div>
+  <div class="list" id="list"></div>
+  <button class="pill more" id="moreBtn" data-t="more"></button>
+</section>
 
-<!-- CONTENT -->
-<main class="container py-4">
+<!-- PRE-ANALYTICAL -->
+<section class="pane" id="pane-pre" role="tabpanel">
+  <h2 data-t="drawTitle"></h2>
+  <p class="sub" data-t="drawSub"></p>
+  <div class="draw" id="draw"></div>
+  <h2 class="galsec" data-t="galTitle"></h2>
+  <p class="sub galsec" data-t="galSub"></p>
+  <div class="gallery galsec">
+    <figure><img src="assets/order-of-draw.png" alt="Order of draw infographic" loading="lazy" onerror="this.closest('figure').remove();if(!document.querySelector('.gallery figure'))document.querySelectorAll('.galsec').forEach(e=>e.remove())"><figcaption data-t="g1"></figcaption></figure>
+    <figure><img src="assets/preanalytical-errors.png" alt="Pre-analytical errors infographic" loading="lazy" onerror="this.closest('figure').remove();if(!document.querySelector('.gallery figure'))document.querySelectorAll('.galsec').forEach(e=>e.remove())"><figcaption data-t="g2"></figcaption></figure>
+    <figure><img src="assets/waste-segregation.png" alt="Waste segregation infographic" loading="lazy" onerror="this.closest('figure').remove();if(!document.querySelector('.gallery figure'))document.querySelectorAll('.galsec').forEach(e=>e.remove())"><figcaption data-t="g3"></figcaption></figure>
+  </div>
+  <h2 style="margin-top:32px" data-t="errTitle"></h2>
+  <p class="sub" data-t="errSub"></p>
+  <div class="grid3" id="errors"></div>
+</section>
 
-    <!-- DIRECTORY TAB -->
-    <div id="tab-directory" class="tab-pane active">
-        <div class="search-section">
-            <div class="search-title" id="searchTitle"></div>
-            <div class="search-input-wrap">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-input">
-            </div>
-            <div class="filter-chips">
-                <button class="chip active" onclick="setFilter('All',this)" data-ar="الكل" data-en="All"></button>
-                <button class="chip" onclick="setFilter('Hematology',this)">🩸 Hematology</button>
-                <button class="chip" onclick="setFilter('Chemistry',this)">🧪 Chemistry</button>
-                <button class="chip" onclick="setFilter('Hormones',this)">💊 Hormones</button>
-                <button class="chip" onclick="setFilter('Coagulation',this)">🩹 Coagulation</button>
-                <button class="chip" onclick="setFilter('Immunology',this)">🦠 Immunology</button>
-                <button class="chip" onclick="setFilter('Microbiology',this)">🔭 Microbiology</button>
-                <button class="chip" onclick="setFilter('TumorMarkers',this)">🎗️ Tumor Markers</button>
-                <button class="chip" onclick="setFilter('Genetic',this)">🧬 Genetic</button>
-                <button class="chip" onclick="setFilter('Toxicology',this)">⚗️ Toxicology</button>
-                <button class="chip" onclick="setFilter('BloodBank',this)">🏥 Blood Bank</button>
-                <button class="chip" onclick="setFilter('Urinalysis',this)">💧 Urinalysis</button>
-            </div>
-            <div class="results-count" id="resultsCount"></div>
-        </div>
-        <div class="table-card">
-            <div class="table-responsive">
-                <table class="table lab-table">
-                    <thead><tr id="tableHeaders"></tr></thead>
-                    <tbody id="testTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+<!-- SAFETY -->
+<section class="pane" id="pane-safety" role="tabpanel">
+  <h2 data-t="safeTitle"></h2>
+  <p class="sub" data-t="safeSub"></p>
+  <div class="grid2" id="safety"></div>
+  <h2 style="margin-top:32px" data-t="wasteTitle"></h2>
+  <p class="sub" data-t="wasteSub"></p>
+  <div class="waste" id="waste"></div>
+  <h2 style="margin-top:32px" data-t="incTitle"></h2>
+  <div class="box"><ul id="incident"></ul></div>
+</section>
 
-    <!-- SAFETY TAB -->
-    <div id="tab-safety" class="tab-pane">
-        <div class="row g-4">
-            <div class="col-lg-8">
-                <div class="safety-card">
-                    <div class="section-title">
-                        <i class="fas fa-biohazard" style="color:var(--danger)"></i>
-                        <span data-ar="بروتوكول السلامة العامة" data-en="General Safety Protocol"></span>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-danger"><i class="fas fa-shield-alt"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="1. معدات الحماية الشخصية (PPE)" data-en="1. Personal Protective Equipment (PPE)"></h6>
-                            <p data-ar="يجب ارتداء المعطف المختبري (Lab Coat) مغلق الأزرار، القفازات ذات الاستخدام الواحد، والكمامة الواقية عند التعامل مع العينات المعدية. نظارات الوقاية إلزامية عند العمل مع المواد الكيميائية."
-                               data-en="Lab coat must be fully buttoned. Single-use gloves and a protective mask must be worn when handling infectious samples. Safety goggles are mandatory when working with chemical substances."></p>
-                        </div>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-warning"><i class="fas fa-syringe"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="2. التعامل مع الأدوات الحادة" data-en="2. Sharps Handling"></h6>
-                            <p data-ar="يمنع منعاً باتاً إعادة تغطية الإبر (Recapping). يجب التخلص منها فوراً في الحاويات الصلبة (Sharp Containers). في حال وخز إبرة ملوثة: غسل الجرح بالماء والصابون فوراً، الإبلاغ فوراً، ومتابعة البروتوكولات الطبية."
-                               data-en="Recapping of needles is strictly prohibited. Dispose immediately in sharps containers. In case of needlestick injury: wash wound immediately with soap and water, report immediately, and follow medical protocols."></p>
-                        </div>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-success"><i class="fas fa-pump-soap"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="3. النظافة والتعقيم" data-en="3. Hygiene & Sterilization"></h6>
-                            <p data-ar="يتم تعقيم أسطح العمل بمحلول الصوديوم هيبوكلوريت (10%) قبل وبعد العمل اليومي. غسل اليدين واجب عند خلع القفازات. استخدام معقم اليدين الكحولي (70%) بشكل دوري."
-                               data-en="Work surfaces must be decontaminated with 10% sodium hypochlorite before and after daily work. Handwashing is mandatory after removing gloves. Use 70% alcohol hand sanitizer regularly."></p>
-                        </div>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-info"><i class="fas fa-fire-extinguisher"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="4. السلامة الكيميائية" data-en="4. Chemical Safety"></h6>
-                            <p data-ar="تخزين الأحماض والقواعد بشكل منفصل. استخدام خزانة الأبخرة (Fume Hood) عند التعامل مع المواد المتطايرة. معرفة مواقع محطات غسل العيون ودش الطوارئ."
-                               data-en="Store acids and bases separately. Use the fume hood when handling volatile substances. Know the locations of eyewash stations and emergency showers."></p>
-                        </div>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-bio"><i class="fas fa-bacterium"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="5. التعامل مع العينات المعدية" data-en="5. Handling Infectious Specimens"></h6>
-                            <p data-ar="جميع عينات الدم تعتبر معدية حتى يثبت العكس (Universal Precautions). التعامل مع العينات عالية الخطورة في خزانة الأمان البيولوجي (BSC). تعقيم النفايات قبل التخلص منها."
-                               data-en="All blood samples are considered infectious until proven otherwise (Universal Precautions). Handle high-risk specimens inside a Biological Safety Cabinet (BSC). Decontaminate waste before disposal."></p>
-                        </div>
-                    </div>
-                    <div class="safety-item">
-                        <div class="safety-icon-wrap si-dark"><i class="fas fa-ambulance"></i></div>
-                        <div class="safety-content">
-                            <h6 data-ar="6. إجراءات الطوارئ والإبلاغ" data-en="6. Emergency & Incident Reporting"></h6>
-                            <p data-ar="اتباع بروتوكول الإبلاغ الداخلي للمؤسسة فوراً عند أي حادث. التواصل مع الإدارة المباشرة وقسم الصحة المهنية. توثيق الحادث في سجل الحوادث. عدم التأخر في طلب المساعدة الطبية عند الضرورة."
-                               data-en="Follow the institution's internal reporting protocol immediately after any incident. Contact direct management and occupational health. Document in the incident log. Do not delay seeking medical assistance."></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="side-card">
-                    <div class="section-title"><i class="fas fa-certificate" style="color:var(--accent)"></i><span data-ar="معايير السلامة المعتمدة" data-en="Accredited Safety Standards"></span></div>
-                    <ul class="standards-list">
-                        <li>CLSI GP17-A2</li><li>OSHA Standards</li>
-                        <li>ISO 15189:2022</li><li>WHO Laboratory Biosafety</li><li>CAP Accreditation</li>
-                    </ul>
-                </div>
-                <div class="reporting-card">
-                    <div class="section-title"><i class="fas fa-file-medical-alt"></i><span data-ar="بروتوكول الإبلاغ عن الحوادث" data-en="Incident Reporting Protocol"></span></div>
-                    <ul class="reporting-steps">
-                        <li><span class="step-num">1</span><span data-ar="إبلاغ المشرف المباشر فوراً" data-en="Notify direct supervisor immediately"></span></li>
-                        <li><span class="step-num">2</span><span data-ar="تعبئة نموذج تقرير الحادث" data-en="Complete the incident report form"></span></li>
-                        <li><span class="step-num">3</span><span data-ar="متابعة الإجراءات الطبية إن لزم" data-en="Follow medical procedures if needed"></span></li>
-                        <li><span class="step-num">4</span><span data-ar="مراجعة قسم الصحة المهنية" data-en="Review with Occupational Health dept."></span></li>
-                    </ul>
-                    <small style="color:rgba(255,255,255,0.45);display:block;margin-top:12px;"><span data-ar="* حسب سياسة المؤسسة الداخلية" data-en="* Subject to institutional policy"></span></small>
-                </div>
-                <div class="side-card">
-                    <div class="section-title"><i class="fas fa-recycle" style="color:var(--accent2)"></i><span data-ar="نظام فصل النفايات" data-en="Waste Segregation System"></span></div>
-                    <div class="waste-item waste-red">🔴 <span><strong data-ar="الكيس الأحمر:" data-en="Red Bag:"></strong> <span data-ar="النفايات البيولوجية الملوثة" data-en="Contaminated biological waste"></span></span></div>
-                    <div class="waste-item waste-black">⚫ <span><strong data-ar="الكيس الأسود:" data-en="Black Bag:"></strong> <span data-ar="النفايات الورقية غير الملوثة" data-en="Non-contaminated paper waste"></span></span></div>
-                    <div class="waste-item waste-yellow">🟡 <span><strong data-ar="الحاوية الصفراء:" data-en="Yellow Container:"></strong> <span data-ar="الإبر والمشارط والزجاج المكسور" data-en="Needles, scalpels & broken glass"></span></span></div>
-                    <div class="waste-item waste-blue">🔵 <span><strong data-ar="البراميل الزرقاء:" data-en="Blue Barrels:"></strong> <span data-ar="المواد الكيميائية السائلة" data-en="Liquid chemical waste"></span></span></div>
-                </div>
-                <div class="alert-card">
-                    <strong><i class="fas fa-exclamation-triangle"></i> <span data-ar="تنبيهات هامة" data-en="Important Warnings"></span></strong>
-                    <span data-ar="لا تأكل أو تشرب داخل المختبر — لا تستخدم مستحضرات التجميل — لا تلمس الوجه أو العينين أثناء العمل"
-                          data-en="No eating or drinking in the lab — No cosmetics — Do not touch your face or eyes during work"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RESOURCES TAB -->
-    <div id="tab-news" class="tab-pane">
-        <div class="mb-4">
-            <div class="section-title"><i class="fas fa-globe" style="color:var(--accent)"></i><span data-ar="مصادر علمية موثوقة" data-en="Trusted Scientific Resources"></span></div>
-            <p style="color:var(--text-muted);font-size:0.9rem;"><span data-ar="روابط مباشرة لأبرز المنصات العلمية في مجال علوم المختبرات الطبية" data-en="Direct links to the leading platforms in medical laboratory sciences"></span></p>
-        </div>
-        <div class="news-grid">
-            <a href="https://www.labmedica.com/molecular-diagnostics/" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#e3f2fd;color:#1565c0;"><i class="fas fa-dna"></i></div>
-                    <div><h5 data-ar="التشخيص الجزيئي والوراثي" data-en="Molecular & Genetic Diagnostics"></h5>
-                    <p data-ar="آخر المستجدات في تقنيات التشخيص الجزيئي وتحليل الجينوم" data-en="Latest advances in molecular diagnostics and genomic analysis"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">LabMedica</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-            <a href="https://www.labmedica.com/microbiology/" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#e8f5e9;color:#2e7d32;"><i class="fas fa-vial"></i></div>
-                    <div><h5 data-ar="علم الأحياء الدقيقة" data-en="Microbiology"></h5>
-                    <p data-ar="تطورات في تشخيص الأمراض المعدية ومقاومة المضادات" data-en="Developments in infectious disease diagnosis and AMR"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">LabMedica</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-            <a href="https://www.labmedica.com/hematology/" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#fce4ec;color:#c62828;"><i class="fas fa-tint"></i></div>
-                    <div><h5 data-ar="أمراض الدم والأورام" data-en="Hematology & Oncology"></h5>
-                    <p data-ar="أحدث الأبحاث في تشخيص وعلاج أمراض الدم" data-en="Latest research in blood disorders and hematologic malignancies"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">LabMedica</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-            <a href="https://www.clsi.org/" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#fffde7;color:#f57f17;"><i class="fas fa-file-alt"></i></div>
-                    <div><h5 data-ar="CLSI — معايير المختبرات" data-en="CLSI — Lab Standards"></h5>
-                    <p data-ar="المعايير الدولية لإجراءات المختبرات والممارسات السريرية" data-en="International standards for laboratory procedures and clinical practices"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">clsi.org</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-            <a href="https://www.who.int/publications/i/item/9789240010789" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#e8eaf6;color:#283593;"><i class="fas fa-globe-europe"></i></div>
-                    <div><h5 data-ar="WHO — دليل السلامة البيولوجية" data-en="WHO — Biosafety Manual"></h5>
-                    <p data-ar="الدليل الرابع لسلامة المختبرات الصادر عن منظمة الصحة العالمية" data-en="4th edition WHO Laboratory Biosafety Manual"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">who.int</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-            <a href="https://www.labce.com/" target="_blank" class="news-card">
-                <div class="news-card-header">
-                    <div class="news-icon" style="background:#fbe9e7;color:#bf360c;"><i class="fas fa-graduation-cap"></i></div>
-                    <div><h5 data-ar="LabCE — التعليم المستمر" data-en="LabCE — Continuing Education"></h5>
-                    <p data-ar="دورات تعليمية ومحتوى تدريبي لاختصاصيي المختبرات" data-en="Educational courses and training for lab professionals"></p></div>
-                </div>
-                <div class="news-card-footer"><span style="font-size:0.76rem;color:var(--text-muted);">labce.com</span><span class="visit-link" data-ar="زيارة" data-en="Visit"><i class="fas fa-arrow-left fa-xs"></i></span></div>
-            </a>
-        </div>
-    </div>
-
+<!-- RESOURCES -->
+<section class="pane" id="pane-res" role="tabpanel">
+  <h2 data-t="resTitle"></h2>
+  <p class="sub" data-t="resSub"></p>
+  <div class="grid3 res" id="res"></div>
+</section>
 </main>
 
-<footer class="footer">
-    <div class="container text-center">
-        <h4 data-ar="أ. مأمون السعودي" data-en="Mamoun Al-Saudi, MLS"></h4>
-        <p data-ar="اختصاصي علوم المختبرات الطبية" data-en="Medical Laboratory Science Specialist"></p>
-        <div class="footer-social mb-4">
-            <a href="https://t.me/alshamelmls" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://wa.me/962799146795" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <p class="footer-copy">Medical Laboratory Science Portal &copy; 2026</p>
-    </div>
-</footer>
+<footer><div class="wrap">
+  <div><b data-t="author"></b><br><span data-t="authorRole"></span> · © 2026</div>
+  <div class="links">
+    <a class="btn" href="https://t.me/alshamelmls" target="_blank" rel="noopener" data-t="tg"></a>
+    <a class="btn ghost" href="https://wa.me/962799146795" target="_blank" rel="noopener" data-t="wa"></a>
+  </div>
+</div></footer>
 
-<a href="https://wa.me/962799146795" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<dialog id="lb"><img alt=""></dialog>
 
 <script>
-// ===== DATA =====
-const testsData = [
-    {name:"CBC (Complete Blood Count)",cat:"Hematology",sample:"EDTA (Purple)",normal:"WBC:4.5-11.0 | Hgb:13.5-17.5 g/dL",use:"General screening, anemia, infection"},
-    {name:"Reticulocyte Count",cat:"Hematology",sample:"EDTA (Purple)",normal:"0.5-2.5%",use:"Bone marrow function assessment"},
-    {name:"ESR (Erythrocyte Sedimentation Rate)",cat:"Hematology",sample:"EDTA (Purple)",normal:"M:<15, F:<20 mm/hr",use:"Non-specific inflammation marker"},
-    {name:"HbA1c (Glycated Hemoglobin)",cat:"Hematology",sample:"EDTA (Purple)",normal:"<5.7% Normal",use:"3-month glucose control"},
-    {name:"Ferritin",cat:"Hematology",sample:"Serum (Yellow)",normal:"20-250 ng/mL",use:"Iron stores assessment"},
-    {name:"Vitamin B12",cat:"Hematology",sample:"Serum (Yellow)",normal:"200-900 pg/mL",use:"Megaloblastic anemia"},
-    {name:"Folic Acid",cat:"Hematology",sample:"Serum (Yellow)",normal:">3.0 ng/mL",use:"Megaloblastic anemia"},
-    {name:"Iron (Fe)",cat:"Hematology",sample:"Serum (Yellow)",normal:"60-170 mcg/dL",use:"Iron deficiency anemia"},
-    {name:"TIBC (Total Iron Binding Capacity)",cat:"Hematology",sample:"Serum (Yellow)",normal:"250-400 mcg/dL",use:"Iron metabolism disorders"},
-    {name:"Transferrin Saturation",cat:"Hematology",sample:"Serum (Yellow)",normal:"20-50%",use:"Hemochromatosis screening"},
-    {name:"Peripheral Blood Smear",cat:"Hematology",sample:"EDTA (Purple)",normal:"Normal morphology",use:"Blood cell morphology assessment"},
-    {name:"Sickle Cell Test",cat:"Hematology",sample:"EDTA (Purple)",normal:"Negative",use:"Sickle cell disease screening"},
-    {name:"Hemoglobin Electrophoresis",cat:"Hematology",sample:"EDTA (Purple)",normal:"HbA:96-98%",use:"Thalassemia, hemoglobinopathies"},
-    {name:"G6PD (Glucose-6-Phosphate Dehydrogenase)",cat:"Hematology",sample:"EDTA (Purple)",normal:"4.6-13.5 U/g Hb",use:"Hemolytic anemia"},
-    {name:"Osmotic Fragility Test",cat:"Hematology",sample:"EDTA (Purple)",normal:"0.45-0.55% NaCl",use:"Hereditary spherocytosis"},
-    {name:"Direct Coombs Test (DAT)",cat:"Hematology",sample:"EDTA (Purple)",normal:"Negative",use:"Autoimmune hemolytic anemia"},
-    {name:"Indirect Coombs Test (IAT)",cat:"Hematology",sample:"Serum (Yellow)",normal:"Negative",use:"Blood compatibility, antibody screen"},
-    {name:"Haptoglobin",cat:"Hematology",sample:"Serum (Yellow)",normal:"30-200 mg/dL",use:"Hemolysis marker"},
-    {name:"Methemoglobin",cat:"Hematology",sample:"EDTA (Purple)",normal:"<1% of total Hb",use:"Methemoglobinemia"},
-    {name:"Carboxyhemoglobin",cat:"Hematology",sample:"EDTA (Purple)",normal:"<3% non-smokers",use:"Carbon monoxide poisoning"},
-    {name:"Erythropoietin (EPO)",cat:"Hematology",sample:"Serum (Yellow)",normal:"2.6-18.5 mIU/mL",use:"Polycythemia, anemia of CKD"},
-    {name:"Blood Parasites (Malaria Smear)",cat:"Hematology",sample:"EDTA (Purple)",normal:"Negative",use:"Malaria diagnosis"},
-    {name:"Flow Cytometry (CD markers)",cat:"Hematology",sample:"EDTA (Purple)",normal:"Normal distribution",use:"Leukemia immunophenotyping"},
-    {name:"JAK2 Mutation",cat:"Hematology",sample:"EDTA (Purple)",normal:"Negative",use:"Myeloproliferative neoplasms"},
-    {name:"BCR-ABL (Philadelphia Chromosome)",cat:"Hematology",sample:"EDTA (Purple)",normal:"Negative",use:"CML diagnosis"},
-    {name:"LDH (Lactate Dehydrogenase)",cat:"Hematology",sample:"Serum (Yellow)",normal:"140-280 U/L",use:"Hemolysis, tumor marker"},
-    {name:"Intrinsic Factor Antibody",cat:"Hematology",sample:"Serum (Yellow)",normal:"Negative",use:"Pernicious anemia"},
-    {name:"Glucose (Fasting)",cat:"Chemistry",sample:"Serum/Plasma (Grey)",normal:"70-100 mg/dL",use:"Diabetes screening"},
-    {name:"Glucose (Random)",cat:"Chemistry",sample:"Serum/Plasma (Grey)",normal:"<140 mg/dL",use:"Acute hyperglycemia"},
-    {name:"Glucose Tolerance Test (OGTT)",cat:"Chemistry",sample:"Serum (Grey) – serial",normal:"2hr <140 mg/dL",use:"Gestational diabetes"},
-    {name:"Creatinine",cat:"Chemistry",sample:"Serum (Yellow)",normal:"0.7-1.3 mg/dL",use:"Kidney function"},
-    {name:"BUN (Blood Urea Nitrogen)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"7-20 mg/dL",use:"Kidney function, dehydration"},
-    {name:"eGFR (Estimated GFR)",cat:"Chemistry",sample:"Calculated",normal:">90 mL/min",use:"CKD staging"},
-    {name:"Cystatin C",cat:"Chemistry",sample:"Serum (Yellow)",normal:"0.6-1.2 mg/L",use:"Early kidney dysfunction"},
-    {name:"Uric Acid",cat:"Chemistry",sample:"Serum (Yellow)",normal:"M:3.5-7.2 F:2.6-6.0 mg/dL",use:"Gout, tumor lysis syndrome"},
-    {name:"ALT (Alanine Aminotransferase)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<41 U/L",use:"Liver cell damage"},
-    {name:"AST (Aspartate Aminotransferase)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<40 U/L",use:"Liver, heart, muscle damage"},
-    {name:"ALP (Alkaline Phosphatase)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"44-147 U/L",use:"Biliary obstruction, bone disease"},
-    {name:"GGT (Gamma-Glutamyl Transferase)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"M:10-71 F:6-42 U/L",use:"Alcohol abuse, cholestasis"},
-    {name:"Bilirubin (Total)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"0.1-1.2 mg/dL",use:"Jaundice, hemolysis"},
-    {name:"Bilirubin (Direct)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"0-0.3 mg/dL",use:"Hepatocellular vs obstructive jaundice"},
-    {name:"Total Protein",cat:"Chemistry",sample:"Serum (Yellow)",normal:"6.0-8.3 g/dL",use:"Nutritional status, liver/kidney"},
-    {name:"Albumin",cat:"Chemistry",sample:"Serum (Yellow)",normal:"3.5-5.0 g/dL",use:"Liver function, nutritional status"},
-    {name:"Ammonia",cat:"Chemistry",sample:"EDTA (Purple) – Ice",normal:"15-45 mcg/dL",use:"Hepatic encephalopathy"},
-    {name:"Lactate",cat:"Chemistry",sample:"EDTA (Purple) – Ice",normal:"0.5-2.2 mmol/L",use:"Sepsis, hypoxia, shock"},
-    {name:"Troponin I (cTnI)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<0.04 ng/mL",use:"Myocardial infarction (AMI)"},
-    {name:"Troponin T (cTnT)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<0.01 ng/mL",use:"Myocardial infarction"},
-    {name:"CK-MB (Creatine Kinase-MB)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<25 U/L",use:"Myocardial injury"},
-    {name:"BNP (B-Type Natriuretic Peptide)",cat:"Chemistry",sample:"EDTA (Purple)",normal:"<100 pg/mL",use:"Heart failure diagnosis"},
-    {name:"NT-proBNP",cat:"Chemistry",sample:"EDTA (Purple)",normal:"<300 pg/mL",use:"Heart failure severity"},
-    {name:"Homocysteine",cat:"Chemistry",sample:"Serum (Yellow)",normal:"5-15 mcmol/L",use:"Cardiovascular risk, B12/folate"},
-    {name:"CRP (C-Reactive Protein)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<10 mg/L",use:"Inflammation, infection marker"},
-    {name:"hs-CRP (High Sensitivity CRP)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<1.0 mg/L low risk",use:"Cardiovascular risk assessment"},
-    {name:"Procalcitonin (PCT)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<0.05 ng/mL",use:"Bacterial sepsis marker"},
-    {name:"Cholesterol (Total)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"<200 mg/dL",use:"Cardiovascular risk screening"},
-    {name:"Triglycerides",cat:"Chemistry",sample:"Serum (Yellow) Fasting",normal:"<150 mg/dL",use:"Pancreatitis risk, CVD"},
-    {name:"HDL Cholesterol",cat:"Chemistry",sample:"Serum (Yellow)",normal:">40 (M) >50 (F) mg/dL",use:"Cardioprotective lipoprotein"},
-    {name:"LDL Cholesterol",cat:"Chemistry",sample:"Calculated (Friedewald)",normal:"<100 mg/dL",use:"Atherosclerosis risk"},
-    {name:"Sodium (Na⁺)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"136-145 mEq/L",use:"Fluid balance, hyponatremia"},
-    {name:"Potassium (K⁺)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"3.5-5.0 mEq/L",use:"Arrhythmias, renal function"},
-    {name:"Calcium (Total)",cat:"Chemistry",sample:"Serum (Yellow)",normal:"8.5-10.5 mg/dL",use:"Bone disease, parathyroid"},
-    {name:"Phosphorus",cat:"Chemistry",sample:"Serum (Yellow)",normal:"2.5-4.5 mg/dL",use:"Bone disease, renal failure"},
-    {name:"Magnesium",cat:"Chemistry",sample:"Serum (Yellow)",normal:"1.7-2.2 mg/dL",use:"Arrhythmias, hypomagnesemia"},
-    {name:"TSH (Thyroid Stimulating Hormone)",cat:"Hormones",sample:"Serum (Yellow)",normal:"0.45-4.5 mIU/L",use:"Thyroid function screening"},
-    {name:"Free T4 (Free Thyroxine)",cat:"Hormones",sample:"Serum (Yellow)",normal:"0.8-1.8 ng/dL",use:"Thyroid function"},
-    {name:"Free T3 (Free Triiodothyronine)",cat:"Hormones",sample:"Serum (Yellow)",normal:"2.3-4.2 pg/mL",use:"Thyroid function, hyperthyroidism"},
-    {name:"Thyroglobulin",cat:"Hormones",sample:"Serum (Yellow)",normal:"3-42 ng/mL",use:"Thyroid cancer follow-up"},
-    {name:"Anti-TPO (Thyroid Peroxidase Ab)",cat:"Hormones",sample:"Serum (Yellow)",normal:"<35 IU/mL",use:"Hashimoto's thyroiditis"},
-    {name:"Anti-Tg (Thyroglobulin Ab)",cat:"Hormones",sample:"Serum (Yellow)",normal:"<40 IU/mL",use:"Autoimmune thyroid disease"},
-    {name:"TRAb (TSH Receptor Ab)",cat:"Hormones",sample:"Serum (Yellow)",normal:"<1.0 IU/L",use:"Graves' disease"},
-    {name:"Prolactin",cat:"Hormones",sample:"Serum (Yellow)",normal:"2-18 ng/mL",use:"Pituitary tumors, infertility"},
-    {name:"Total Testosterone",cat:"Hormones",sample:"Serum (Yellow)",normal:"300-1000 ng/dL",use:"Hypogonadism"},
-    {name:"DHEA-S",cat:"Hormones",sample:"Serum (Yellow)",normal:"M:280-640 F:65-380 mcg/dL",use:"Adrenal function, PCOS"},
-    {name:"Estradiol (E2)",cat:"Hormones",sample:"Serum (Yellow)",normal:"Varies by menstrual phase",use:"Ovulation, fertility assessment"},
-    {name:"Progesterone",cat:"Hormones",sample:"Serum (Yellow)",normal:"Follicular:<1 Luteal:5-20 ng/mL",use:"Ovulation confirmation, pregnancy"},
-    {name:"17-OH Progesterone",cat:"Hormones",sample:"Serum (Yellow)",normal:"<200 ng/dL",use:"Congenital Adrenal Hyperplasia (CAH)"},
-    {name:"Cortisol (AM – 8AM)",cat:"Hormones",sample:"Serum (Yellow)",normal:"6-23 mcg/dL",use:"Adrenal function, Cushing's syndrome"},
-    {name:"ACTH (Adrenocorticotropin)",cat:"Hormones",sample:"EDTA (Purple) – Ice",normal:"7.2-63.3 pg/mL",use:"Cushing's, Addison's disease"},
-    {name:"Aldosterone",cat:"Hormones",sample:"Serum (Yellow)",normal:"<28 ng/dL (upright)",use:"Primary hyperaldosteronism"},
-    {name:"Plasma Renin Activity",cat:"Hormones",sample:"EDTA (Purple) – Ice",normal:"0.65-5.0 ng/mL/hr",use:"Hypertension workup"},
-    {name:"Insulin (Fasting)",cat:"Hormones",sample:"Serum (Yellow)",normal:"2.6-24.9 mIU/L",use:"Insulin resistance, insulinoma"},
-    {name:"C-Peptide",cat:"Hormones",sample:"Serum (Yellow)",normal:"0.8-4.0 ng/mL",use:"Endogenous insulin production"},
-    {name:"GH (Growth Hormone)",cat:"Hormones",sample:"Serum (Yellow)",normal:"<10 ng/mL",use:"Acromegaly, GH deficiency"},
-    {name:"IGF-1",cat:"Hormones",sample:"Serum (Yellow)",normal:"Varies by age",use:"GH status, acromegaly monitoring"},
-    {name:"FSH (Follicle Stimulating Hormone)",cat:"Hormones",sample:"Serum (Yellow)",normal:"Varies by phase",use:"Fertility workup, menopause"},
-    {name:"LH (Luteinizing Hormone)",cat:"Hormones",sample:"Serum (Yellow)",normal:"Varies by phase",use:"Ovulation detection, PCOS"},
-    {name:"AMH (Anti-Müllerian Hormone)",cat:"Hormones",sample:"Serum (Yellow)",normal:"1.0-3.5 ng/mL",use:"Ovarian reserve assessment"},
-    {name:"PTH (Parathyroid Hormone)",cat:"Hormones",sample:"EDTA (Purple)",normal:"10-65 pg/mL",use:"Hypercalcemia, bone disease"},
-    {name:"Vitamin D (25-OH)",cat:"Hormones",sample:"Serum (Yellow)",normal:"30-100 ng/mL",use:"Vitamin D deficiency/toxicity"},
-    {name:"Calcitonin",cat:"Hormones",sample:"Serum (Yellow)",normal:"M:<11.5 F:<4.6 pg/mL",use:"Medullary thyroid carcinoma"},
-    {name:"PT (Prothrombin Time)",cat:"Coagulation",sample:"Citrate (Blue)",normal:"11-13.5 sec",use:"Warfarin monitoring, liver function"},
-    {name:"INR (International Normalized Ratio)",cat:"Coagulation",sample:"Citrate (Blue)",normal:"0.9-1.1 (therapeutic 2-3)",use:"Warfarin anticoagulation monitoring"},
-    {name:"aPTT (Activated Partial Thromboplastin Time)",cat:"Coagulation",sample:"Citrate (Blue)",normal:"25-35 sec",use:"Heparin monitoring, bleeding disorders"},
-    {name:"D-Dimer",cat:"Coagulation",sample:"Citrate (Blue)",normal:"<0.5 μg/mL FEU",use:"DVT/PE exclusion, DIC"},
-    {name:"Fibrinogen",cat:"Coagulation",sample:"Citrate (Blue)",normal:"200-400 mg/dL",use:"DIC, bleeding disorders, clotting"},
-    {name:"Thrombin Time",cat:"Coagulation",sample:"Citrate (Blue)",normal:"14-21 sec",use:"Fibrinogen qualitative disorders"},
-    {name:"Factor VIII Activity",cat:"Coagulation",sample:"Citrate (Blue)",normal:"50-150%",use:"Hemophilia A diagnosis"},
-    {name:"Factor IX Activity",cat:"Coagulation",sample:"Citrate (Blue)",normal:"50-150%",use:"Hemophilia B diagnosis"},
-    {name:"von Willebrand Factor Antigen",cat:"Coagulation",sample:"Citrate (Blue)",normal:"50-150%",use:"von Willebrand disease"},
-    {name:"Protein C Activity",cat:"Coagulation",sample:"Citrate (Blue)",normal:"65-135%",use:"Inherited thrombophilia"},
-    {name:"Protein S Activity",cat:"Coagulation",sample:"Citrate (Blue)",normal:"65-140%",use:"Inherited thrombophilia"},
-    {name:"Antithrombin III",cat:"Coagulation",sample:"Citrate (Blue)",normal:"80-120%",use:"Thrombophilia, heparin resistance"},
-    {name:"Lupus Anticoagulant",cat:"Coagulation",sample:"Citrate (Blue)",normal:"Negative",use:"Antiphospholipid Syndrome (APS)"},
-    {name:"Factor V Leiden Mutation",cat:"Coagulation",sample:"EDTA (Purple)",normal:"Negative",use:"Activated protein C resistance"},
-    {name:"Platelet Count",cat:"Coagulation",sample:"EDTA (Purple)",normal:"150-450 ×10³/µL",use:"Thrombocytopenia or thrombocytosis"},
-    {name:"ANA (Antinuclear Antibodies)",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative (<1:40)",use:"Autoimmune disease screening"},
-    {name:"Anti-dsDNA",cat:"Immunology",sample:"Serum (Yellow)",normal:"<100 IU/mL",use:"SLE specific, disease activity"},
-    {name:"Anti-Smith (Sm)",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"SLE highly specific antibody"},
-    {name:"Anti-SSA/Ro",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Sjögren's syndrome, neonatal lupus"},
-    {name:"Anti-SSB/La",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Sjögren's syndrome"},
-    {name:"Anti-Scl-70 (Topoisomerase I)",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Systemic sclerosis (diffuse)"},
-    {name:"RF (Rheumatoid Factor)",cat:"Immunology",sample:"Serum (Yellow)",normal:"<14 IU/mL",use:"Rheumatoid arthritis"},
-    {name:"Anti-CCP (Cyclic Citrullinated Peptide)",cat:"Immunology",sample:"Serum (Yellow)",normal:"<20 U/mL",use:"Early RA, high specificity"},
-    {name:"ASO (Antistreptolysin O)",cat:"Immunology",sample:"Serum (Yellow)",normal:"<200 IU/mL",use:"Post-streptococcal rheumatic disease"},
-    {name:"IgG",cat:"Immunology",sample:"Serum (Yellow)",normal:"700-1600 mg/dL",use:"Immune status, deficiency"},
-    {name:"IgA",cat:"Immunology",sample:"Serum (Yellow)",normal:"70-400 mg/dL",use:"IgA deficiency, celiac"},
-    {name:"IgM",cat:"Immunology",sample:"Serum (Yellow)",normal:"40-230 mg/dL",use:"Acute infection, Waldenström's"},
-    {name:"IgE (Total)",cat:"Immunology",sample:"Serum (Yellow)",normal:"<100 IU/mL",use:"Allergies, asthma, atopy"},
-    {name:"Complement C3",cat:"Immunology",sample:"Serum (Yellow)",normal:"90-180 mg/dL",use:"SLE disease activity"},
-    {name:"Complement C4",cat:"Immunology",sample:"Serum (Yellow)",normal:"10-40 mg/dL",use:"SLE, hereditary angioedema"},
-    {name:"HIV Antibody/Ag (4th Gen combo)",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"HIV-1/2 screening"},
-    {name:"HIV RNA (Viral Load)",cat:"Immunology",sample:"EDTA (Purple)",normal:"Undetectable",use:"HIV treatment monitoring"},
-    {name:"HBsAg (Hepatitis B Surface Ag)",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Active HBV infection"},
-    {name:"Anti-HBs (Hepatitis B Surface Ab)",cat:"Immunology",sample:"Serum (Yellow)",normal:">10 mIU/mL",use:"Immunity to HBV"},
-    {name:"Anti-HBc Total",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Past or current HBV exposure"},
-    {name:"Hepatitis C Antibody",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"HCV infection screening"},
-    {name:"Hepatitis C RNA (Viral Load)",cat:"Immunology",sample:"EDTA (Purple)",normal:"Undetectable",use:"Active HCV, treatment response"},
-    {name:"CMV IgM",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Acute CMV infection"},
-    {name:"EBV VCA IgM",cat:"Immunology",sample:"Serum (Yellow)",normal:"Negative",use:"Acute infectious mononucleosis"},
-    {name:"Blood Culture (Aerobic)",cat:"Microbiology",sample:"Blood culture bottles",normal:"No growth",use:"Bacteremia, sepsis"},
-    {name:"Blood Culture (Anaerobic)",cat:"Microbiology",sample:"Blood culture bottles",normal:"No growth",use:"Anaerobic bacteremia"},
-    {name:"Urine Culture",cat:"Microbiology",sample:"Clean catch midstream urine",normal:"<10³ CFU/mL",use:"UTI diagnosis & pathogen ID"},
-    {name:"Stool Culture",cat:"Microbiology",sample:"Fresh stool sample",normal:"No pathogens",use:"Bacterial gastroenteritis"},
-    {name:"Sputum Culture",cat:"Microbiology",sample:"Expectorated sputum",normal:"Normal respiratory flora",use:"Pneumonia, respiratory infection"},
-    {name:"Throat Culture",cat:"Microbiology",sample:"Posterior pharynx swab",normal:"No Group A Strep",use:"Streptococcal pharyngitis"},
-    {name:"Wound Culture",cat:"Microbiology",sample:"Wound swab or tissue",normal:"No pathogens",use:"Wound infection, abscess"},
-    {name:"CSF Culture",cat:"Microbiology",sample:"Cerebrospinal fluid",normal:"No growth",use:"Bacterial/fungal meningitis"},
-    {name:"Gram Stain",cat:"Microbiology",sample:"Any clinical specimen",normal:"No organisms identified",use:"Rapid bacterial classification"},
-    {name:"AFB Smear (TB)",cat:"Microbiology",sample:"Sputum / CSF",normal:"Negative (no AFB seen)",use:"TB screening, smear positivity"},
-    {name:"AFB Culture (TB Culture)",cat:"Microbiology",sample:"Sputum / CSF",normal:"No mycobacterial growth",use:"Definitive TB diagnosis"},
-    {name:"TB PCR – GeneXpert MTB/RIF",cat:"Microbiology",sample:"Sputum",normal:"MTB not detected",use:"Rapid TB + rifampicin resistance"},
-    {name:"KOH Preparation",cat:"Microbiology",sample:"Skin scrapings / nail / hair",normal:"No hyphae or spores",use:"Rapid dermatophyte detection"},
-    {name:"Cryptococcal Antigen (CrAg)",cat:"Microbiology",sample:"Serum / CSF",normal:"Negative",use:"Cryptococcal meningitis"},
-    {name:"C. difficile Toxin A/B",cat:"Microbiology",sample:"Liquid/unformed stool",normal:"Negative",use:"Antibiotic-associated colitis (CDAD)"},
-    {name:"H. pylori Stool Antigen",cat:"Microbiology",sample:"Stool",normal:"Negative",use:"H. pylori active infection"},
-    {name:"H. pylori Urea Breath Test",cat:"Microbiology",sample:"Exhaled breath",normal:"Negative",use:"H. pylori detection & eradication"},
-    {name:"Syphilis RPR/VDRL",cat:"Microbiology",sample:"Serum",normal:"Non-reactive",use:"Syphilis screening (non-treponemal)"},
-    {name:"Chlamydia NAAT/PCR",cat:"Microbiology",sample:"Urine / cervical/urethral swab",normal:"Not detected",use:"Chlamydia trachomatis infection"},
-    {name:"Gonorrhea NAAT/PCR",cat:"Microbiology",sample:"Urine / swab",normal:"Not detected",use:"Neisseria gonorrhoeae infection"},
-    {name:"MRSA Surveillance Screen",cat:"Microbiology",sample:"Nasal swab",normal:"Negative",use:"MRSA colonization screening"},
-    {name:"Legionella Urinary Antigen",cat:"Microbiology",sample:"Urine",normal:"Negative",use:"Legionnaires' disease"},
-    {name:"AFP (Alpha-Fetoprotein)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<10 ng/mL",use:"Hepatocellular carcinoma, germ cell tumors"},
-    {name:"CEA (Carcinoembryonic Antigen)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<3.0 ng/mL (non-smoker)",use:"Colorectal, lung, breast cancer monitoring"},
-    {name:"CA 19-9",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<37 U/mL",use:"Pancreatic adenocarcinoma"},
-    {name:"CA 125",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<35 U/mL",use:"Ovarian cancer, peritoneal disease"},
-    {name:"CA 15-3",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<30 U/mL",use:"Breast cancer monitoring"},
-    {name:"PSA (Total Prostate-Specific Antigen)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<4.0 ng/mL",use:"Prostate cancer screening & monitoring"},
-    {name:"PSA Free/Total Ratio",cat:"TumorMarkers",sample:"Calculated",normal:">0.25 (lower ratio = higher risk)",use:"Prostate cancer risk stratification"},
-    {name:"hCG (Beta-hCG Quantitative)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<5 mIU/mL (non-pregnant)",use:"Germ cell tumors, trophoblastic disease"},
-    {name:"Beta-2 Microglobulin",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"1.1-2.4 mg/L",use:"Multiple myeloma, lymphoma staging"},
-    {name:"Chromogranin A (CgA)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<93 ng/mL",use:"Neuroendocrine tumors (NET)"},
-    {name:"NSE (Neuron-Specific Enolase)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<16.3 ng/mL",use:"Small cell lung cancer, neuroblastoma"},
-    {name:"CYFRA 21-1",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<3.3 ng/mL",use:"Non-small cell lung cancer (NSCLC)"},
-    {name:"SCC Antigen (Squamous Cell Carcinoma)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<1.5 ng/mL",use:"Cervical, head/neck squamous cell cancer"},
-    {name:"HE4 (Human Epididymis Protein 4)",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<70 pmol/L",use:"Ovarian cancer (combined with CA-125 ROMA)"},
-    {name:"CA 72-4",cat:"TumorMarkers",sample:"Serum (Yellow)",normal:"<6.9 U/mL",use:"Gastric adenocarcinoma"},
-    {name:"BRCA1/BRCA2 Gene Testing",cat:"Genetic",sample:"EDTA (Purple) – blood",normal:"No pathogenic variant",use:"Hereditary breast & ovarian cancer risk"},
-    {name:"Lynch Syndrome Panel (MMR genes)",cat:"Genetic",sample:"EDTA (Purple)",normal:"No mutation detected",use:"Hereditary colorectal cancer (HNPCC)"},
-    {name:"KRAS Mutation Analysis",cat:"Genetic",sample:"FFPE tissue / liquid biopsy",normal:"Wild type (no mutation)",use:"Colorectal/NSCLC – EGFR/MEK therapy"},
-    {name:"BRAF V600E Mutation",cat:"Genetic",sample:"FFPE tissue / plasma",normal:"Wild type",use:"Melanoma, colorectal, thyroid – Vemurafenib"},
-    {name:"EGFR Mutation (Exons 18-21)",cat:"Genetic",sample:"FFPE tissue / plasma",normal:"Wild type",use:"NSCLC – TKI therapy (Erlotinib, Osimertinib)"},
-    {name:"ALK Gene Rearrangement (FISH/IHC)",cat:"Genetic",sample:"FFPE tissue",normal:"Negative",use:"NSCLC – Crizotinib, Alectinib"},
-    {name:"PD-L1 Expression (IHC)",cat:"Genetic",sample:"FFPE tumor tissue",normal:"<1% TPS",use:"Immunotherapy eligibility (Pembrolizumab)"},
-    {name:"HER2 Amplification (FISH)",cat:"Genetic",sample:"FFPE tissue",normal:"Negative / not amplified",use:"Breast & gastric cancer – Trastuzumab"},
-    {name:"IDH1/IDH2 Mutation",cat:"Genetic",sample:"FFPE tissue / bone marrow",normal:"Wild type",use:"AML, glioma – Ivosidenib/Enasidenib"},
-    {name:"TP53 Mutation",cat:"Genetic",sample:"Tissue / plasma",normal:"Wild type",use:"Multiple cancers, poor prognosis marker"},
-    {name:"Factor V Leiden (R506Q)",cat:"Genetic",sample:"EDTA (Purple)",normal:"Negative",use:"Inherited thrombophilia risk"},
-    {name:"CYP2C19 Genotyping",cat:"Genetic",sample:"EDTA (Purple)",normal:"*1/*1 (normal metabolizer)",use:"Clopidogrel & PPI drug metabolism"},
-    {name:"CYP2D6 Genotyping",cat:"Genetic",sample:"EDTA (Purple)",normal:"*1/*1 (normal metabolizer)",use:"Tamoxifen, codeine, antidepressants"},
-    {name:"MTHFR C677T Polymorphism",cat:"Genetic",sample:"EDTA (Purple)",normal:"CC genotype (wild type)",use:"Hyperhomocysteinemia & thrombosis risk"},
-    {name:"Ethanol – Blood Alcohol Level",cat:"Toxicology",sample:"Serum / whole blood (NaF grey)",normal:"0 mg/dL (legal limit <80 mg/dL)",use:"Alcohol intoxication, forensic"},
-    {name:"Acetaminophen (Paracetamol) Level",cat:"Toxicology",sample:"Serum (grey top)",normal:"Therapeutic: 10-20 mcg/mL",use:"Overdose assessment (Rumack-Matthew)"},
-    {name:"Salicylate Level",cat:"Toxicology",sample:"Serum",normal:"Therapeutic: 15-30 mg/dL",use:"Aspirin toxicity & overdose"},
-    {name:"Benzodiazepine Screen",cat:"Toxicology",sample:"Urine / serum",normal:"Negative",use:"Sedative hypnotic overdose/abuse"},
-    {name:"Opiate Drug Screen (Qualitative)",cat:"Toxicology",sample:"Urine",normal:"Negative",use:"Opioid drug screening"},
-    {name:"Morphine (Quantitative)",cat:"Toxicology",sample:"Serum",normal:"Therapeutic: 10-80 ng/mL",use:"Pain management TDM"},
-    {name:"Fentanyl Level",cat:"Toxicology",sample:"Plasma / urine",normal:"Therapeutic: 1-10 ng/mL",use:"Fentanyl TDM, overdose"},
-    {name:"Cocaine Metabolite (Benzoylecgonine)",cat:"Toxicology",sample:"Urine",normal:"Negative",use:"Cocaine use detection (up to 72h)"},
-    {name:"Amphetamine/Methamphetamine Screen",cat:"Toxicology",sample:"Urine",normal:"Negative",use:"Stimulant abuse detection"},
-    {name:"Cannabinoids (THC metabolites)",cat:"Toxicology",sample:"Urine",normal:"Negative",use:"Marijuana use detection"},
-    {name:"Blood Lead Level",cat:"Toxicology",sample:"EDTA (Tan/Navy)",normal:"<5 mcg/dL (CDC reference)",use:"Lead poisoning, occupational exposure"},
-    {name:"Blood Mercury Level",cat:"Toxicology",sample:"EDTA trace metal tube",normal:"<10 ng/mL",use:"Mercury toxicity"},
-    {name:"Digoxin Level",cat:"Toxicology",sample:"Serum – 6-8h post dose",normal:"0.8-2.0 ng/mL",use:"Cardiac glycoside TDM"},
-    {name:"Lithium Level",cat:"Toxicology",sample:"Serum – 12h post dose",normal:"0.6-1.2 mEq/L",use:"Bipolar disorder TDM"},
-    {name:"Valproic Acid Level",cat:"Toxicology",sample:"Serum (trough)",normal:"50-100 mcg/mL",use:"Epilepsy / mood disorder TDM"},
-    {name:"Carbamazepine Level",cat:"Toxicology",sample:"Serum (trough)",normal:"4-12 mcg/mL",use:"Epilepsy / neuropathic pain TDM"},
-    {name:"Phenytoin Level",cat:"Toxicology",sample:"Serum (trough)",normal:"10-20 mcg/mL",use:"Epilepsy TDM"},
-    {name:"ABO Blood Grouping",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Group determined",use:"Pre-transfusion blood type identification"},
-    {name:"Rh(D) Typing",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Positive or Negative",use:"Rh compatibility for transfusion/pregnancy"},
-    {name:"Irregular Antibody Screen (IAT)",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Negative (no alloantibodies)",use:"Unexpected RBC alloantibody detection"},
-    {name:"Direct Antiglobulin Test (DAT)",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Negative",use:"Hemolytic disease of newborn, AIHA, DIIHA"},
-    {name:"Major Crossmatch",cat:"BloodBank",sample:"Patient serum + donor RBCs",normal:"Compatible (no agglutination)",use:"Pre-transfusion compatibility testing"},
-    {name:"Antibody Identification Panel",cat:"BloodBank",sample:"Serum (Red)",normal:"No clinically significant antibody",use:"Alloantibody specificity determination"},
-    {name:"Kleihauer-Betke Acid Elution Test",cat:"BloodBank",sample:"Maternal EDTA blood",normal:"<0.1% fetal cells",use:"Quantify fetomaternal hemorrhage for RhIG"},
-    {name:"HLA Typing (Class I & II)",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Genotype determined",use:"Organ/stem cell transplant matching"},
-    {name:"Panel Reactive Antibody (PRA)",cat:"BloodBank",sample:"Serum (Yellow)",normal:"0% (undetectable)",use:"Transplant candidate sensitization status"},
-    {name:"Extended RBC Phenotyping (Kell/Duffy/Kidd)",cat:"BloodBank",sample:"EDTA (Purple)",normal:"Phenotype determined",use:"Complex transfusion patients, alloimmunized"},
-    {name:"Urinalysis – Dipstick (10-parameter)",cat:"Urinalysis",sample:"Freshly voided random urine",normal:"All parameters negative/normal",use:"Urinary tract screening, metabolic disorders"},
-    {name:"Urine Specific Gravity",cat:"Urinalysis",sample:"Random urine",normal:"1.005-1.030",use:"Renal concentrating & diluting ability"},
-    {name:"Urine pH",cat:"Urinalysis",sample:"Random urine",normal:"4.5-8.0",use:"Acid-base disorders, urolithiasis risk"},
-    {name:"Urine Glucose",cat:"Urinalysis",sample:"Random urine",normal:"Negative",use:"Diabetes mellitus, Fanconi syndrome"},
-    {name:"Urine Ketones",cat:"Urinalysis",sample:"Random urine",normal:"Negative",use:"DKA, starvation ketosis, alcoholic ketosis"},
-    {name:"Urine Protein",cat:"Urinalysis",sample:"Random urine",normal:"Negative/trace",use:"Glomerulonephritis, nephrotic syndrome"},
-    {name:"Urine Microscopy (Sediment)",cat:"Urinalysis",sample:"Fresh midstream urine",normal:"0-2 RBC/hpf, 0-5 WBC/hpf",use:"Hematuria, pyuria, casts, crystals"},
-    {name:"24-hour Urine Protein",cat:"Urinalysis",sample:"24h urine collection",normal:"<150 mg/24h",use:"Proteinuria quantification, nephrotic workup"},
-    {name:"Urine Albumin/Creatinine Ratio (ACR)",cat:"Urinalysis",sample:"Spot first-morning urine",normal:"<30 mg/g",use:"Early diabetic nephropathy screening"},
-    {name:"Urine Protein/Creatinine Ratio (PCR)",cat:"Urinalysis",sample:"Spot urine",normal:"<0.2 mg/mg",use:"Proteinuria quantification (spot method)"},
-    {name:"Urine Osmolality",cat:"Urinalysis",sample:"Random or timed urine",normal:"300-900 mOsm/kg",use:"Renal concentrating ability, SIADH"},
-    {name:"Urine Calcium (24h)",cat:"Urinalysis",sample:"24h urine – acidified",normal:"100-300 mg/24h",use:"Hypercalciuria, calcium nephrolithiasis"},
-    {name:"Urine Uric Acid (24h)",cat:"Urinalysis",sample:"24h urine",normal:"250-750 mg/24h",use:"Gout, uric acid stone prevention"},
-    {name:"Urine 5-HIAA (24h)",cat:"Urinalysis",sample:"24h urine – acidified",normal:"2-9 mg/24h",use:"Carcinoid tumor, serotonin-secreting NET"},
-    {name:"Urine Free Cortisol (24h UFC)",cat:"Urinalysis",sample:"24h urine",normal:"10-100 mcg/24h",use:"Cushing's syndrome (best screening test)"},
-    {name:"Urine Metanephrines (Fractionated, 24h)",cat:"Urinalysis",sample:"24h urine – acidified",normal:"<1.3 mg/24h",use:"Pheochromocytoma/paraganglioma"}
-];
+const TESTS = [{"n": "CBC (Complete Blood Count)", "c": "Hematology", "s": "EDTA (Purple)", "r": "WBC:4.5-11.0 | Hgb:13.5-17.5 g/dL", "u": "General screening, anemia, infection"}, {"n": "Reticulocyte Count", "c": "Hematology", "s": "EDTA (Purple)", "r": "0.5-2.5%", "u": "Bone marrow function assessment"}, {"n": "ESR (Erythrocyte Sedimentation Rate)", "c": "Hematology", "s": "EDTA (Purple)", "r": "M:<15, F:<20 mm/hr", "u": "Non-specific inflammation marker"}, {"n": "HbA1c (Glycated Hemoglobin)", "c": "Hematology", "s": "EDTA (Purple)", "r": "<5.7% Normal", "u": "3-month glucose control"}, {"n": "Ferritin", "c": "Hematology", "s": "Serum (Yellow)", "r": "20-250 ng/mL", "u": "Iron stores assessment"}, {"n": "Vitamin B12", "c": "Hematology", "s": "Serum (Yellow)", "r": "200-900 pg/mL", "u": "Megaloblastic anemia"}, {"n": "Folic Acid", "c": "Hematology", "s": "Serum (Yellow)", "r": ">3.0 ng/mL", "u": "Megaloblastic anemia"}, {"n": "Iron (Fe)", "c": "Hematology", "s": "Serum (Yellow)", "r": "60-170 mcg/dL", "u": "Iron deficiency anemia"}, {"n": "TIBC (Total Iron Binding Capacity)", "c": "Hematology", "s": "Serum (Yellow)", "r": "250-400 mcg/dL", "u": "Iron metabolism disorders"}, {"n": "Transferrin Saturation", "c": "Hematology", "s": "Serum (Yellow)", "r": "20-50%", "u": "Hemochromatosis screening"}, {"n": "Peripheral Blood Smear", "c": "Hematology", "s": "EDTA (Purple)", "r": "Normal morphology", "u": "Blood cell morphology assessment"}, {"n": "Sickle Cell Test", "c": "Hematology", "s": "EDTA (Purple)", "r": "Negative", "u": "Sickle cell disease screening"}, {"n": "Hemoglobin Electrophoresis", "c": "Hematology", "s": "EDTA (Purple)", "r": "HbA:96-98%", "u": "Thalassemia, hemoglobinopathies"}, {"n": "G6PD (Glucose-6-Phosphate Dehydrogenase)", "c": "Hematology", "s": "EDTA (Purple)", "r": "4.6-13.5 U/g Hb", "u": "Hemolytic anemia"}, {"n": "Osmotic Fragility Test", "c": "Hematology", "s": "EDTA (Purple)", "r": "0.45-0.55% NaCl", "u": "Hereditary spherocytosis"}, {"n": "Direct Coombs Test (DAT)", "c": "Hematology", "s": "EDTA (Purple)", "r": "Negative", "u": "Autoimmune hemolytic anemia"}, {"n": "Indirect Coombs Test (IAT)", "c": "Hematology", "s": "Serum (Yellow)", "r": "Negative", "u": "Blood compatibility, antibody screen"}, {"n": "Haptoglobin", "c": "Hematology", "s": "Serum (Yellow)", "r": "30-200 mg/dL", "u": "Hemolysis marker"}, {"n": "Methemoglobin", "c": "Hematology", "s": "EDTA (Purple)", "r": "<1% of total Hb", "u": "Methemoglobinemia"}, {"n": "Carboxyhemoglobin", "c": "Hematology", "s": "EDTA (Purple)", "r": "<3% non-smokers", "u": "Carbon monoxide poisoning"}, {"n": "Erythropoietin (EPO)", "c": "Hematology", "s": "Serum (Yellow)", "r": "2.6-18.5 mIU/mL", "u": "Polycythemia, anemia of CKD"}, {"n": "Blood Parasites (Malaria Smear)", "c": "Hematology", "s": "EDTA (Purple)", "r": "Negative", "u": "Malaria diagnosis"}, {"n": "Flow Cytometry (CD markers)", "c": "Hematology", "s": "EDTA (Purple)", "r": "Normal distribution", "u": "Leukemia immunophenotyping"}, {"n": "JAK2 Mutation", "c": "Hematology", "s": "EDTA (Purple)", "r": "Negative", "u": "Myeloproliferative neoplasms"}, {"n": "BCR-ABL (Philadelphia Chromosome)", "c": "Hematology", "s": "EDTA (Purple)", "r": "Negative", "u": "CML diagnosis"}, {"n": "LDH (Lactate Dehydrogenase)", "c": "Hematology", "s": "Serum (Yellow)", "r": "140-280 U/L", "u": "Hemolysis, tumor marker"}, {"n": "Intrinsic Factor Antibody", "c": "Hematology", "s": "Serum (Yellow)", "r": "Negative", "u": "Pernicious anemia"}, {"n": "Glucose (Fasting)", "c": "Chemistry", "s": "Serum/Plasma (Grey)", "r": "70-100 mg/dL", "u": "Diabetes screening"}, {"n": "Glucose (Random)", "c": "Chemistry", "s": "Serum/Plasma (Grey)", "r": "<140 mg/dL", "u": "Acute hyperglycemia"}, {"n": "Glucose Tolerance Test (OGTT)", "c": "Chemistry", "s": "Serum (Grey) – serial", "r": "2hr <140 mg/dL", "u": "Gestational diabetes"}, {"n": "Creatinine", "c": "Chemistry", "s": "Serum (Yellow)", "r": "0.7-1.3 mg/dL", "u": "Kidney function"}, {"n": "BUN (Blood Urea Nitrogen)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "7-20 mg/dL", "u": "Kidney function, dehydration"}, {"n": "eGFR (Estimated GFR)", "c": "Chemistry", "s": "Calculated", "r": ">90 mL/min", "u": "CKD staging"}, {"n": "Cystatin C", "c": "Chemistry", "s": "Serum (Yellow)", "r": "0.6-1.2 mg/L", "u": "Early kidney dysfunction"}, {"n": "Uric Acid", "c": "Chemistry", "s": "Serum (Yellow)", "r": "M:3.5-7.2 F:2.6-6.0 mg/dL", "u": "Gout, tumor lysis syndrome"}, {"n": "ALT (Alanine Aminotransferase)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<41 U/L", "u": "Liver cell damage"}, {"n": "AST (Aspartate Aminotransferase)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<40 U/L", "u": "Liver, heart, muscle damage"}, {"n": "ALP (Alkaline Phosphatase)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "44-147 U/L", "u": "Biliary obstruction, bone disease"}, {"n": "GGT (Gamma-Glutamyl Transferase)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "M:10-71 F:6-42 U/L", "u": "Alcohol abuse, cholestasis"}, {"n": "Bilirubin (Total)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "0.1-1.2 mg/dL", "u": "Jaundice, hemolysis"}, {"n": "Bilirubin (Direct)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "0-0.3 mg/dL", "u": "Hepatocellular vs obstructive jaundice"}, {"n": "Total Protein", "c": "Chemistry", "s": "Serum (Yellow)", "r": "6.0-8.3 g/dL", "u": "Nutritional status, liver/kidney"}, {"n": "Albumin", "c": "Chemistry", "s": "Serum (Yellow)", "r": "3.5-5.0 g/dL", "u": "Liver function, nutritional status"}, {"n": "Ammonia", "c": "Chemistry", "s": "EDTA/Heparin – on ice, test <30 min", "r": "15-45 mcg/dL", "u": "Hepatic encephalopathy"}, {"n": "Lactate", "c": "Chemistry", "s": "Fluoride/Oxalate (Grey) – on ice", "r": "0.5-2.2 mmol/L", "u": "Sepsis, hypoxia, shock"}, {"n": "hs-Troponin I (hs-cTnI)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "< 99th percentile URL (assay-specific, ng/L)", "u": "Myocardial infarction (AMI)"}, {"n": "hs-Troponin T (hs-cTnT)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<14 ng/L (99th percentile)", "u": "Myocardial infarction"}, {"n": "CK-MB (Creatine Kinase-MB)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<25 U/L", "u": "Myocardial injury"}, {"n": "BNP (B-Type Natriuretic Peptide)", "c": "Chemistry", "s": "EDTA (Purple)", "r": "<100 pg/mL", "u": "Heart failure diagnosis"}, {"n": "NT-proBNP", "c": "Chemistry", "s": "EDTA (Purple)", "r": "<300 pg/mL", "u": "Heart failure severity"}, {"n": "Homocysteine", "c": "Chemistry", "s": "Serum (Yellow)", "r": "5-15 mcmol/L", "u": "Cardiovascular risk, B12/folate"}, {"n": "CRP (C-Reactive Protein)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<10 mg/L", "u": "Inflammation, infection marker"}, {"n": "hs-CRP (High Sensitivity CRP)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<1.0 mg/L low risk", "u": "Cardiovascular risk assessment"}, {"n": "Procalcitonin (PCT)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<0.05 ng/mL", "u": "Bacterial sepsis marker"}, {"n": "Cholesterol (Total)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "<200 mg/dL", "u": "Cardiovascular risk screening"}, {"n": "Triglycerides", "c": "Chemistry", "s": "Serum (Yellow) Fasting", "r": "<150 mg/dL", "u": "Pancreatitis risk, CVD"}, {"n": "HDL Cholesterol", "c": "Chemistry", "s": "Serum (Yellow)", "r": ">40 (M) >50 (F) mg/dL", "u": "Cardioprotective lipoprotein"}, {"n": "LDL Cholesterol", "c": "Chemistry", "s": "Calculated (Friedewald)", "r": "<100 mg/dL", "u": "Atherosclerosis risk"}, {"n": "Sodium (Na⁺)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "136-145 mEq/L", "u": "Fluid balance, hyponatremia"}, {"n": "Potassium (K⁺)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "3.5-5.0 mEq/L", "u": "Arrhythmias, renal function"}, {"n": "Calcium (Total)", "c": "Chemistry", "s": "Serum (Yellow)", "r": "8.5-10.5 mg/dL", "u": "Bone disease, parathyroid"}, {"n": "Phosphorus", "c": "Chemistry", "s": "Serum (Yellow)", "r": "2.5-4.5 mg/dL", "u": "Bone disease, renal failure"}, {"n": "Magnesium", "c": "Chemistry", "s": "Serum (Yellow)", "r": "1.7-2.2 mg/dL", "u": "Arrhythmias, hypomagnesemia"}, {"n": "TSH (Thyroid Stimulating Hormone)", "c": "Hormones", "s": "Serum (Yellow)", "r": "0.45-4.5 mIU/L", "u": "Thyroid function screening"}, {"n": "Free T4 (Free Thyroxine)", "c": "Hormones", "s": "Serum (Yellow)", "r": "0.8-1.8 ng/dL", "u": "Thyroid function"}, {"n": "Free T3 (Free Triiodothyronine)", "c": "Hormones", "s": "Serum (Yellow)", "r": "2.3-4.2 pg/mL", "u": "Thyroid function, hyperthyroidism"}, {"n": "Thyroglobulin", "c": "Hormones", "s": "Serum (Yellow)", "r": "3-42 ng/mL", "u": "Thyroid cancer follow-up"}, {"n": "Anti-TPO (Thyroid Peroxidase Ab)", "c": "Hormones", "s": "Serum (Yellow)", "r": "<35 IU/mL", "u": "Hashimoto's thyroiditis"}, {"n": "Anti-Tg (Thyroglobulin Ab)", "c": "Hormones", "s": "Serum (Yellow)", "r": "<40 IU/mL", "u": "Autoimmune thyroid disease"}, {"n": "TRAb (TSH Receptor Ab)", "c": "Hormones", "s": "Serum (Yellow)", "r": "<1.0 IU/L", "u": "Graves' disease"}, {"n": "Prolactin", "c": "Hormones", "s": "Serum (Yellow)", "r": "2-18 ng/mL", "u": "Pituitary tumors, infertility"}, {"n": "Total Testosterone", "c": "Hormones", "s": "Serum (Yellow)", "r": "300-1000 ng/dL", "u": "Hypogonadism"}, {"n": "DHEA-S", "c": "Hormones", "s": "Serum (Yellow)", "r": "M:280-640 F:65-380 mcg/dL", "u": "Adrenal function, PCOS"}, {"n": "Estradiol (E2)", "c": "Hormones", "s": "Serum (Yellow)", "r": "Varies by menstrual phase", "u": "Ovulation, fertility assessment"}, {"n": "Progesterone", "c": "Hormones", "s": "Serum (Yellow)", "r": "Follicular:<1 Luteal:5-20 ng/mL", "u": "Ovulation confirmation, pregnancy"}, {"n": "17-OH Progesterone", "c": "Hormones", "s": "Serum (Yellow)", "r": "<200 ng/dL", "u": "Congenital Adrenal Hyperplasia (CAH)"}, {"n": "Cortisol (AM – 8AM)", "c": "Hormones", "s": "Serum (Yellow)", "r": "6-23 mcg/dL", "u": "Adrenal function, Cushing's syndrome"}, {"n": "ACTH (Adrenocorticotropin)", "c": "Hormones", "s": "EDTA (Purple) – Ice", "r": "7.2-63.3 pg/mL", "u": "Cushing's, Addison's disease"}, {"n": "Aldosterone", "c": "Hormones", "s": "Serum (Yellow)", "r": "<28 ng/dL (upright)", "u": "Primary hyperaldosteronism"}, {"n": "Plasma Renin Activity", "c": "Hormones", "s": "EDTA (Purple) – Ice", "r": "0.65-5.0 ng/mL/hr", "u": "Hypertension workup"}, {"n": "Insulin (Fasting)", "c": "Hormones", "s": "Serum (Yellow)", "r": "2.6-24.9 mIU/L", "u": "Insulin resistance, insulinoma"}, {"n": "C-Peptide", "c": "Hormones", "s": "Serum (Yellow)", "r": "0.8-4.0 ng/mL", "u": "Endogenous insulin production"}, {"n": "GH (Growth Hormone)", "c": "Hormones", "s": "Serum (Yellow)", "r": "<10 ng/mL", "u": "Acromegaly, GH deficiency"}, {"n": "IGF-1", "c": "Hormones", "s": "Serum (Yellow)", "r": "Varies by age", "u": "GH status, acromegaly monitoring"}, {"n": "FSH (Follicle Stimulating Hormone)", "c": "Hormones", "s": "Serum (Yellow)", "r": "Varies by phase", "u": "Fertility workup, menopause"}, {"n": "LH (Luteinizing Hormone)", "c": "Hormones", "s": "Serum (Yellow)", "r": "Varies by phase", "u": "Ovulation detection, PCOS"}, {"n": "AMH (Anti-Müllerian Hormone)", "c": "Hormones", "s": "Serum (Yellow)", "r": "1.0-3.5 ng/mL", "u": "Ovarian reserve assessment"}, {"n": "PTH (Parathyroid Hormone)", "c": "Hormones", "s": "EDTA (Purple)", "r": "10-65 pg/mL", "u": "Hypercalcemia, bone disease"}, {"n": "Vitamin D (25-OH)", "c": "Hormones", "s": "Serum (Yellow)", "r": "30-100 ng/mL", "u": "Vitamin D deficiency/toxicity"}, {"n": "Calcitonin", "c": "Hormones", "s": "Serum (Yellow)", "r": "M:<11.5 F:<4.6 pg/mL", "u": "Medullary thyroid carcinoma"}, {"n": "PT (Prothrombin Time)", "c": "Coagulation", "s": "Citrate (Blue)", "r": "11-13.5 sec", "u": "Warfarin monitoring, liver function"}, {"n": "INR (International Normalized Ratio)", "c": "Coagulation", "s": "Citrate (Blue)", "r": "0.9-1.1 (therapeutic 2-3)", "u": "Warfarin anticoagulation monitoring"}, {"n": "aPTT (Activated Partial Thromboplastin Time)", "c": "Coagulation", "s": "Citrate (Blue)", "r": "25-35 sec", "u": "Heparin monitoring, bleeding disorders"}, {"n": "D-Dimer", "c": "Coagulation", "s": "Citrate (Blue)", "r": "<0.5 μg/mL FEU", "u": "DVT/PE exclusion, DIC"}, {"n": "Fibrinogen", "c": "Coagulation", "s": "Citrate (Blue)", "r": "200-400 mg/dL", "u": "DIC, bleeding disorders, clotting"}, {"n": "Thrombin Time", "c": "Coagulation", "s": "Citrate (Blue)", "r": "14-21 sec", "u": "Fibrinogen qualitative disorders"}, {"n": "Factor VIII Activity", "c": "Coagulation", "s": "Citrate (Blue)", "r": "50-150%", "u": "Hemophilia A diagnosis"}, {"n": "Factor IX Activity", "c": "Coagulation", "s": "Citrate (Blue)", "r": "50-150%", "u": "Hemophilia B diagnosis"}, {"n": "von Willebrand Factor Antigen", "c": "Coagulation", "s": "Citrate (Blue)", "r": "50-150%", "u": "von Willebrand disease"}, {"n": "Protein C Activity", "c": "Coagulation", "s": "Citrate (Blue)", "r": "65-135%", "u": "Inherited thrombophilia"}, {"n": "Protein S Activity", "c": "Coagulation", "s": "Citrate (Blue)", "r": "65-140%", "u": "Inherited thrombophilia"}, {"n": "Antithrombin III", "c": "Coagulation", "s": "Citrate (Blue)", "r": "80-120%", "u": "Thrombophilia, heparin resistance"}, {"n": "Lupus Anticoagulant", "c": "Coagulation", "s": "Citrate (Blue)", "r": "Negative", "u": "Antiphospholipid Syndrome (APS)"}, {"n": "Factor V Leiden Mutation", "c": "Coagulation", "s": "EDTA (Purple)", "r": "Negative", "u": "Activated protein C resistance"}, {"n": "Platelet Count", "c": "Hematology", "s": "EDTA (Purple)", "r": "150-450 ×10³/µL", "u": "Thrombocytopenia or thrombocytosis"}, {"n": "ANA (Antinuclear Antibodies)", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative (<1:40)", "u": "Autoimmune disease screening"}, {"n": "Anti-dsDNA", "c": "Immunology", "s": "Serum (Yellow)", "r": "<100 IU/mL", "u": "SLE specific, disease activity"}, {"n": "Anti-Smith (Sm)", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "SLE highly specific antibody"}, {"n": "Anti-SSA/Ro", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Sjögren's syndrome, neonatal lupus"}, {"n": "Anti-SSB/La", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Sjögren's syndrome"}, {"n": "Anti-Scl-70 (Topoisomerase I)", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Systemic sclerosis (diffuse)"}, {"n": "RF (Rheumatoid Factor)", "c": "Immunology", "s": "Serum (Yellow)", "r": "<14 IU/mL", "u": "Rheumatoid arthritis"}, {"n": "Anti-CCP (Cyclic Citrullinated Peptide)", "c": "Immunology", "s": "Serum (Yellow)", "r": "<20 U/mL", "u": "Early RA, high specificity"}, {"n": "ASO (Antistreptolysin O)", "c": "Immunology", "s": "Serum (Yellow)", "r": "<200 IU/mL", "u": "Post-streptococcal rheumatic disease"}, {"n": "IgG", "c": "Immunology", "s": "Serum (Yellow)", "r": "700-1600 mg/dL", "u": "Immune status, deficiency"}, {"n": "IgA", "c": "Immunology", "s": "Serum (Yellow)", "r": "70-400 mg/dL", "u": "IgA deficiency, celiac"}, {"n": "IgM", "c": "Immunology", "s": "Serum (Yellow)", "r": "40-230 mg/dL", "u": "Acute infection, Waldenström's"}, {"n": "IgE (Total)", "c": "Immunology", "s": "Serum (Yellow)", "r": "<100 IU/mL", "u": "Allergies, asthma, atopy"}, {"n": "Complement C3", "c": "Immunology", "s": "Serum (Yellow)", "r": "90-180 mg/dL", "u": "SLE disease activity"}, {"n": "Complement C4", "c": "Immunology", "s": "Serum (Yellow)", "r": "10-40 mg/dL", "u": "SLE, hereditary angioedema"}, {"n": "HIV Antibody/Ag (4th Gen combo)", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "HIV-1/2 screening"}, {"n": "HIV RNA (Viral Load)", "c": "Immunology", "s": "EDTA (Purple)", "r": "Undetectable", "u": "HIV treatment monitoring"}, {"n": "HBsAg (Hepatitis B Surface Ag)", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Active HBV infection"}, {"n": "Anti-HBs (Hepatitis B Surface Ab)", "c": "Immunology", "s": "Serum (Yellow)", "r": ">10 mIU/mL", "u": "Immunity to HBV"}, {"n": "Anti-HBc Total", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Past or current HBV exposure"}, {"n": "Hepatitis C Antibody", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "HCV infection screening"}, {"n": "Hepatitis C RNA (Viral Load)", "c": "Immunology", "s": "EDTA (Purple)", "r": "Undetectable", "u": "Active HCV, treatment response"}, {"n": "CMV IgM", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Acute CMV infection"}, {"n": "EBV VCA IgM", "c": "Immunology", "s": "Serum (Yellow)", "r": "Negative", "u": "Acute infectious mononucleosis"}, {"n": "Blood Culture (Aerobic)", "c": "Microbiology", "s": "Blood culture bottles", "r": "No growth", "u": "Bacteremia, sepsis"}, {"n": "Blood Culture (Anaerobic)", "c": "Microbiology", "s": "Blood culture bottles", "r": "No growth", "u": "Anaerobic bacteremia"}, {"n": "Urine Culture", "c": "Microbiology", "s": "Clean catch midstream urine", "r": "<10³ CFU/mL", "u": "UTI diagnosis & pathogen ID"}, {"n": "Stool Culture", "c": "Microbiology", "s": "Fresh stool sample", "r": "No pathogens", "u": "Bacterial gastroenteritis"}, {"n": "Sputum Culture", "c": "Microbiology", "s": "Expectorated sputum", "r": "Normal respiratory flora", "u": "Pneumonia, respiratory infection"}, {"n": "Throat Culture", "c": "Microbiology", "s": "Posterior pharynx swab", "r": "No Group A Strep", "u": "Streptococcal pharyngitis"}, {"n": "Wound Culture", "c": "Microbiology", "s": "Wound swab or tissue", "r": "No pathogens", "u": "Wound infection, abscess"}, {"n": "CSF Culture", "c": "Microbiology", "s": "Cerebrospinal fluid", "r": "No growth", "u": "Bacterial/fungal meningitis"}, {"n": "Gram Stain", "c": "Microbiology", "s": "Any clinical specimen", "r": "No organisms identified", "u": "Rapid bacterial classification"}, {"n": "AFB Smear (TB)", "c": "Microbiology", "s": "Sputum / CSF", "r": "Negative (no AFB seen)", "u": "TB screening, smear positivity"}, {"n": "AFB Culture (TB Culture)", "c": "Microbiology", "s": "Sputum / CSF", "r": "No mycobacterial growth", "u": "Definitive TB diagnosis"}, {"n": "TB PCR – GeneXpert MTB/RIF", "c": "Microbiology", "s": "Sputum", "r": "MTB not detected", "u": "Rapid TB + rifampicin resistance"}, {"n": "KOH Preparation", "c": "Microbiology", "s": "Skin scrapings / nail / hair", "r": "No hyphae or spores", "u": "Rapid dermatophyte detection"}, {"n": "Cryptococcal Antigen (CrAg)", "c": "Microbiology", "s": "Serum / CSF", "r": "Negative", "u": "Cryptococcal meningitis"}, {"n": "C. difficile Toxin A/B", "c": "Microbiology", "s": "Liquid/unformed stool", "r": "Negative", "u": "Antibiotic-associated colitis (CDAD)"}, {"n": "H. pylori Stool Antigen", "c": "Microbiology", "s": "Stool", "r": "Negative", "u": "H. pylori active infection"}, {"n": "H. pylori Urea Breath Test", "c": "Microbiology", "s": "Exhaled breath", "r": "Negative", "u": "H. pylori detection & eradication"}, {"n": "Syphilis RPR/VDRL", "c": "Microbiology", "s": "Serum", "r": "Non-reactive", "u": "Syphilis screening (non-treponemal)"}, {"n": "Chlamydia NAAT/PCR", "c": "Microbiology", "s": "Urine / cervical/urethral swab", "r": "Not detected", "u": "Chlamydia trachomatis infection"}, {"n": "Gonorrhea NAAT/PCR", "c": "Microbiology", "s": "Urine / swab", "r": "Not detected", "u": "Neisseria gonorrhoeae infection"}, {"n": "MRSA Surveillance Screen", "c": "Microbiology", "s": "Nasal swab", "r": "Negative", "u": "MRSA colonization screening"}, {"n": "Legionella Urinary Antigen", "c": "Microbiology", "s": "Urine", "r": "Negative", "u": "Legionnaires' disease"}, {"n": "AFP (Alpha-Fetoprotein)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<10 ng/mL", "u": "Hepatocellular carcinoma, germ cell tumors"}, {"n": "CEA (Carcinoembryonic Antigen)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<3.0 ng/mL (non-smoker)", "u": "Colorectal, lung, breast cancer monitoring"}, {"n": "CA 19-9", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<37 U/mL", "u": "Pancreatic adenocarcinoma"}, {"n": "CA 125", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<35 U/mL", "u": "Ovarian cancer, peritoneal disease"}, {"n": "CA 15-3", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<30 U/mL", "u": "Breast cancer monitoring"}, {"n": "PSA (Total Prostate-Specific Antigen)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<4.0 ng/mL", "u": "Prostate cancer screening & monitoring"}, {"n": "PSA Free/Total Ratio", "c": "TumorMarkers", "s": "Calculated", "r": ">0.25 (lower ratio = higher risk)", "u": "Prostate cancer risk stratification"}, {"n": "hCG (Beta-hCG Quantitative)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<5 mIU/mL (non-pregnant)", "u": "Germ cell tumors, trophoblastic disease"}, {"n": "Beta-2 Microglobulin", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "1.1-2.4 mg/L", "u": "Multiple myeloma, lymphoma staging"}, {"n": "Chromogranin A (CgA)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<93 ng/mL", "u": "Neuroendocrine tumors (NET)"}, {"n": "NSE (Neuron-Specific Enolase)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<16.3 ng/mL", "u": "Small cell lung cancer, neuroblastoma"}, {"n": "CYFRA 21-1", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<3.3 ng/mL", "u": "Non-small cell lung cancer (NSCLC)"}, {"n": "SCC Antigen (Squamous Cell Carcinoma)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<1.5 ng/mL", "u": "Cervical, head/neck squamous cell cancer"}, {"n": "HE4 (Human Epididymis Protein 4)", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<70 pmol/L", "u": "Ovarian cancer (combined with CA-125 ROMA)"}, {"n": "CA 72-4", "c": "TumorMarkers", "s": "Serum (Yellow)", "r": "<6.9 U/mL", "u": "Gastric adenocarcinoma"}, {"n": "BRCA1/BRCA2 Gene Testing", "c": "Genetic", "s": "EDTA (Purple) – blood", "r": "No pathogenic variant", "u": "Hereditary breast & ovarian cancer risk"}, {"n": "Lynch Syndrome Panel (MMR genes)", "c": "Genetic", "s": "EDTA (Purple)", "r": "No mutation detected", "u": "Hereditary colorectal cancer (HNPCC)"}, {"n": "KRAS Mutation Analysis", "c": "Genetic", "s": "FFPE tissue / liquid biopsy", "r": "Wild type (no mutation)", "u": "Colorectal/NSCLC – EGFR/MEK therapy"}, {"n": "BRAF V600E Mutation", "c": "Genetic", "s": "FFPE tissue / plasma", "r": "Wild type", "u": "Melanoma, colorectal, thyroid – Vemurafenib"}, {"n": "EGFR Mutation (Exons 18-21)", "c": "Genetic", "s": "FFPE tissue / plasma", "r": "Wild type", "u": "NSCLC – TKI therapy (Erlotinib, Osimertinib)"}, {"n": "ALK Gene Rearrangement (FISH/IHC)", "c": "Genetic", "s": "FFPE tissue", "r": "Negative", "u": "NSCLC – Crizotinib, Alectinib"}, {"n": "PD-L1 Expression (IHC)", "c": "Genetic", "s": "FFPE tumor tissue", "r": "<1% TPS", "u": "Immunotherapy eligibility (Pembrolizumab)"}, {"n": "HER2 Amplification (FISH)", "c": "Genetic", "s": "FFPE tissue", "r": "Negative / not amplified", "u": "Breast & gastric cancer – Trastuzumab"}, {"n": "IDH1/IDH2 Mutation", "c": "Genetic", "s": "FFPE tissue / bone marrow", "r": "Wild type", "u": "AML, glioma – Ivosidenib/Enasidenib"}, {"n": "TP53 Mutation", "c": "Genetic", "s": "Tissue / plasma", "r": "Wild type", "u": "Multiple cancers, poor prognosis marker"}, {"n": "Factor V Leiden (R506Q)", "c": "Genetic", "s": "EDTA (Purple)", "r": "Negative", "u": "Inherited thrombophilia risk"}, {"n": "CYP2C19 Genotyping", "c": "Genetic", "s": "EDTA (Purple)", "r": "*1/*1 (normal metabolizer)", "u": "Clopidogrel & PPI drug metabolism"}, {"n": "CYP2D6 Genotyping", "c": "Genetic", "s": "EDTA (Purple)", "r": "*1/*1 (normal metabolizer)", "u": "Tamoxifen, codeine, antidepressants"}, {"n": "MTHFR C677T Polymorphism", "c": "Genetic", "s": "EDTA (Purple)", "r": "CC genotype (wild type)", "u": "Hyperhomocysteinemia & thrombosis risk"}, {"n": "Ethanol – Blood Alcohol Level", "c": "Toxicology", "s": "Serum / whole blood (NaF grey)", "r": "0 mg/dL (legal limit <80 mg/dL)", "u": "Alcohol intoxication, forensic"}, {"n": "Acetaminophen (Paracetamol) Level", "c": "Toxicology", "s": "Serum (grey top)", "r": "Therapeutic: 10-20 mcg/mL", "u": "Overdose assessment (Rumack-Matthew)"}, {"n": "Salicylate Level", "c": "Toxicology", "s": "Serum", "r": "Therapeutic: 15-30 mg/dL", "u": "Aspirin toxicity & overdose"}, {"n": "Benzodiazepine Screen", "c": "Toxicology", "s": "Urine / serum", "r": "Negative", "u": "Sedative hypnotic overdose/abuse"}, {"n": "Opiate Drug Screen (Qualitative)", "c": "Toxicology", "s": "Urine", "r": "Negative", "u": "Opioid drug screening"}, {"n": "Morphine (Quantitative)", "c": "Toxicology", "s": "Serum", "r": "Therapeutic: 10-80 ng/mL", "u": "Pain management TDM"}, {"n": "Fentanyl Level", "c": "Toxicology", "s": "Plasma / urine", "r": "Therapeutic: 1-10 ng/mL", "u": "Fentanyl TDM, overdose"}, {"n": "Cocaine Metabolite (Benzoylecgonine)", "c": "Toxicology", "s": "Urine", "r": "Negative", "u": "Cocaine use detection (up to 72h)"}, {"n": "Amphetamine/Methamphetamine Screen", "c": "Toxicology", "s": "Urine", "r": "Negative", "u": "Stimulant abuse detection"}, {"n": "Cannabinoids (THC metabolites)", "c": "Toxicology", "s": "Urine", "r": "Negative", "u": "Marijuana use detection"}, {"n": "Blood Lead Level", "c": "Toxicology", "s": "EDTA (Tan/Navy)", "r": "<5 mcg/dL (CDC reference)", "u": "Lead poisoning, occupational exposure"}, {"n": "Blood Mercury Level", "c": "Toxicology", "s": "EDTA trace metal tube", "r": "<10 ng/mL", "u": "Mercury toxicity"}, {"n": "Digoxin Level", "c": "Toxicology", "s": "Serum – 6-8h post dose", "r": "0.8-2.0 ng/mL", "u": "Cardiac glycoside TDM"}, {"n": "Lithium Level", "c": "Toxicology", "s": "Serum – 12h post dose", "r": "0.6-1.2 mEq/L", "u": "Bipolar disorder TDM"}, {"n": "Valproic Acid Level", "c": "Toxicology", "s": "Serum (trough)", "r": "50-100 mcg/mL", "u": "Epilepsy / mood disorder TDM"}, {"n": "Carbamazepine Level", "c": "Toxicology", "s": "Serum (trough)", "r": "4-12 mcg/mL", "u": "Epilepsy / neuropathic pain TDM"}, {"n": "Phenytoin Level", "c": "Toxicology", "s": "Serum (trough)", "r": "10-20 mcg/mL", "u": "Epilepsy TDM"}, {"n": "ABO Blood Grouping", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Group determined", "u": "Pre-transfusion blood type identification"}, {"n": "Rh(D) Typing", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Positive or Negative", "u": "Rh compatibility for transfusion/pregnancy"}, {"n": "Irregular Antibody Screen (IAT)", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Negative (no alloantibodies)", "u": "Unexpected RBC alloantibody detection"}, {"n": "Direct Antiglobulin Test (DAT)", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Negative", "u": "Hemolytic disease of newborn, AIHA, DIIHA"}, {"n": "Major Crossmatch", "c": "BloodBank", "s": "Patient serum + donor RBCs", "r": "Compatible (no agglutination)", "u": "Pre-transfusion compatibility testing"}, {"n": "Antibody Identification Panel", "c": "BloodBank", "s": "Serum (Red)", "r": "No clinically significant antibody", "u": "Alloantibody specificity determination"}, {"n": "Kleihauer-Betke Acid Elution Test", "c": "BloodBank", "s": "Maternal EDTA blood", "r": "<0.1% fetal cells", "u": "Quantify fetomaternal hemorrhage for RhIG"}, {"n": "HLA Typing (Class I & II)", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Genotype determined", "u": "Organ/stem cell transplant matching"}, {"n": "Panel Reactive Antibody (PRA)", "c": "BloodBank", "s": "Serum (Yellow)", "r": "0% (undetectable)", "u": "Transplant candidate sensitization status"}, {"n": "Extended RBC Phenotyping (Kell/Duffy/Kidd)", "c": "BloodBank", "s": "EDTA (Purple)", "r": "Phenotype determined", "u": "Complex transfusion patients, alloimmunized"}, {"n": "Urinalysis – Dipstick (10-parameter)", "c": "Urinalysis", "s": "Freshly voided random urine", "r": "All parameters negative/normal", "u": "Urinary tract screening, metabolic disorders"}, {"n": "Urine Specific Gravity", "c": "Urinalysis", "s": "Random urine", "r": "1.005-1.030", "u": "Renal concentrating & diluting ability"}, {"n": "Urine pH", "c": "Urinalysis", "s": "Random urine", "r": "4.5-8.0", "u": "Acid-base disorders, urolithiasis risk"}, {"n": "Urine Glucose", "c": "Urinalysis", "s": "Random urine", "r": "Negative", "u": "Diabetes mellitus, Fanconi syndrome"}, {"n": "Urine Ketones", "c": "Urinalysis", "s": "Random urine", "r": "Negative", "u": "DKA, starvation ketosis, alcoholic ketosis"}, {"n": "Urine Protein", "c": "Urinalysis", "s": "Random urine", "r": "Negative/trace", "u": "Glomerulonephritis, nephrotic syndrome"}, {"n": "Urine Microscopy (Sediment)", "c": "Urinalysis", "s": "Fresh midstream urine", "r": "0-2 RBC/hpf, 0-5 WBC/hpf", "u": "Hematuria, pyuria, casts, crystals"}, {"n": "24-hour Urine Protein", "c": "Urinalysis", "s": "24h urine collection", "r": "<150 mg/24h", "u": "Proteinuria quantification, nephrotic workup"}, {"n": "Urine Albumin/Creatinine Ratio (ACR)", "c": "Urinalysis", "s": "Spot first-morning urine", "r": "<30 mg/g", "u": "Early diabetic nephropathy screening"}, {"n": "Urine Protein/Creatinine Ratio (PCR)", "c": "Urinalysis", "s": "Spot urine", "r": "<0.2 mg/mg", "u": "Proteinuria quantification (spot method)"}, {"n": "Urine Osmolality", "c": "Urinalysis", "s": "Random or timed urine", "r": "300-900 mOsm/kg", "u": "Renal concentrating ability, SIADH"}, {"n": "Urine Calcium (24h)", "c": "Urinalysis", "s": "24h urine – acidified", "r": "100-300 mg/24h", "u": "Hypercalciuria, calcium nephrolithiasis"}, {"n": "Urine Uric Acid (24h)", "c": "Urinalysis", "s": "24h urine", "r": "250-750 mg/24h", "u": "Gout, uric acid stone prevention"}, {"n": "Urine 5-HIAA (24h)", "c": "Urinalysis", "s": "24h urine – acidified", "r": "2-9 mg/24h", "u": "Carcinoid tumor, serotonin-secreting NET"}, {"n": "Urine Free Cortisol (24h UFC)", "c": "Urinalysis", "s": "24h urine", "r": "10-100 mcg/24h", "u": "Cushing's syndrome (best screening test)"}, {"n": "Urine Metanephrines (Fractionated, 24h)", "c": "Urinalysis", "s": "24h urine – acidified", "r": "<1.3 mg/24h", "u": "Pheochromocytoma/paraganglioma"}];
 
-// ===== I18N =====
-let lang = 'ar';
-
-const i18n = {
-    ar: {
-        searchTitle: '🔍 البحث في قاعدة الفحوصات',
-        searchPlaceholder: 'ابحث بالاسم، التخصص، العينة، أو الاستخدام...',
-        showing: (n, t) => `عرض <strong>${n}</strong> فحص من أصل <strong>${t}</strong>`,
-        noResults: 'لا توجد نتائج مطابقة للبحث',
-        headers: ['اسم الفحص','التخصص','العينة المطلوبة','القيم الطبيعية','الاستخدامات']
-    },
-    en: {
-        searchTitle: '🔍 Search the Test Database',
-        searchPlaceholder: 'Search by name, specialty, sample, or indication...',
-        showing: (n, t) => `Showing <strong>${n}</strong> of <strong>${t}</strong> tests`,
-        noResults: 'No matching results found',
-        headers: ['Test Name','Specialty','Sample Required','Normal Values','Indications']
-    }
+const CATS = {
+  Hematology:{ar:"أمراض الدم",en:"Hematology"}, Chemistry:{ar:"الكيمياء الحيوية",en:"Chemistry"},
+  Hormones:{ar:"الهرمونات",en:"Hormones"}, Coagulation:{ar:"التخثر",en:"Coagulation"},
+  Immunology:{ar:"المناعة",en:"Immunology"}, Microbiology:{ar:"الأحياء الدقيقة",en:"Microbiology"},
+  TumorMarkers:{ar:"دلالات الأورام",en:"Tumor Markers"}, Genetic:{ar:"الوراثة الجزيئية",en:"Genetic"},
+  Toxicology:{ar:"السموم والأدوية",en:"Toxicology"}, BloodBank:{ar:"بنك الدم",en:"Blood Bank"},
+  Urinalysis:{ar:"تحليل البول",en:"Urinalysis"}
 };
 
-function setLang(l) {
-    lang = l;
-    const html = document.getElementById('htmlRoot');
-    html.setAttribute('lang', l);
-    html.setAttribute('dir', l === 'ar' ? 'rtl' : 'ltr');
-    document.getElementById('btn-ar').classList.toggle('active', l === 'ar');
-    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+const T = {
+ ar:{brand:"بوابة علوم المختبرات الطبية",eyebrow:"مرجع مجاني للمختبريين · محدّث 2026",
+  h1:"كل ما تحتاجه عن <span>الفحص المخبري</span> في مكان واحد",
+  lead:"العينة الصحيحة، القيم المرجعية، الاستخدام السريري، ترتيب سحب العينات، ومعايير السلامة — بالعربي والإنجليزي. إعداد أ. مأمون السعودي.",
+  sTests:"فحص مخبري",sCats:"تخصص",sTubes:"أنابيب بترتيب السحب",sStd:"متوافق مع المعيار",
+  tTests:"دليل الفحوصات",tPre:"ما قبل التحليل",tSafety:"السلامة المهنية",tRes:"مصادر علمية",
+  testsSub:"ابحث باسم الفحص أو نوع العينة أو الاستخدام، أو اختر تخصصاً.",
+  ph:"ابحث: CBC، Ferritin، Citrate، anemia…",all:"الكل",
+  refNote:"القيم المرجعية استرشادية للبالغين فقط وتختلف حسب المختبر والجهاز والطريقة والعمر والجنس — اعتمد دائماً القيم المعتمدة في مختبرك (ISO 15189:2022 – 7.3.7).",
+  count:(n,t)=>`عرض ${n} من ${t} فحص`,empty:"لا توجد نتائج — جرّب كلمة أخرى",more:"عرض المزيد",
+  kSample:"العينة",kRef:"المرجع",kUse:"الاستخدام",
+  drawTitle:"ترتيب سحب العينات (Order of Draw)",drawSub:"حسب CLSI GP41 — الترتيب يمنع انتقال المواد المضافة بين الأنابيب (مثل EDTA الذي يرفع البوتاسيوم ويخفض الكالسيوم كاذباً).",
+  galTitle:"إنفوجرافيك للمشاركة",galSub:"اضغط على الصورة لتكبيرها — مناسبة للطباعة ولقناة التلغرام.",
+  g1:"ترتيب سحب العينات",g2:"أخطاء ما قبل التحليل",g3:"فصل النفايات",
+  errTitle:"أشهر أخطاء ما قبل التحليل",errSub:"تشير الدراسات إلى أن 60–70% من أخطاء المختبر تحدث قبل وصول العينة للجهاز.",
+  safeTitle:"بروتوكول السلامة العامة",safeSub:"مبني على دليل منظمة الصحة العالمية للسلامة البيولوجية (الطبعة 4) و CLSI GP17.",
+  wasteTitle:"نظام فصل النفايات",wasteSub:"ألوان منظمة الصحة العالمية الشائعة — الألوان قد تختلف، اتبع التعليمات الوطنية وسياسة مؤسستك.",
+  incTitle:"عند وقوع حادث أو وخز إبرة",
+  resTitle:"مصادر علمية موثوقة",resSub:"روابط مباشرة لأهم المراجع والمنصات في علوم المختبرات.",visit:"زيارة",
+  author:"أ. مأمون السعودي",authorRole:"اختصاصي علوم المختبرات الطبية",tg:"قناة التلغرام",wa:"واتساب",lang:"English"},
+ en:{brand:"Medical Lab Portal",eyebrow:"Free reference for lab professionals · Updated 2026",
+  h1:"Everything about the <span>lab test</span>, in one place",
+  lead:"Right sample, reference ranges, clinical use, order of draw and safety standards — in Arabic and English. By Mamoun Al-Saudi, MLS.",
+  sTests:"Lab tests",sCats:"Specialties",sTubes:"Tubes in draw order",sStd:"Aligned standard",
+  tTests:"Test Directory",tPre:"Pre-analytical",tSafety:"Lab Safety",tRes:"Resources",
+  testsSub:"Search by test name, sample type or indication, or pick a specialty.",
+  ph:"Search: CBC, Ferritin, Citrate, anemia…",all:"All",
+  refNote:"Reference ranges are indicative adult values only and vary by laboratory, analyser, method, age and sex — always use your laboratory's validated intervals (ISO 15189:2022 – 7.3.7).",
+  count:(n,t)=>`Showing ${n} of ${t} tests`,empty:"No results — try another term",more:"Show more",
+  kSample:"Sample",kRef:"Ref.",kUse:"Use",
+  drawTitle:"Order of Draw",drawSub:"Per CLSI GP41 — the order prevents additive carry-over between tubes (e.g. EDTA falsely raising K⁺ and lowering Ca²⁺).",
+  galTitle:"Shareable infographics",galSub:"Tap an image to enlarge — ready for print and Telegram.",
+  g1:"Order of draw",g2:"Pre-analytical errors",g3:"Waste segregation",
+  errTitle:"Most common pre-analytical errors",errSub:"Studies attribute 60–70% of laboratory errors to the phase before the sample reaches the analyser.",
+  safeTitle:"General Safety Protocol",safeSub:"Based on the WHO Laboratory Biosafety Manual (4th ed.) and CLSI GP17.",
+  wasteTitle:"Waste Segregation",wasteSub:"Common WHO colour coding — colours vary; follow national rules and institutional policy.",
+  incTitle:"After an incident or needlestick",
+  resTitle:"Trusted Scientific Resources",resSub:"Direct links to the key references and platforms in laboratory science.",visit:"Visit",
+  author:"Mamoun Al-Saudi",authorRole:"Medical Laboratory Science Specialist",tg:"Telegram channel",wa:"WhatsApp",lang:"العربية"}
+};
 
-    // Translate all [data-ar/en] elements
-    document.querySelectorAll('[data-ar]').forEach(el => {
-        el.textContent = l === 'ar' ? el.dataset.ar : el.dataset.en;
-    });
+const DRAW = [
+ {c:"#9ca3af",ar:["زجاجات زرع الدم","تُسحب أولاً لمنع التلوث"],en:["Blood culture","First, to avoid contamination"]},
+ {c:"#7dd3fc",ar:["أزرق فاتح — سترات","PT · aPTT · D-Dimer"],en:["Light blue — Citrate","PT · aPTT · D-Dimer"]},
+ {c:"#dc2626",ar:["أحمر / ذهبي SST","كيمياء · هرمونات · مصليات"],en:["Red / Gold SST","Chemistry · hormones · serology"]},
+ {c:"#16a34a",ar:["أخضر — هيبارين","كيمياء طارئة · أمونيا"],en:["Green — Heparin","STAT chemistry · ammonia"]},
+ {c:"#8b5cf6",ar:["بنفسجي — EDTA","CBC · HbA1c · بنك الدم"],en:["Lavender — EDTA","CBC · HbA1c · blood bank"]},
+ {c:"#6b7280",ar:["رمادي — فلورايد","سكر · لاكتات"],en:["Grey — Fluoride","Glucose · lactate"]}
+];
 
-    // Search input placeholder
-    document.getElementById('searchInput').placeholder = i18n[l].searchPlaceholder;
-    // Search title
-    document.getElementById('searchTitle').textContent = i18n[l].searchTitle;
-    // Table headers
-    const headers = document.getElementById('tableHeaders');
-    headers.innerHTML = i18n[l].headers.map(h => `<th>${h}</th>`).join('');
+const ERRORS = [
+ {ar:["تحلل الدم (Hemolysis)","يرفع K⁺ و LDH و AST كاذباً. تجنّب الإبر الرفيعة والسحب العنيف."],en:["Hemolysis","Falsely raises K⁺, LDH, AST. Avoid small needles and forceful aspiration."]},
+ {ar:["نقص تعبئة أنبوب السترات","يجب أن تكون النسبة 9:1 — النقص يطيل PT/aPTT كاذباً."],en:["Under-filled citrate tube","Ratio must be 9:1 — under-filling falsely prolongs PT/aPTT."]},
+ {ar:["تلوث EDTA","ترتيب سحب خاطئ يرفع K⁺ ويخفض Ca²⁺ كاذباً."],en:["EDTA contamination","Wrong draw order falsely raises K⁺ and lowers Ca²⁺."]},
+ {ar:["خطأ في هوية المريض","استخدم معرّفين اثنين على الأقل (الاسم + الرقم الطبي) عند السحب."],en:["Patient misidentification","Use at least two identifiers (name + MRN) at collection."]},
+ {ar:["تأخير نقل العينة","ينخفض السكر 5–7% كل ساعة بدون فلورايد."],en:["Delayed transport","Glucose falls 5–7% per hour without fluoride."]},
+ {ar:["الرباط الضاغط أكثر من دقيقة","يسبب تركّز الدم وارتفاع البروتين والكالسيوم كاذباً."],en:["Tourniquet over 1 minute","Haemoconcentration — falsely high protein and calcium."]}
+];
 
-    filterData();
+const SAFETY = [
+ {ar:["معدات الحماية الشخصية (PPE)","معطف مختبر مغلق، قفازات للاستخدام الواحد، ونظارات واقية عند خطر الرذاذ أو المواد الكيميائية. اخلع القفازات قبل لمس الهاتف أو المقابض."],en:["Personal Protective Equipment","Closed lab coat, single-use gloves, and eye protection where splashes or chemicals are possible. Remove gloves before touching phones or door handles."]},
+ {ar:["الأدوات الحادة","يُمنع إعادة تغطية الإبر. تخلّص منها فوراً في حاوية الأدوات الحادة ولا تملأها أكثر من ¾."],en:["Sharps","Never recap needles. Discard immediately into a sharps container and never fill it beyond ¾."]},
+ {ar:["التطهير","هيبوكلوريت الصوديوم بتخفيف 1:10 من الكلور المنزلي (≈0.5% كلور فعّال، يُحضّر يومياً) للانسكابات الدموية، و70% كحول للأسطح. اغسل يديك بعد خلع القفازات."],en:["Decontamination","Sodium hypochlorite diluted 1:10 from household bleach (≈0.5% available chlorine, prepared daily) for blood spills; 70% alcohol for surfaces. Wash hands after removing gloves."]},
+ {ar:["السلامة الكيميائية","افصل الأحماض عن القواعد، واستخدم خزانة الأبخرة مع الفورمالين والزايلين. راقب تركيز الفورمالين في الهواء (حد OSHA: 0.75 ppm خلال 8 ساعات). اعرف مكان غسول العين ودش الطوارئ."],en:["Chemical safety","Store acids and bases apart; use the fume hood for formalin and xylene. Monitor airborne formaldehyde (OSHA PEL 0.75 ppm, 8-h TWA). Know where the eyewash and safety shower are."]},
+ {ar:["العينات المعدية","كل عينة تُعامل كمعدية (Standard Precautions). استخدم خزانة السلامة البيولوجية (BSC) لأي عمل يولّد رذاذاً."],en:["Infectious specimens","Treat every specimen as infectious (Standard Precautions). Use a biological safety cabinet for any aerosol-generating work."]},
+ {ar:["ممنوعات داخل المختبر","لا أكل ولا شرب ولا مستحضرات تجميل ولا عدسات لاصقة تُعدَّل، ولا تلمس وجهك أثناء العمل."],en:["Prohibited in the lab","No eating, drinking, cosmetics or adjusting contact lenses; do not touch your face while working."]}
+];
+
+const WASTE = [
+ {c:"#eab308",ar:["أصفر — معدي","قفازات وشاش وأي مادة ملوثة بالدم أو سوائل الجسم"],en:["Yellow — Infectious","Gloves, gauze, anything contaminated with blood or body fluids"]},
+ {c:"#f59e0b",ar:["حاوية الأدوات الحادة","إبر، مشارط، شرائح وزجاج مكسور — صلبة ومقاومة للثقب"],en:["Sharps container","Needles, blades, slides and broken glass — rigid, puncture-proof"]},
+ {c:"#111827",ar:["أسود — عام","ورق وتغليف غير ملوث"],en:["Black — General","Non-contaminated paper and packaging"]},
+ {c:"#2563eb",ar:["حاويات كيميائية مُعلّمة","فورمالين، زايلين، أصباغ — لا تُسكب في المجاري"],en:["Labelled chemical containers","Formalin, xylene, stains — never down the drain"]}
+];
+
+const INCIDENT = {
+ ar:["اغسل مكان الوخز بالماء والصابون فوراً (العين: ماء جارٍ 15 دقيقة) — لا تعصر الجرح.","أبلغ مشرفك المباشر فوراً.","راجع الصحة المهنية/الطوارئ خلال ساعتين لتقييم الحاجة للوقاية بعد التعرض (PEP).","وثّق الحادث في نموذج تقرير الحوادث وحدد مصدر العينة.","* حسب سياسة المؤسسة الداخلية."],
+ en:["Wash the site with soap and water at once (eyes: running water 15 min) — do not squeeze the wound.","Notify your direct supervisor immediately.","See Occupational Health / ED within 2 hours to assess post-exposure prophylaxis (PEP).","Document the incident on the report form and identify the source specimen.","* Subject to institutional policy."]
+};
+
+const RES = [
+ {u:"https://www.who.int/publications/i/item/9789240011311",ar:["WHO — دليل السلامة البيولوجية","الطبعة الرابعة من دليل منظمة الصحة العالمية لسلامة المختبرات"],en:["WHO Laboratory Biosafety Manual","4th edition of the WHO laboratory biosafety manual"]},
+ {u:"https://www.iso.org/standard/76677.html",ar:["ISO 15189:2022","متطلبات الجودة والكفاءة للمختبرات الطبية"],en:["ISO 15189:2022","Quality and competence requirements for medical laboratories"]},
+ {u:"https://clsi.org/",ar:["CLSI","معايير إجراءات المختبر مثل GP41 لسحب الدم"],en:["CLSI","Laboratory standards, e.g. GP41 for venipuncture"]},
+ {u:"https://www.westgard.com/",ar:["Westgard QC","مرجع ضبط الجودة الداخلي وقواعد Westgard"],en:["Westgard QC","Internal quality control and Westgard rules"]},
+ {u:"https://www.labmedica.com/",ar:["LabMedica","أخبار التشخيص المخبري والتقنيات الجديدة"],en:["LabMedica","Clinical lab diagnostics news and new technology"]},
+ {u:"https://www.labce.com/",ar:["LabCE","دورات تعليم مستمر لاختصاصيي المختبرات"],en:["LabCE","Continuing education for lab professionals"]}
+];
+
+/* ---------- state ---------- */
+let lang = "ar", cat = "All", q = "", shown = 24;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function tubeColor(s){
+  s = s.toLowerCase();
+  if (s.includes("citrate")) return "#7dd3fc";
+  if (s.includes("tan/navy")) return "#1e3a8a";
+  if (s.includes("edta") || s.includes("purple")) return "#8b5cf6";
+  if (s.includes("grey") || s.includes("naf") || s.includes("fluoride")) return "#6b7280";
+  if (s.includes("heparin")) return "#16a34a";
+  if (s.includes("yellow") || s.includes("red") || s.includes("serum")) return "#eab308";
+  if (s.includes("urine")) return "#fde047";
+  return null;
 }
 
-// ===== TABLE =====
-let activeFilter = 'All';
-let searchTerm = '';
-
-function renderTable(data) {
-    const tbody = document.getElementById('testTableBody');
-    if (!data.length) {
-        tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><i class="fas fa-search"></i><p>${i18n[lang].noResults}</p></div></td></tr>`;
-    } else {
-        tbody.innerHTML = data.map(t => `<tr>
-            <td><div class="test-name">${t.name}</div></td>
-            <td><span class="cat-badge cat-${t.cat}">${t.cat}</span></td>
-            <td><span class="sample-badge">${t.sample}</span></td>
-            <td><span class="normal-text">${t.normal}</span></td>
-            <td><span class="use-text">${t.use}</span></td>
-        </tr>`).join('');
-    }
-    document.getElementById('resultsCount').innerHTML = i18n[lang].showing(data.length, testsData.length);
+function renderChips(){
+  const counts = {};
+  TESTS.forEach(t => counts[t.c] = (counts[t.c] || 0) + 1);
+  $("#chips").innerHTML = [`<button class="chip ${cat==="All"?"on":""}" data-c="All">${T[lang].all}<small>${TESTS.length}</small></button>`]
+    .concat(Object.keys(CATS).filter(k => counts[k]).map(k =>
+      `<button class="chip ${cat===k?"on":""}" data-c="${k}">${CATS[k][lang]}<small>${counts[k]}</small></button>`)).join("");
 }
 
-function filterData() {
-    const t = searchTerm.toLowerCase();
-    const filtered = testsData.filter(x =>
-        (activeFilter === 'All' || x.cat === activeFilter) &&
-        (!t || x.name.toLowerCase().includes(t) || x.cat.toLowerCase().includes(t) || x.use.toLowerCase().includes(t) || x.sample.toLowerCase().includes(t))
-    );
-    renderTable(filtered);
+function renderList(){
+  const term = q.trim().toLowerCase();
+  const f = TESTS.filter(t => (cat === "All" || t.c === cat) &&
+    (!term || [t.n, t.s, t.u, t.c, CATS[t.c]?.ar].join(" ").toLowerCase().includes(term)));
+  const L = T[lang];
+  $("#count").textContent = L.count(f.length, TESTS.length);
+  $("#list").innerHTML = f.length ? f.slice(0, shown).map(t => {
+    const col = tubeColor(t.s);
+    return `<article class="card">
+      <div class="cat">${esc(CATS[t.c]?.en || t.c)}</div>
+      <h3>${esc(t.n)}</h3>
+      <div class="row"><span class="k">${L.kSample}</span><span class="v tube">${col?`<i class="dot" style="background:${col}"></i>`:""}${esc(t.s)}</span></div>
+      <div class="row"><span class="k">${L.kRef}</span><span class="v ref">${esc(t.r)}</span></div>
+      <div class="row"><span class="k">${L.kUse}</span><span class="v">${esc(t.u)}</span></div>
+    </article>`;}).join("") : `<div class="empty">${L.empty}</div>`;
+  $("#moreBtn").style.display = f.length > shown ? "block" : "none";
 }
 
-function setFilter(cat, el) {
-    activeFilter = cat;
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    filterData();
+function renderStatic(){
+  const L = T[lang];
+  $("#draw").innerHTML = DRAW.map((d,i) => `<div class="step"><div class="cap" style="background:${d.c}"></div><div class="body"></div><span class="n">${i+1}</span><b>${d[lang][0]}</b><small>${d[lang][1]}</small></div>`).join("");
+  $("#errors").innerHTML = ERRORS.map((e,i) => `<div class="box"><h3><span class="num">${i+1}</span>${e[lang][0]}</h3><p>${e[lang][1]}</p></div>`).join("");
+  $("#safety").innerHTML = SAFETY.map((e,i) => `<div class="box"><h3><span class="num">${i+1}</span>${e[lang][0]}</h3><p>${e[lang][1]}</p></div>`).join("");
+  $("#waste").innerHTML = WASTE.map(w => `<div class="bin" style="--c:${w.c}"><b>${w[lang][0]}</b><p>${w[lang][1]}</p></div>`).join("");
+  $("#incident").innerHTML = INCIDENT[lang].map(x => `<li>${x}</li>`).join("");
+  $("#res").innerHTML = RES.map(r => `<a href="${r.u}" target="_blank" rel="noopener"><div class="box"><div class="dom">${new URL(r.u).hostname.replace("www.","")}</div><h3>${r[lang][0]}</h3><p>${r[lang][1]}</p></div></a>`).join("");
 }
 
-function switchTab(tab, btn) {
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    btn.classList.add('active');
+function setLang(l){
+  lang = l;
+  const root = document.documentElement;
+  root.lang = l; root.dir = l === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-t]").forEach(el => {
+    const v = T[l][el.dataset.t]; if (typeof v !== "string") return;
+    if (el.hasAttribute("data-html")) el.innerHTML = v; else el.textContent = v;
+  });
+  $("#q").placeholder = T[l].ph;
+  $("#langBtn").textContent = T[l].lang;
+  try { localStorage.setItem("lang", l); } catch(e) {}
+  renderChips(); renderList(); renderStatic();
 }
 
-document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value; filterData(); });
-document.getElementById('totalCount').textContent = testsData.length + '+';
+/* ---------- events ---------- */
+$("#q").addEventListener("input", e => { q = e.target.value; shown = 24; renderList(); });
+$("#chips").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; cat = b.dataset.c; shown = 24; renderChips(); renderList(); });
+$("#moreBtn").addEventListener("click", () => { shown += 48; renderList(); });
+$("#langBtn").addEventListener("click", () => setLang(lang === "ar" ? "en" : "ar"));
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "pane-" + b.dataset.pane));
+  window.scrollTo({top: document.querySelector(".tabs").offsetTop - 62, behavior: "smooth"});
+}));
+$("#themeBtn").addEventListener("click", () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+});
+const lb = $("#lb");
+document.querySelectorAll(".gallery img").forEach(img => img.addEventListener("click", () => { lb.querySelector("img").src = img.src; lb.showModal(); }));
+lb.addEventListener("click", () => lb.close());
 
-// Init
-setLang('ar');
+$("#statTests").textContent = TESTS.length;
+$("#statCats").textContent = new Set(TESTS.map(t => t.c)).size;
+let saved = "ar"; try { saved = localStorage.getItem("lang") || "ar"; } catch(e) {}
+setLang(saved);
 </script>
 </body>
 </html>
