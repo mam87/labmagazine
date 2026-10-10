@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بوابة علوم المختبرات الطبية | Medical Lab Portal</title>
-<meta name="description" content="دليل مرجعي ثنائي اللغة لأكثر من 220 فحصاً مخبرياً: نوع العينة، القيم المرجعية، الاستخدامات، ترتيب سحب العينات، أخطاء ما قبل التحليل، ومعايير السلامة. إعداد أ. مأمون السعودي.">
+<meta name="description" content="دليل مرجعي ثنائي اللغة لأكثر من 220 فحصاً مخبرياً: نوع العينة، القيم المرجعية، الاستخدامات، ترتيب سحب العينات، أخطاء ما قبل التحليل، وحاسبات مخبرية تفاعلية ومرجع سريع، ومعايير السلامة. إعداد أ. مأمون السعودي.">
 <meta property="og:title" content="بوابة علوم المختبرات الطبية | Medical Lab Portal">
 <meta property="og:description" content="دليل الفحوصات المخبرية، ترتيب سحب العينات، والسلامة المهنية — بالعربي والإنجليزي.">
 <meta property="og:image" content="https://mam87.github.io/labmagazine/assets/order-of-draw.png">
@@ -128,6 +128,40 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-con
 footer .links{display:flex;gap:10px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:14px;padding:10px 16px;border-radius:12px;background:var(--brand);color:var(--brand-ink)}
 .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+
+/* calculators */
+.calcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.calc h3{font-size:16.5px}
+.calc .f{direction:ltr;text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:8px 10px;line-height:1.5}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-3)}
+.fld input,.fld select{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;width:100%;direction:ltr;text-align:left;font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.out{border-top:1px dashed var(--line);padding-top:10px;display:grid;gap:6px}
+.res{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.res span{font-size:13px;color:var(--ink-2)}
+.res b{font-size:20px;font-variant-numeric:tabular-nums;direction:ltr}
+.res b small{font-size:12px;font-weight:500;color:var(--ink-3);margin-inline-start:4px}
+.flag{font-size:13px;border-radius:8px;padding:7px 10px;background:var(--brand-soft);color:var(--brand)}
+.flag.w{background:var(--warn-bg);color:var(--warn-ink)}
+.muted{font-size:13px;color:var(--ink-3)}
+.src{margin-top:22px;font-size:12.5px;color:var(--ink-3)}
+/* quick reference */
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.refsec{margin-bottom:30px;scroll-margin-top:130px}
+.refsec h3.t{font-size:19px;margin-bottom:4px}
+.refsec p.d{color:var(--ink-2);font-size:14.5px;margin-bottom:12px}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.rc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);border-inline-start:5px solid var(--c,var(--brand))}
+.rc b{display:block;font-size:15px;margin-bottom:4px}
+.rc .code{direction:ltr;display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--surface-2);border-radius:6px;padding:1px 7px;margin-bottom:6px}
+.rc ul{list-style:none;display:grid;gap:3px;font-size:13.5px;color:var(--ink-2)}
+.rc li span{color:var(--ink-3)}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;margin-bottom:6px}
+.tag.rej{background:#fee2e2;color:#991b1b}.tag.wrn{background:var(--warn-bg);color:var(--warn-ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag.rej{background:#3b1414;color:#fca5a5}}
+:root[data-theme="dark"] .tag.rej{background:#3b1414;color:#fca5a5}
 @media (max-width:900px){.draw{grid-template-columns:repeat(3,1fr)}.waste,.grid3,.gallery{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.grid2,.grid3,.gallery,.waste{grid-template-columns:1fr}.draw{grid-template-columns:1fr 1fr}.hero{padding-top:32px}.logo span{display:none}.list{grid-template-columns:1fr}}
 @media print{.top,.tabs,footer,.more{display:none}.pane{display:block!important}}
@@ -155,7 +189,9 @@ footer .links{display:flex;gap:10px;flex-wrap:wrap}
 
 <nav class="tabs"><div class="wrap" role="tablist">
   <button class="tab" role="tab" data-pane="tests" aria-selected="true" data-t="tTests"></button>
+  <button class="tab" role="tab" data-pane="calc" aria-selected="false" data-t="tCalc"></button>
   <button class="tab" role="tab" data-pane="pre" aria-selected="false" data-t="tPre"></button>
+  <button class="tab" role="tab" data-pane="ref" aria-selected="false" data-t="tRef"></button>
   <button class="tab" role="tab" data-pane="safety" aria-selected="false" data-t="tSafety"></button>
   <button class="tab" role="tab" data-pane="res" aria-selected="false" data-t="tRes"></button>
 </div></nav>
@@ -191,6 +227,23 @@ footer .links{display:flex;gap:10px;flex-wrap:wrap}
   <h2 style="margin-top:32px" data-t="errTitle"></h2>
   <p class="sub" data-t="errSub"></p>
   <div class="grid3" id="errors"></div>
+</section>
+
+<!-- CALCULATORS -->
+<section class="pane" id="pane-calc" role="tabpanel">
+  <h2 data-t="calcTitle"></h2>
+  <p class="sub" data-t="calcSub"></p>
+  <div class="calcs" id="calcs"></div>
+  <p class="src" data-t="srcNote"></p>
+</section>
+
+<!-- QUICK REFERENCE -->
+<section class="pane" id="pane-ref" role="tabpanel">
+  <h2 data-t="refTitle"></h2>
+  <p class="sub" data-t="refSub"></p>
+  <nav class="jump" id="jump"></nav>
+  <div id="refs"></div>
+  <p class="src" data-t="srcNote"></p>
 </section>
 
 <!-- SAFETY -->
@@ -240,7 +293,7 @@ const T = {
   h1:"كل ما تحتاجه عن <span>الفحص المخبري</span> في مكان واحد",
   lead:"العينة الصحيحة، القيم المرجعية، الاستخدام السريري، ترتيب سحب العينات، ومعايير السلامة — بالعربي والإنجليزي. إعداد أ. مأمون السعودي.",
   sTests:"فحص مخبري",sCats:"تخصص",sTubes:"أنابيب بترتيب السحب",sStd:"متوافق مع المعيار",
-  tTests:"دليل الفحوصات",tPre:"ما قبل التحليل",tSafety:"السلامة المهنية",tRes:"مصادر علمية",
+  tTests:"دليل الفحوصات",tCalc:"الحاسبات",tRef:"مرجع سريع",calcTitle:"حاسبات المختبر",calcSub:"اكتب القيم وتظهر النتيجة مع التفسير فوراً. للتعليم والتحقق — النتيجة النهائية حسب إجراءات مختبرك.",refTitle:"مرجع سريع",refSub:"أهم الجداول التي يحتاجها المختبري يومياً، ملخّصة بشكل عملي.",srcNote:"المرجع الأساسي: Turgeon ML. Linne & Ringsrud's Clinical Laboratory Science, 7th ed. Elsevier — المحتوى مُلخّص ومُعاد صياغته، وليس نقلاً حرفياً.",tPre:"ما قبل التحليل",tSafety:"السلامة المهنية",tRes:"مصادر علمية",
   testsSub:"ابحث باسم الفحص أو نوع العينة أو الاستخدام، أو اختر تخصصاً.",
   ph:"ابحث: CBC، Ferritin، Citrate، anemia…",all:"الكل",
   refNote:"القيم المرجعية استرشادية للبالغين فقط وتختلف حسب المختبر والجهاز والطريقة والعمر والجنس — اعتمد دائماً القيم المعتمدة في مختبرك (ISO 15189:2022 – 7.3.7).",
@@ -259,7 +312,7 @@ const T = {
   h1:"Everything about the <span>lab test</span>, in one place",
   lead:"Right sample, reference ranges, clinical use, order of draw and safety standards — in Arabic and English. By Mamoun Al-Saudi, MLS.",
   sTests:"Lab tests",sCats:"Specialties",sTubes:"Tubes in draw order",sStd:"Aligned standard",
-  tTests:"Test Directory",tPre:"Pre-analytical",tSafety:"Lab Safety",tRes:"Resources",
+  tTests:"Test Directory",tCalc:"Calculators",tRef:"Quick Reference",calcTitle:"Lab Calculators",calcSub:"Type the values and the result appears instantly with interpretation. For education and verification — final results follow your lab's procedures.",refTitle:"Quick Reference",refSub:"The tables lab professionals reach for every day, summarised for practical use.",srcNote:"Main reference: Turgeon ML. Linne & Ringsrud's Clinical Laboratory Science, 7th ed. Elsevier — content summarised and reworded, not reproduced.",tPre:"Pre-analytical",tSafety:"Lab Safety",tRes:"Resources",
   testsSub:"Search by test name, sample type or indication, or pick a specialty.",
   ph:"Search: CBC, Ferritin, Citrate, anemia…",all:"All",
   refNote:"Reference ranges are indicative adult values only and vary by laboratory, analyser, method, age and sex — always use your laboratory's validated intervals (ISO 15189:2022 – 7.3.7).",
@@ -323,6 +376,170 @@ const RES = [
  {u:"https://www.labmedica.com/",ar:["LabMedica","أخبار التشخيص المخبري والتقنيات الجديدة"],en:["LabMedica","Clinical lab diagnostics news and new technology"]},
  {u:"https://www.labce.com/",ar:["LabCE","دورات تعليم مستمر لاختصاصيي المختبرات"],en:["LabCE","Continuing education for lab professionals"]}
 ];
+
+
+/* ---------- calculators ---------- */
+const CV = {}; // remembered input values
+const n = v => (v === "" || v == null || isNaN(+v)) ? null : +v;
+const fx = (v, d=1) => (v == null || !isFinite(v)) ? "—" : (+v).toFixed(d);
+const L2 = (ar, en) => ({ar, en});
+
+const CALCS = [
+ {id:"idx", t:L2("مؤشرات كريات الدم الحمراء","RBC Indices"),
+  f:"MCV = Hct×10/RBC · MCH = Hb×10/RBC · MCHC = Hb×100/Hct",
+  in:[["hb",L2("الهيموغلوبين","Hemoglobin"),"g/dL",14],["hct",L2("الهيماتوكريت","Hematocrit"),"%",42],["rbc",L2("عدد الكريات الحمراء","RBC count"),"×10¹²/L",4.8]],
+  run:v=>{ if(!v.rbc||!v.hct) return null;
+   const mcv=v.hct*10/v.rbc, mch=v.hb*10/v.rbc, mchc=v.hb*100/v.hct, fl=[];
+   if(mcv<80) fl.push([1,L2("صغر حجم الكريات (Microcytic) — فكّر بنقص الحديد أو الثلاسيميا","Microcytic — consider iron deficiency or thalassemia")]);
+   else if(mcv>100) fl.push([1,L2("كبر حجم الكريات (Macrocytic) — فكّر بنقص B12/الفولات أو أمراض الكبد","Macrocytic — consider B12/folate deficiency or liver disease")]);
+   else fl.push([0,L2("حجم طبيعي (Normocytic)","Normocytic")]);
+   if(mchc<32) fl.push([1,L2("نقص الصباغ (Hypochromic)","Hypochromic")]);
+   if(mchc>40) fl.push([1,L2("MCHC أعلى من 40 غير منطقي — تحقق من خلل الجهاز أو الأجسام الباردة (Cold agglutinins)","MCHC >40 is implausible — check instrument or cold agglutinins")]);
+   else if(mchc>36) fl.push([1,L2("MCHC مرتفع — راجع اللطاخة (Spherocytes) أو الدهون/التحلل","High MCHC — review smear for spherocytes, or lipemia/hemolysis")]);
+   return {r:[["MCV",fx(mcv),"fL"],["MCH",fx(mch),"pg"],["MCHC",fx(mchc),"g/dL"]],fl};}},
+ {id:"nrbc", t:L2("تصحيح عدد البيض بوجود nRBC","WBC corrected for nRBC"),
+  f:"Corrected WBC = WBC × 100 / (100 + nRBC per 100 WBC)",
+  in:[["wbc",L2("عدد البيض من الجهاز","Instrument WBC"),"×10⁹/L",12],["nrbc",L2("nRBC لكل 100 خلية بيضاء","nRBC per 100 WBC"),"",10]],
+  run:v=>{ if(v.wbc==null||v.nrbc==null) return null; const c=v.wbc*100/(100+v.nrbc);
+   return {r:[[L2("العدد المصحح","Corrected WBC"),fx(c,2),"×10⁹/L"]],fl:[[0,L2("الكريات الحمراء المنواة تُعدّ كبيض في بعض الأجهزة، فيرتفع العدد كاذباً","nRBCs are counted as WBCs by some analysers, falsely raising the count")]]};}},
+ {id:"ret", t:L2("الشبكيات المصححة ومؤشر الإنتاج","Corrected Retic & RPI"),
+  f:"Corrected % = Retic% × Hct/45 · RPI = Corrected % / maturation time",
+  in:[["ret",L2("الشبكيات","Reticulocytes"),"%",4],["hct",L2("الهيماتوكريت","Hematocrit"),"%",25]],
+  run:v=>{ if(v.ret==null||!v.hct) return null; const c=v.ret*v.hct/45;
+   const m=v.hct>=40?1:v.hct>=35?1.5:v.hct>=25?2:v.hct>=15?2.5:3, rpi=c/m;
+   return {r:[[L2("الشبكيات المصححة","Corrected retic"),fx(c,2),"%"],["RPI",fx(rpi,2),""]],
+    fl:[rpi>=2?[0,L2("استجابة نخاع جيدة (RPI ≥ 2) — فكّر بالنزف أو انحلال الدم","Adequate marrow response (RPI ≥ 2) — suggests blood loss or hemolysis")]:[1,L2("استجابة ضعيفة (RPI < 2) — فقر دم ناتج عن نقص الإنتاج","Inadequate response (RPI < 2) — hypoproliferative anemia")]]};}},
+ {id:"ag", t:L2("الفجوة الأنيونية","Anion Gap"),
+  f:"AG = Na⁺ − (Cl⁻ + HCO₃⁻)   [+ K⁺ optional]",
+  in:[["na","Na⁺","mmol/L",140],["cl","Cl⁻","mmol/L",104],["hco3","HCO₃⁻","mmol/L",24],["k",L2("K⁺ (اختياري)","K⁺ (optional)"),"mmol/L",""],["alb",L2("الألبومين (اختياري)","Albumin (optional)"),"g/dL",""]],
+  run:v=>{ if(v.na==null||v.cl==null||v.hco3==null) return null;
+   const withK=v.k!=null, ag=v.na-(v.cl+v.hco3)+(withK?v.k:0), hi=withK?20:16, lo=withK?10:8, r=[[L2("الفجوة","Anion gap"),fx(ag),"mmol/L"]], fl=[];
+   if(v.alb!=null){ const c=ag+2.5*(4-v.alb); r.push([L2("مصححة للألبومين","Albumin-corrected"),fx(c),"mmol/L"]); }
+   fl.push([0,L2(`المرجع التقريبي ${lo}–${hi} ${withK?"(مع K⁺)":"(بدون K⁺)"}`,`Approx. reference ${lo}–${hi} ${withK?"(with K⁺)":"(without K⁺)"}`)]);
+   if(ag>hi) fl.push([1,L2("مرتفعة: حماض لبني أو كيتوني، فشل كلوي، تسمم (ميثانول، ساليسيلات)","High: lactic or ketoacidosis, uremia, toxins (methanol, salicylate)")]);
+   if(ag<lo) fl.push([1,L2("منخفضة: نقص الألبومين، بروتينات وحيدة النسيلة، أو خطأ مخبري — أعد الفحص","Low: hypoalbuminemia, paraprotein, or analytical error — repeat")]);
+   return {r,fl};}},
+ {id:"osm", t:L2("الأسمولية المحسوبة والفجوة","Calculated Osmolality & Gap"),
+  f:"Osm = 2×Na + Glucose/18 + BUN/2.8   (mg/dL)",
+  in:[["na","Na⁺","mmol/L",140],["glu",L2("الغلوكوز","Glucose"),"mg/dL",100],["bun","BUN","mg/dL",14],["mo",L2("المقاسة (اختياري)","Measured (optional)"),"mOsm/kg",""]],
+  run:v=>{ if(v.na==null||v.glu==null||v.bun==null) return null; const c=2*v.na+v.glu/18+v.bun/2.8, r=[[L2("المحسوبة","Calculated"),fx(c,0),"mOsm/kg"]], fl=[];
+   if(v.mo!=null){ const g=v.mo-c; r.push([L2("الفجوة الأسمولية","Osmolal gap"),fx(g,0),"mOsm/kg"]);
+    fl.push(g>10?[1,L2("فجوة > 10: فكّر بالكحولات السامة (ميثانول، إيثيلين غلايكول) أو الإيثانول","Gap > 10: consider toxic alcohols (methanol, ethylene glycol) or ethanol")]:[0,L2("فجوة طبيعية (≤ 10)","Normal gap (≤ 10)")]);}
+   else fl.push([0,L2("المرجع التقريبي 275–295 mOsm/kg","Approx. reference 275–295 mOsm/kg")]);
+   return {r,fl};}},
+ {id:"egfr", t:L2("eGFR — معادلة CKD-EPI 2021","eGFR — CKD-EPI 2021"),
+  f:"142 × min(Scr/κ,1)^α × max(Scr/κ,1)^−1.2 × 0.9938^age × 1.012 (F)",
+  in:[["scr",L2("الكرياتينين","Creatinine"),"mg/dL",1.0],["age",L2("العمر","Age"),L2("سنة","yr"),50],["sex",L2("الجنس","Sex"),"",["M","F"]]],
+  run:v=>{ if(!v.scr||!v.age) return null; const F=v.sex==="F", k=F?0.7:0.9, a=F?-0.241:-0.302, x=v.scr/k;
+   const e=142*Math.pow(Math.min(x,1),a)*Math.pow(Math.max(x,1),-1.2)*Math.pow(0.9938,v.age)*(F?1.012:1);
+   const st=e>=90?"G1":e>=60?"G2":e>=45?"G3a":e>=30?"G3b":e>=15?"G4":"G5";
+   return {r:[["eGFR",fx(e,0),"mL/min/1.73m²"],[L2("المرحلة","Stage"),st,""]],fl:[[e<60?1:0,L2("للبالغين فقط؛ لا تُستخدم عند تغيّر الكرياتينين السريع","Adults only; not valid when creatinine is changing rapidly")]]};}},
+ {id:"ccr", t:L2("تصفية الكرياتينين (بول 24 ساعة)","Creatinine Clearance (24-h urine)"),
+  f:"CCr = (U × V / P) × 1.73 / BSA   · V = mL/min",
+  in:[["u",L2("كرياتينين البول","Urine creatinine"),"mg/dL",100],["p",L2("كرياتينين البلازما","Plasma creatinine"),"mg/dL",1.0],["vol",L2("حجم البول","Urine volume"),"mL",1500],["hrs",L2("مدة الجمع","Collection time"),L2("ساعة","h"),24],["ht",L2("الطول","Height"),"cm",170],["wt",L2("الوزن","Weight"),"kg",70]],
+  run:v=>{ if(!v.u||!v.p||!v.vol||!v.hrs) return null; const V=v.vol/(v.hrs*60), raw=v.u*V/v.p;
+   const bsa=(v.ht&&v.wt)?Math.sqrt(v.ht*v.wt/3600):null, cc=bsa?raw*1.73/bsa:null, r=[[L2("غير مُعايرة","Uncorrected"),fx(raw,0),"mL/min"]];
+   if(bsa){ r.push(["BSA",fx(bsa,2),"m²"]); r.push([L2("مُعايرة للمساحة","BSA-corrected"),fx(cc,0),"mL/min/1.73m²"]); }
+   return {r,fl:[[0,L2("المرجع (أقل من 40 سنة): ذكور 90–139، إناث 80–125 — تتناقص مع العمر","Reference (<40 yr): men 90–139, women 80–125 — declines with age")],[0,L2("أهم مصدر خطأ: جمع البول غير الكامل","Most common error: incomplete urine collection")]]};}},
+ {id:"ldl", t:L2("LDL المحسوب (فريدوالد)","Calculated LDL (Friedewald)"),
+  f:"LDL = TC − HDL − TG/5   (mg/dL)",
+  in:[["tc",L2("الكوليسترول الكلي","Total cholesterol"),"mg/dL",200],["hdl","HDL","mg/dL",50],["tg",L2("الدهون الثلاثية","Triglycerides"),"mg/dL",150]],
+  run:v=>{ if(v.tc==null||v.hdl==null||v.tg==null) return null; const r=[[L2("Non-HDL","Non-HDL"),fx(v.tc-v.hdl,0),"mg/dL"]];
+   if(v.tg>=400) return {r,fl:[[1,L2("TG ≥ 400: المعادلة غير صالحة — اطلب LDL مباشر","TG ≥ 400: formula invalid — request direct LDL")]]};
+   r.unshift(["LDL",fx(v.tc-v.hdl-v.tg/5,0),"mg/dL"]); return {r,fl:[[0,L2("تتطلب عينة صائمة","Requires a fasting sample")]]};}},
+ {id:"dil", t:L2("التخفيف C₁V₁ = C₂V₂","Dilution C₁V₁ = C₂V₂"),
+  f:"V₁ = C₂ × V₂ / C₁   · diluent = V₂ − V₁",
+  in:[["c1",L2("تركيز المحلول الأصلي","Stock concentration (C₁)"),"",10],["c2",L2("التركيز المطلوب","Target concentration (C₂)"),"",1],["v2",L2("الحجم النهائي","Final volume (V₂)"),"mL",100]],
+  run:v=>{ if(!v.c1||v.c2==null||!v.v2) return null; if(v.c2>v.c1) return {r:[],fl:[[1,L2("التركيز المطلوب أعلى من الأصلي","Target exceeds stock concentration")]]};
+   const v1=v.c2*v.v2/v.c1; return {r:[[L2("حجم المحلول الأصلي","Stock volume"),fx(v1,2),"mL"],[L2("حجم المذيب","Diluent"),fx(v.v2-v1,2),"mL"],[L2("نسبة التخفيف","Dilution"),"1:"+fx(v.c1/v.c2,1),""]],fl:[]};}},
+ {id:"csf", t:L2("نسبة غلوكوز السائل الشوكي للدم","CSF : Blood Glucose Ratio"),
+  f:"Ratio = CSF glucose / serum glucose  (expected ≈ 0.6)",
+  in:[["c",L2("غلوكوز السائل الشوكي","CSF glucose"),"mg/dL",60],["s",L2("غلوكوز الدم (بنفس الوقت)","Serum glucose (same time)"),"mg/dL",100]],
+  run:v=>{ if(v.c==null||!v.s) return null; const q=v.c/v.s;
+   return {r:[[L2("النسبة","Ratio"),fx(q,2),""],[L2("المتوقع","Expected CSF"),fx(v.s*2/3,0),"mg/dL"]],
+    fl:[q<0.4?[1,L2("منخفضة (< 0.4): تشير لالتهاب سحايا بكتيري أو سلّي أو فطري","Low (< 0.4): suggests bacterial, TB or fungal meningitis")]:[0,L2("ضمن المتوقع — الالتهاب الفيروسي عادة لا يخفض الغلوكوز","Within expected — viral meningitis usually spares glucose")]]};}}
+];
+
+function lbl(x){ return typeof x === "string" ? x : x[lang]; }
+function renderCalc(){
+  const box = $("#calcs"); if (!box) return;
+  box.innerHTML = CALCS.map(c => `<article class="calc" data-id="${c.id}">
+    <h3>${c.t[lang]}</h3><div class="f">${c.f}</div>
+    <div class="fields">${c.in.map(([k,l,u,d]) => {
+      const key=c.id+"."+k, val = key in CV ? CV[key] : d;
+      if (Array.isArray(d)) return `<label class="fld">${lbl(l)}<select data-k="${k}">${d.map(o=>`<option value="${o}" ${val===o?"selected":""}>${o==="M"?(lang==="ar"?"ذكر":"Male"):(lang==="ar"?"أنثى":"Female")}</option>`).join("")}</select></label>`;
+      return `<label class="fld">${lbl(l)}${u?` <small>(${lbl(u)})</small>`:""}<input type="number" inputmode="decimal" step="any" data-k="${k}" value="${val}"></label>`;}).join("")}</div>
+    <div class="out"></div></article>`).join("");
+  box.querySelectorAll(".calc").forEach(updCalc);
+}
+function updCalc(el){
+  const c = CALCS.find(x => x.id === el.dataset.id), v = {};
+  el.querySelectorAll("[data-k]").forEach(i => { CV[c.id+"."+i.dataset.k] = i.value; v[i.dataset.k] = i.tagName === "SELECT" ? i.value : n(i.value); });
+  let o = null; try { o = c.run(v); } catch(e) {}
+  el.querySelector(".out").innerHTML = !o ? `<div class="muted">${lang==="ar"?"أدخل القيم المطلوبة":"Enter the required values"}</div>` :
+    o.r.map(([k,val,u]) => `<div class="res"><span>${lbl(k)}</span><b>${val}<small>${u}</small></b></div>`).join("") +
+    o.fl.map(([w,t]) => `<div class="flag ${w?"w":""}">${t[lang]}</div>`).join("");
+}
+document.addEventListener("input", e => { const el = e.target.closest(".calc"); if (el) updCalc(el); });
+
+/* ---------- quick reference ---------- */
+const REFS = [
+ {id:"westgard", t:L2("قواعد Westgard لضبط الجودة","Westgard QC Rules"),
+  d:L2("تُطبَّق على مخطط Levey-Jennings. قاعدة 1₂s إنذار يستدعي فحص بقية القواعد؛ مخالفة أي قاعدة رفض تعني إيقاف التشغيل وعدم إصدار النتائج.","Applied to the Levey-Jennings chart. 1₂s is a warning that triggers checking the other rules; violating any rejection rule means stop the run and hold results."),
+  items:[
+   ["1₂s","wrn",L2("قيمة واحدة خارج ±2SD","One value beyond ±2SD"),L2("إنذار — افحص باقي القواعد","Warning — inspect the other rules")],
+   ["1₃s","rej",L2("قيمة واحدة خارج ±3SD","One value beyond ±3SD"),L2("خطأ عشوائي","Random error")],
+   ["2₂s","rej",L2("قيمتان متتاليتان خارج 2SD بنفس الجهة","Two consecutive beyond 2SD, same side"),L2("خطأ منهجي","Systematic error")],
+   ["R₄s","rej",L2("الفرق بين قيمتين ضمن نفس التشغيل > 4SD","Range between two values in a run > 4SD"),L2("خطأ عشوائي","Random error")],
+   ["4₁s","rej",L2("أربع قيم متتالية خارج 1SD بنفس الجهة","Four consecutive beyond 1SD, same side"),L2("خطأ منهجي (انحراف/Shift)","Systematic error (shift)")],
+   ["10x̄","rej",L2("عشر قيم متتالية بنفس جهة المتوسط","Ten consecutive on one side of the mean"),L2("خطأ منهجي (اتجاه/Trend)","Systematic error (trend)")]
+  ].map(([code,k,a,b])=>({code,tag:k,b:a,l:[b]})),
+  note:L2("عند الرفض: راجع الإجراء، ابحث عن تغيير حديث (دفعة كواشف، معايرة، صيانة، حرارة)، جهّز كنترول جديد، ثم أعد التشغيل. بعض المختبرات تعتبر 4₁s و10x̄ إنذاراً.","On rejection: review the procedure, look for recent changes (reagent lot, calibration, maintenance, temperature), use fresh control, then rerun. Some labs treat 4₁s and 10x̄ as warnings.")},
+ {id:"effusion", t:L2("السوائل المصلية: ارتشاحي أم نتحي؟","Serous Effusions: Transudate vs Exudate"),
+  d:L2("الارتشاحي (Transudate) سببه مرض جهازي (قصور قلب، تشمع كبد) ولا يحتاج غالباً فحوصات إضافية؛ النتحي (Exudate) سببه التهاب أو ورم ويحتاج زرعاً وفحصاً خلوياً. معايير Light أدق من البروتين وحده.","A transudate reflects systemic disease (heart failure, cirrhosis) and rarely needs more work-up; an exudate reflects inflammation or malignancy and needs culture and cytology. Light's criteria beat protein alone."),
+  items:[
+   {b:L2("ارتشاحي — Transudate","Transudate"),c:"#0e7c7b",l:[L2("صافٍ، أصفر فاتح، لا يتخثر","Clear, pale yellow, does not clot"),L2("بروتين < 3 g/dL","Protein < 3 g/dL"),L2("WBC < 1000/µL، أغلبها وحيدة النواة","WBC < 1000/µL, mostly mononuclear"),L2("LDH منخفض","LDH low")]},
+   {b:L2("نتحي — Exudate","Exudate"),c:"#c2410c",l:[L2("عكر، قيحي أو دموي، قد يتخثر","Cloudy, purulent or bloody, may clot"),L2("بروتين > 3 g/dL","Protein > 3 g/dL"),L2("WBC مرتفع، عدلات (لمفاويات في السل)","WBC high, neutrophils (lymphocytes in TB)"),L2("الغلوكوز منخفض في العدوى البكتيرية","Glucose low in bacterial infection")]},
+   {b:L2("معايير Light (يكفي معيار واحد = نتحي)","Light's criteria (any one = exudate)"),c:"#2563eb",l:[L2("بروتين السائل ÷ المصل > 0.5","Fluid/serum protein > 0.5"),L2("LDH السائل ÷ المصل > 0.6","Fluid/serum LDH > 0.6"),L2("LDH السائل > ⅔ الحد الأعلى لطبيعي المصل","Fluid LDH > ⅔ of serum upper limit")]}
+  ]},
+ {id:"csf", t:L2("السائل الشوكي في التهاب السحايا","CSF in Meningitis"),
+  d:L2("الطبيعي: صافٍ كالماء، WBC 0–5/µL للبالغ، غلوكوز 40–80 mg/dL (≈ ⅔ غلوكوز الدم)، بروتين 15–45 mg/dL. يُفحص فوراً — الخلايا تتحلل بسرعة.","Normal: water-clear, WBC 0–5/µL in adults, glucose 40–80 mg/dL (≈ ⅔ of blood), protein 15–45 mg/dL. Examine immediately — cells lyse quickly."),
+  items:[
+   {b:L2("بكتيري","Bacterial"),c:"#dc2626",l:[L2("عكر · WBC ↑↑ عدلات","Turbid · WBC ↑↑ neutrophils"),L2("بروتين ↑↑ · غلوكوز ↓↓","Protein ↑↑ · glucose ↓↓"),L2("لاكتات > 25 mg/dL · صبغة غرام","Lactate > 25 mg/dL · Gram stain")]},
+   {b:L2("فيروسي","Viral"),c:"#16a34a",l:[L2("صافٍ غالباً · WBC ↑ لمفاويات","Usually clear · WBC ↑ lymphocytes"),L2("بروتين طبيعي أو ↑ قليلاً","Protein normal or mildly ↑"),L2("غلوكوز طبيعي","Glucose normal")]},
+   {b:L2("سلّي (TB)","Tuberculous"),c:"#9333ea",l:[L2("WBC ↑ لمفاويات","WBC ↑ lymphocytes"),L2("بروتين ↑↑ · غلوكوز ↓","Protein ↑↑ · glucose ↓"),L2("قد يتكوّن غشاء (Pellicle) · صبغة AFB","Pellicle may form · AFB stain")]},
+   {b:L2("فطري (Cryptococcus)","Fungal (Cryptococcus)"),c:"#ca8a04",l:[L2("WBC ↑ لمفاويات","WBC ↑ lymphocytes"),L2("بروتين ↑ · غلوكوز ↓","Protein ↑ · glucose ↓"),L2("حبر هندي · مستضد CrAg","India ink · CrAg antigen")]},
+   {b:L2("وخز رضّي أم نزف تحت العنكبوتية؟","Traumatic tap vs SAH?"),c:"#6b7280",l:[L2("الوخز الرضّي: الدم يقل من الأنبوب 1 إلى 3","Traumatic tap: blood clears from tube 1 to 3"),L2("النزف: دم متساوٍ في الأنابيب + اصفرار (Xanthochromia) بعد التثفيل","SAH: even blood in all tubes + xanthochromia after spinning")]}
+  ]},
+ {id:"casts", t:L2("الأسطوانات البولية ودلالتها","Urinary Casts & Significance"),
+  d:L2("تتكوّن في الأنابيب الكلوية من بروتين Tamm-Horsfall، لذا فوجودها يعني أن المصدر كلوي. تُفحص بالتكبير الصغير وبإضاءة منخفضة.","Formed in renal tubules from Tamm-Horsfall protein, so they localise the finding to the kidney. Scan under low power with reduced light."),
+  items:[
+   {b:L2("هيالينية — Hyaline","Hyaline"),c:"#94a3b8",l:[L2("أقلها أهمية؛ قد تظهر بعد الجهد أو الجفاف","Least significant; seen after exercise or dehydration")]},
+   {b:L2("كريات حمراء — RBC","RBC cast"),c:"#dc2626",l:[L2("نزف كبيبي — التهاب كبيبات الكلى","Glomerular bleeding — glomerulonephritis")]},
+   {b:L2("كريات بيضاء — WBC","WBC cast"),c:"#f59e0b",l:[L2("التهاب حويضة وكلية أو التهاب خلالي","Pyelonephritis or interstitial nephritis")]},
+   {b:L2("خلايا ظهارية — Epithelial","Epithelial cast"),c:"#0ea5e9",l:[L2("أذية أنبوبية (نخر أنبوبي حاد، سموم)","Tubular injury (acute tubular necrosis, toxins)")]},
+   {b:L2("حبيبية — Granular","Granular"),c:"#a16207",l:[L2("تحلل خلايا داخل أسطوانة؛ مرض كلوي","Degenerated cellular cast; renal disease")]},
+   {b:L2("شمعية — Waxy","Waxy"),c:"#7c3aed",l:[L2("ركود طويل؛ فشل كلوي مزمن","Prolonged stasis; chronic renal failure")]},
+   {b:L2("دهنية — Fatty","Fatty"),c:"#eab308",l:[L2("المتلازمة الكلوية (صليب مالطي بالضوء المستقطب)","Nephrotic syndrome (Maltese cross under polarised light)")]},
+   {b:L2("عريضة — Broad","Broad"),c:"#111827",l:[L2("تتكوّن في أنابيب متوسعة؛ علامة إنذار سيئة","Formed in dilated tubules; poor prognostic sign")]}
+  ]},
+ {id:"crystals", t:L2("بلورات السائل الزلالي","Synovial Fluid Crystals"),
+  d:L2("الطبيعي: لزج كبياض البيض، WBC < 200/µL، عدلات < 25%، بلا بلورات. يُفحص بالمجهر المستقطب مع المُعوِّض الأحمر.","Normal: viscous like egg white, WBC < 200/µL, neutrophils < 25%, no crystals. Examine with a polarising microscope and red compensator."),
+  items:[
+   {b:L2("يورات أحادية الصوديوم (MSU)","Monosodium urate (MSU)"),c:"#eab308",l:[L2("إبرية الشكل","Needle-shaped"),L2("انكسار مزدوج سالب قوي — أصفر عندما توازي محور المعوِّض","Strong negative birefringence — yellow when parallel to the compensator axis"),L2("النقرس (Gout)","Gout")]},
+   {b:L2("بيروفوسفات الكالسيوم (CPPD)","Calcium pyrophosphate (CPPD)"),c:"#2563eb",l:[L2("معيّنية أو عصوية قصيرة","Rhomboid or short rods"),L2("انكسار مزدوج موجب ضعيف — أزرق عند التوازي","Weak positive birefringence — blue when parallel"),L2("النقرس الكاذب (Pseudogout)","Pseudogout")]},
+   {b:L2("الكوليسترول","Cholesterol"),c:"#64748b",l:[L2("صفائح مسطحة بزاوية مكسورة","Flat plates with notched corner"),L2("انصبابات مزمنة (التهاب المفاصل الروماتويدي)","Chronic effusions (rheumatoid arthritis)")]}
+  ]}
+];
+function renderRef(){
+  const box = $("#refs"); if (!box) return;
+  $("#jump").innerHTML = REFS.map(r => `<a class="chip" href="#ref-${r.id}">${r.t[lang]}</a>`).join("");
+  box.innerHTML = REFS.map(r => `<section class="refsec" id="ref-${r.id}"><h3 class="t">${r.t[lang]}</h3><p class="d">${r.d[lang]}</p>
+    <div class="rgrid">${r.items.map(i => `<div class="rc" style="--c:${i.c||"var(--brand)"}">
+      ${i.code?`<span class="code">${i.code}</span> `:""}${i.tag?`<span class="tag ${i.tag}">${i.tag==="rej"?(lang==="ar"?"رفض":"Reject"):(lang==="ar"?"إنذار":"Warning")}</span>`:""}
+      <b>${i.b[lang]}</b><ul>${i.l.map(x=>`<li>${x[lang]}</li>`).join("")}</ul></div>`).join("")}</div>
+    ${r.note?`<div class="note" style="margin-top:12px">${r.note[lang]}</div>`:""}</section>`).join("");
+}
 
 /* ---------- state ---------- */
 let lang = "ar", cat = "All", q = "", shown = 24;
@@ -388,7 +605,7 @@ function setLang(l){
   $("#q").placeholder = T[l].ph;
   $("#langBtn").textContent = T[l].lang;
   try { localStorage.setItem("lang", l); } catch(e) {}
-  renderChips(); renderList(); renderStatic();
+  renderChips(); renderList(); renderStatic(); renderCalc(); renderRef();
 }
 
 /* ---------- events ---------- */
