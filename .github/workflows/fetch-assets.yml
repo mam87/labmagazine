@@ -1,0 +1,30 @@
+name: Fetch Canva infographics
+on:
+  push:
+    paths: ['.github/workflows/fetch-assets.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download images
+        env:
+          U1: "https://export-download.canva.com/ATCG4/DAHXnlATCG4/-1/0/0001-9112426497667242817.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH5AO7UJ26%2F20261009%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261009T154427Z&X-Amz-Expires=85770&X-Amz-Signature=cc27693aa9b27b1fb6ad09fa3a22d356fcf02736ad76ccfe42f09a5cafc6f97e&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sat%2C%2010%20Oct%202026%2015%3A33%3A57%20GMT"
+          U2: "https://export-download.canva.com/KGkQE/DAHXnhKGkQE/-1/0/0001-3378218269153832282.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH5AO7UJ26%2F20261010%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261010T045909Z&X-Amz-Expires=40448&X-Amz-Signature=69817ff68a7e286273f7efba3692c1387f7564b82cd9b30d4f1cb72d67b9f90b&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sat%2C%2010%20Oct%202026%2016%3A13%3A17%20GMT"
+          U3: "https://export-download.canva.com/gcQTo/DAHXnkgcQTo/-1/0/0001-6262773830768992484.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH5AO7UJ26%2F20261010%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261010T002337Z&X-Amz-Expires=57469&X-Amz-Signature=eb4b5e1cbcc2336d46165a1b5c50f94e60d5e499fb077c88115f3ba9e1ecd93c&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sat%2C%2010%20Oct%202026%2016%3A21%3A26%20GMT"
+        run: |
+          mkdir -p assets
+          curl -sSfL -o assets/order-of-draw.png "$U1"
+          curl -sSfL -o assets/waste-segregation.png "$U2"
+          curl -sSfL -o assets/preanalytical-errors.png "$U3"
+          file assets/*.png | grep -c "PNG image" | grep -q 3
+      - name: Commit images and remove this workflow
+        run: |
+          git rm -q .github/workflows/fetch-assets.yml
+          git add assets
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Add Canva infographics (order of draw, waste segregation, pre-analytical errors)"
+          git push
